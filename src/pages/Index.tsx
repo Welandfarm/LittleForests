@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -14,7 +13,7 @@ const Index = () => {
       id: 1,
       name: "Indigenous Tree Seedlings",
       description: "Native indigenous trees perfect for landscaping and conservation projects.",
-      price: "₹45",
+      price: "Ksh 45",
       image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=300&fit=crop",
       category: "Indigenous",
       inStock: true
@@ -23,7 +22,7 @@ const Index = () => {
       id: 2,
       name: "Ornamental Ferns",
       description: "Beautiful indoor and outdoor plants for adding greenery to any space.",
-      price: "₹25",
+      price: "Ksh 25",
       image: "https://images.unsplash.com/photo-1462275646964-a0e3386b89e0?w=400&h=300&fit=crop",
       category: "Ornamental Plants",
       inStock: true
@@ -32,7 +31,7 @@ const Index = () => {
       id: 3,
       name: "Mango Tree Saplings",
       description: "Premium fruit tree saplings including mango, guava, and citrus varieties.",
-      price: "₹65",
+      price: "Ksh 65",
       image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=300&fit=crop",
       category: "Fruit Trees",
       inStock: false
@@ -41,7 +40,7 @@ const Index = () => {
       id: 4,
       name: "Avocado Seedlings",
       description: "High-quality avocado trees perfect for home gardens and commercial farming.",
-      price: "₹55",
+      price: "Ksh 55",
       image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=300&fit=crop",
       category: "Fruit Trees",
       inStock: true
@@ -50,7 +49,7 @@ const Index = () => {
       id: 5,
       name: "Flowering Plants",
       description: "Colorful ornamental flowering plants perfect for gardens and balconies.",
-      price: "₹30",
+      price: "Ksh 30",
       image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=300&fit=crop",
       category: "Ornamental Plants",
       inStock: true
@@ -59,7 +58,7 @@ const Index = () => {
       id: 6,
       name: "Mukau Indigenous Trees",
       description: "Fast-growing indigenous trees perfect for timber and conservation.",
-      price: "₹40",
+      price: "Ksh 40",
       image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=300&fit=crop",
       category: "Indigenous",
       inStock: true
@@ -73,11 +72,16 @@ const Index = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center space-x-3">
-              <div className="bg-green-600 p-2 rounded-lg">
-                <Leaf className="h-8 w-8 text-white" />
-              </div>
+              <img 
+                src="/lovable-uploads/bd17ddd8-8af4-40c1-8b3b-4234a074ae9b.png" 
+                alt="LittleForest Logo" 
+                className="h-12 w-auto"
+              />
               <div>
-                <h1 className="text-2xl font-bold text-green-800">Little Forest</h1>
+                <h1 className="text-2xl font-bold">
+                  <span className="text-orange-500">Little</span>
+                  <span className="text-green-600">Forest</span>
+                </h1>
                 <p className="text-sm text-gray-600">Nurturing Nature</p>
               </div>
             </div>
@@ -104,8 +108,8 @@ const Index = () => {
               <span className="text-green-800 font-medium">Premium Plant Nursery</span>
             </div>
             <h1 className="text-5xl md:text-6xl font-bold mb-6">
-              Welcome to <span className="text-green-600">Little</span>{" "}
-              <span className="text-green-800">Forest</span>
+              Welcome to <span className="text-orange-500">Little</span>
+              <span className="text-green-600">Forest</span>
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
               Indigenous trees, fruit trees, and ornamental plants delivered to your doorstep. 
@@ -291,8 +295,15 @@ const Index = () => {
           <div className="grid md:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center space-x-2 mb-4">
-                <Leaf className="h-8 w-8" />
-                <span className="text-xl font-bold">Little Forest</span>
+                <img 
+                  src="/lovable-uploads/bd17ddd8-8af4-40c1-8b3b-4234a074ae9b.png" 
+                  alt="LittleForest Logo" 
+                  className="h-8 w-auto"
+                />
+                <span className="text-xl font-bold">
+                  <span className="text-orange-500">Little</span>
+                  <span className="text-green-400">Forest</span>
+                </span>
               </div>
               <p className="text-green-200 text-sm">
                 Nurturing nature, growing futures. Your trusted partner for indigenous trees, fruit trees, and ornamental plants.

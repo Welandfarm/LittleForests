@@ -80,7 +80,7 @@ const Admin = () => {
         <Tabs defaultValue="products" className="space-y-6">
           <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="products">Products</TabsTrigger>
-            <TabsTrigger value="content">Content</TabsTrigger>
+            <TabsTrigger value="content">Content & Blog</TabsTrigger>
             <TabsTrigger value="messages">Messages</TabsTrigger>
           </TabsList>
 

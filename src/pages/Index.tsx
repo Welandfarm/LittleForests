@@ -2,15 +2,28 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Leaf, TreePine, Sprout, Users, Award, Heart } from "lucide-react";
+import { Leaf, TreePine, Sprout, Users, Award, Heart, ShoppingCart, Plus, Minus } from "lucide-react";
 import ContactForm from '@/components/ContactForm';
 import AuthButton from '@/components/AuthButton';
+import CartSidebar from '@/components/CartSidebar';
+import { useCart } from '@/contexts/CartContext';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Index = () => {
+  const navigate = useNavigate();
+  const { addToCart, getCartTotal } = useCart();
+  const [cartOpen, setCartOpen] = useState(false);
+  const [quantities, setQuantities] = useState<{[key: string]: number}>({});
+
   const handleOrder = () => {
     window.open("https://wa.me/254722973557", "_blank");
+  };
+
+  const handleLearnMore = () => {
+    navigate('/blog');
   };
 
   // Fetch products from database
@@ -27,6 +40,19 @@ const Index = () => {
       return data;
     },
   });
+
+  const updateQuantity = (productId: string, change: number) => {
+    setQuantities(prev => ({
+      ...prev,
+      [productId]: Math.max(1, (prev[productId] || 1) + change)
+    }));
+  };
+
+  const handleAddToCart = (product: any) => {
+    const quantity = quantities[product.id] || 1;
+    addToCart(product, quantity);
+    setQuantities(prev => ({ ...prev, [product.id]: 1 }));
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-50 to-white">
@@ -54,9 +80,23 @@ const Index = () => {
               <a href="#products" className="text-gray-700 hover:text-green-600 transition-colors">Products</a>
               <a href="#testimonials" className="text-gray-700 hover:text-green-600 transition-colors">Stories</a>
               <a href="#contact" className="text-gray-700 hover:text-green-600 transition-colors">Contact</a>
+              <button onClick={() => navigate('/blog')} className="text-gray-700 hover:text-green-600 transition-colors">Blog</button>
             </nav>
             <div className="flex items-center space-x-3">
               <AuthButton />
+              <Button 
+                variant="outline" 
+                onClick={() => setCartOpen(true)}
+                className="relative"
+              >
+                <ShoppingCart className="h-4 w-4 mr-1" />
+                Cart
+                {getCartTotal() > 0 && (
+                  <Badge className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs">
+                    {getCartTotal()}
+                  </Badge>
+                )}
+              </Button>
               <Button onClick={handleOrder} className="bg-orange-500 hover:bg-orange-600 text-white">
                 Order
               </Button>
@@ -95,10 +135,28 @@ const Index = () => {
               <Button onClick={handleOrder} className="bg-green-600 hover:bg-green-700 text-white px-8 py-3">
                 Order Now
               </Button>
-              <Button variant="outline" className="border-white text-white hover:bg-white hover:text-green-600 px-8 py-3">
+              <Button onClick={handleLearnMore} variant="outline" className="border-white text-white hover:bg-white hover:text-green-600 px-8 py-3">
                 Learn More
               </Button>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* About Us Section */}
+      <section id="about" className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-green-800 mb-4">About Us</h2>
+          </div>
+          <div className="max-w-4xl mx-auto text-center">
+            <p className="text-lg text-gray-700 leading-relaxed">
+              At LittleForest Nursery, we grow and supply high-quality seedlings to help farmers thrive. 
+              From grafted avocados to tree tomatoes, passion fruit, ornamental plants, and indigenous trees, 
+              every seedling is nurtured with expert care and soil health in mind. Whether you're planting 
+              a few trees or starting a full orchard, we're here to guide you—offering not just seedlings, 
+              but agronomic advice and dependable service trusted by farmers across the region.
+            </p>
           </div>
         </div>
       </section>
@@ -161,15 +219,34 @@ const Index = () => {
                   <div className="p-6">
                     <h3 className="text-xl font-semibold mb-2">{product.name}</h3>
                     <p className="text-gray-600 mb-4">{product.description}</p>
-                    <div className="flex justify-between items-center">
+                    <div className="flex justify-between items-center mb-4">
                       <span className="text-2xl font-bold text-green-600">{product.price}</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-2">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => updateQuantity(product.id, -1)}
+                        >
+                          <Minus className="h-3 w-3" />
+                        </Button>
+                        <span className="w-8 text-center">{quantities[product.id] || 1}</span>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => updateQuantity(product.id, 1)}
+                        >
+                          <Plus className="h-3 w-3" />
+                        </Button>
+                      </div>
                       <Button 
                         size="sm" 
                         disabled={product.status !== 'Available'}
-                        onClick={handleOrder}
+                        onClick={() => handleAddToCart(product)}
                         className="bg-green-600 hover:bg-green-700"
                       >
-                        {product.status === 'Available' ? "Order Now" : "Notify Me"}
+                        Add to Cart
                       </Button>
                     </div>
                   </div>
@@ -259,6 +336,7 @@ const Index = () => {
                 <li><a href="#about" className="hover:text-white">About Us</a></li>
                 <li><a href="#products" className="hover:text-white">Products</a></li>
                 <li><a href="#contact" className="hover:text-white">Contact</a></li>
+                <li><button onClick={() => navigate('/blog')} className="hover:text-white">Blog</button></li>
               </ul>
             </div>
 
@@ -288,6 +366,8 @@ const Index = () => {
           </div>
         </div>
       </footer>
+
+      <CartSidebar isOpen={cartOpen} onClose={() => setCartOpen(false)} />
     </div>
   );
 };

@@ -8,7 +8,7 @@ import { useToast } from '@/hooks/use-toast';
 import ContentForm from './ContentForm';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { edit, plus } from 'lucide-react';
+import { Edit, Plus } from 'lucide-react';
 
 const ContentManagement = () => {
   const [editingContent, setEditingContent] = useState(null);
@@ -82,7 +82,7 @@ const ContentManagement = () => {
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold">Content Management</h2>
         <Button onClick={handleAdd} className="bg-green-600 hover:bg-green-700">
-          <plus className="h-4 w-4 mr-2" />
+          <Plus className="h-4 w-4 mr-2" />
           Add Content
         </Button>
       </div>
@@ -128,7 +128,7 @@ const ContentManagement = () => {
                         variant="outline"
                         onClick={() => handleEdit(item)}
                       >
-                        <edit className="h-4 w-4" />
+                        <Edit className="h-4 w-4" />
                       </Button>
                       <Button
                         size="sm"

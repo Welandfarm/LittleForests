@@ -2,6 +2,8 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Leaf, TreePine, Sprout, Users, Award, Heart } from "lucide-react";
+import ContactForm from '@/components/ContactForm';
+import AuthButton from '@/components/AuthButton';
 
 const Index = () => {
   const handleOrder = () => {
@@ -92,9 +94,12 @@ const Index = () => {
               <a href="#testimonials" className="text-gray-700 hover:text-green-600 transition-colors">Stories</a>
               <a href="#contact" className="text-gray-700 hover:text-green-600 transition-colors">Contact</a>
             </nav>
-            <Button onClick={handleOrder} className="bg-orange-500 hover:bg-orange-600 text-white">
-              Order
-            </Button>
+            <div className="flex items-center space-x-3">
+              <AuthButton />
+              <Button onClick={handleOrder} className="bg-orange-500 hover:bg-orange-600 text-white">
+                Order
+              </Button>
+            </div>
           </div>
         </div>
       </header>
@@ -226,7 +231,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Contact Section */}
+      {/* Updated Contact Section */}
       <section id="contact" className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
@@ -246,45 +251,7 @@ const Index = () => {
           </div>
 
           <div className="max-w-md mx-auto">
-            <Card className="p-6">
-              <form className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
-                  <input 
-                    type="text" 
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
-                    placeholder="Your full name"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                  <input 
-                    type="email" 
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
-                    placeholder="your.email@example.com"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
-                  <input 
-                    type="tel" 
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
-                    placeholder="+254 XXX XXX XXX"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Message</label>
-                  <textarea 
-                    rows={4}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
-                    placeholder="Tell us about your plant needs..."
-                  />
-                </div>
-                <Button className="w-full bg-green-600 hover:bg-green-700 text-white">
-                  Send Message
-                </Button>
-              </form>
-            </Card>
+            <ContactForm />
           </div>
         </div>
       </section>

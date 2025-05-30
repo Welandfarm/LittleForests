@@ -1,71 +1,32 @@
+
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Leaf, TreePine, Sprout, Users, Award, Heart } from "lucide-react";
 import ContactForm from '@/components/ContactForm';
 import AuthButton from '@/components/AuthButton';
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
 
 const Index = () => {
   const handleOrder = () => {
     window.open("https://wa.me/254722973557", "_blank");
   };
 
-  const products = [
-    {
-      id: 1,
-      name: "Indigenous Tree Seedlings",
-      description: "Native indigenous trees perfect for landscaping and conservation projects.",
-      price: "Ksh 45",
-      image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=300&fit=crop",
-      category: "Indigenous",
-      inStock: true
+  // Fetch products from database
+  const { data: products = [], isLoading: productsLoading } = useQuery({
+    queryKey: ['products'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('products')
+        .select('*')
+        .eq('status', 'Available')
+        .order('created_at', { ascending: false });
+      
+      if (error) throw error;
+      return data;
     },
-    {
-      id: 2,
-      name: "Ornamental Ferns",
-      description: "Beautiful indoor and outdoor plants for adding greenery to any space.",
-      price: "Ksh 25",
-      image: "https://images.unsplash.com/photo-1462275646964-a0e3386b89e0?w=400&h=300&fit=crop",
-      category: "Ornamental Plants",
-      inStock: true
-    },
-    {
-      id: 3,
-      name: "Mango Tree Saplings",
-      description: "Premium fruit tree saplings including mango, guava, and citrus varieties.",
-      price: "Ksh 65",
-      image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=300&fit=crop",
-      category: "Fruit Trees",
-      inStock: false
-    },
-    {
-      id: 4,
-      name: "Avocado Seedlings",
-      description: "High-quality avocado trees perfect for home gardens and commercial farming.",
-      price: "Ksh 55",
-      image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=300&fit=crop",
-      category: "Fruit Trees",
-      inStock: true
-    },
-    {
-      id: 5,
-      name: "Flowering Plants",
-      description: "Colorful ornamental flowering plants perfect for gardens and balconies.",
-      price: "Ksh 30",
-      image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=300&fit=crop",
-      category: "Ornamental Plants",
-      inStock: true
-    },
-    {
-      id: 6,
-      name: "Mukau Indigenous Trees",
-      description: "Fast-growing indigenous trees perfect for timber and conservation.",
-      price: "Ksh 40",
-      image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=300&fit=crop",
-      category: "Indigenous",
-      inStock: true
-    }
-  ];
+  });
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-50 to-white">
@@ -104,19 +65,29 @@ const Index = () => {
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section id="home" className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      {/* Hero Section with Background Image */}
+      <section 
+        id="home" 
+        className="py-20 relative"
+        style={{
+          backgroundImage: 'url(/lovable-uploads/82ebeeb5-b8dd-4161-9668-d9077f5da34d.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
+        <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="mb-8">
             <div className="inline-flex items-center space-x-2 bg-green-100 px-4 py-2 rounded-full mb-6">
               <TreePine className="h-5 w-5 text-green-600" />
-              <span className="text-green-800 font-medium">Premium Plant Nursery</span>
+              <span className="text-green-800 font-medium">Reliable Tree Nursery</span>
             </div>
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">
+            <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white">
               Welcome to <span className="text-orange-500">Little</span>
-              <span className="text-green-600">Forest</span>
+              <span className="text-green-400">Forest</span>
             </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+            <p className="text-xl text-gray-100 max-w-3xl mx-auto mb-8">
               Indigenous trees, fruit trees, and ornamental plants delivered to your doorstep. 
               Transform your space with nature's finest offerings.
             </p>
@@ -124,7 +95,7 @@ const Index = () => {
               <Button onClick={handleOrder} className="bg-green-600 hover:bg-green-700 text-white px-8 py-3">
                 Order Now
               </Button>
-              <Button variant="outline" className="border-green-600 text-green-600 hover:bg-green-50 px-8 py-3">
+              <Button variant="outline" className="border-white text-white hover:bg-white hover:text-green-600 px-8 py-3">
                 Learn More
               </Button>
             </div>
@@ -164,44 +135,48 @@ const Index = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {products.map((product) => (
-              <Card key={product.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-                <div className="relative">
-                  <img 
-                    src={product.image} 
-                    alt={product.name}
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="absolute top-2 right-2">
-                    <Badge variant={product.inStock ? "default" : "secondary"}>
-                      {product.inStock ? "In Stock" : "Out of Stock"}
-                    </Badge>
+          {productsLoading ? (
+            <div className="text-center py-8">Loading products...</div>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {products.map((product) => (
+                <Card key={product.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+                  <div className="relative">
+                    <img 
+                      src={product.image_url || "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=300&fit=crop"} 
+                      alt={product.name}
+                      className="w-full h-48 object-cover"
+                    />
+                    <div className="absolute top-2 right-2">
+                      <Badge variant={product.status === 'Available' ? "default" : "secondary"}>
+                        {product.status}
+                      </Badge>
+                    </div>
+                    <div className="absolute top-2 left-2">
+                      <Badge variant="outline" className="bg-white">
+                        {product.category}
+                      </Badge>
+                    </div>
                   </div>
-                  <div className="absolute top-2 left-2">
-                    <Badge variant="outline" className="bg-white">
-                      {product.category}
-                    </Badge>
+                  <div className="p-6">
+                    <h3 className="text-xl font-semibold mb-2">{product.name}</h3>
+                    <p className="text-gray-600 mb-4">{product.description}</p>
+                    <div className="flex justify-between items-center">
+                      <span className="text-2xl font-bold text-green-600">{product.price}</span>
+                      <Button 
+                        size="sm" 
+                        disabled={product.status !== 'Available'}
+                        onClick={handleOrder}
+                        className="bg-green-600 hover:bg-green-700"
+                      >
+                        {product.status === 'Available' ? "Order Now" : "Notify Me"}
+                      </Button>
+                    </div>
                   </div>
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-2">{product.name}</h3>
-                  <p className="text-gray-600 mb-4">{product.description}</p>
-                  <div className="flex justify-between items-center">
-                    <span className="text-2xl font-bold text-green-600">{product.price}</span>
-                    <Button 
-                      size="sm" 
-                      disabled={!product.inStock}
-                      onClick={handleOrder}
-                      className="bg-green-600 hover:bg-green-700"
-                    >
-                      {product.inStock ? "Order Now" : "Notify Me"}
-                    </Button>
-                  </div>
-                </div>
-              </Card>
-            ))}
-          </div>
+                </Card>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
@@ -300,7 +275,7 @@ const Index = () => {
               <h3 className="font-semibold mb-4">Contact Info</h3>
               <ul className="space-y-2 text-sm text-green-200">
                 <li>📱 WhatsApp: +254 722973557</li>
-                <li>🌐 LittleForest Kenyan Website</li>
+                <li>🌐 littleforest.co.ke</li>
                 <li>📍 Kamureito Bomet</li>
               </ul>
             </div>

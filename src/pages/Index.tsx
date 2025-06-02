@@ -135,7 +135,7 @@ const Index = () => {
               <Button onClick={handleOrder} className="bg-green-600 hover:bg-green-700 text-white px-8 py-3">
                 Order Now
               </Button>
-              <Button onClick={handleLearnMore} variant="outline" className="border-white text-white hover:bg-white hover:text-green-600 px-8 py-3">
+              <Button onClick={handleLearnMore} className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3">
                 Learn More
               </Button>
             </div>

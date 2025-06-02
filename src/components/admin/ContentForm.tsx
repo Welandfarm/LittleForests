@@ -9,15 +9,16 @@ import { useAuth } from '@/contexts/AuthContext';
 
 interface ContentFormProps {
   content?: any;
+  contentType?: string;
   onClose: () => void;
   onSuccess: () => void;
 }
 
-const ContentForm: React.FC<ContentFormProps> = ({ content, onClose, onSuccess }) => {
+const ContentForm: React.FC<ContentFormProps> = ({ content, contentType = 'page', onClose, onSuccess }) => {
   const [formData, setFormData] = useState({
     title: '',
     content: '',
-    type: 'page',
+    type: contentType,
     status: 'draft'
   });
 
@@ -29,11 +30,16 @@ const ContentForm: React.FC<ContentFormProps> = ({ content, onClose, onSuccess }
       setFormData({
         title: content.title || '',
         content: content.content || '',
-        type: content.type || 'page',
+        type: content.type || contentType,
         status: content.status || 'draft'
       });
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        type: contentType
+      }));
     }
-  }, [content]);
+  }, [content, contentType]);
 
   const mutation = useMutation({
     mutationFn: async (data: any) => {
@@ -69,6 +75,7 @@ const ContentForm: React.FC<ContentFormProps> = ({ content, onClose, onSuccess }
         description: `Failed to ${content ? 'update' : 'create'} content. Please try again.`,
         variant: "destructive",
       });
+      console.error("Content form error:", error);
     },
   });
 
@@ -88,7 +95,7 @@ const ContentForm: React.FC<ContentFormProps> = ({ content, onClose, onSuccess }
     <Card className="p-6">
       <div className="flex justify-between items-center mb-6">
         <h3 className="text-xl font-semibold">
-          {content ? 'Edit Content' : 'Add New Content'}
+          {content ? 'Edit Content' : formData.type === 'blog' ? 'Add New Blog Post' : 'Add New Page Content'}
         </h3>
         <Button variant="outline" onClick={onClose}>
           Cancel

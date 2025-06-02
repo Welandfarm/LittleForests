@@ -13,6 +13,7 @@ import { Edit, Plus, Trash2, FileText, Globe } from 'lucide-react';
 const ContentManagement = () => {
   const [editingContent, setEditingContent] = useState(null);
   const [showForm, setShowForm] = useState(false);
+  const [contentType, setContentType] = useState('page'); // 'page' or 'blog'
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -56,11 +57,13 @@ const ContentManagement = () => {
 
   const handleEdit = (content: any) => {
     setEditingContent(content);
+    setContentType(content.type);
     setShowForm(true);
   };
 
-  const handleAdd = () => {
+  const handleAdd = (type: string) => {
     setEditingContent(null);
+    setContentType(type);
     setShowForm(true);
   };
 
@@ -86,19 +89,19 @@ const ContentManagement = () => {
         </div>
         <div className="flex space-x-3">
           <Button 
-            onClick={handleAdd} 
-            className="bg-blue-600 hover:bg-blue-700 text-white font-medium"
+            onClick={() => handleAdd('page')} 
+            className="bg-blue-600 hover:bg-blue-700 text-white font-medium flex items-center gap-2"
             size="lg"
           >
-            <FileText className="h-5 w-5 mr-2" />
+            <Globe className="h-5 w-5" />
             Add Page Content
           </Button>
           <Button 
-            onClick={handleAdd} 
-            className="bg-green-600 hover:bg-green-700 text-white font-medium"
+            onClick={() => handleAdd('blog')} 
+            className="bg-green-600 hover:bg-green-700 text-white font-medium flex items-center gap-2"
             size="lg"
           >
-            <Plus className="h-5 w-5 mr-2" />
+            <FileText className="h-5 w-5" />
             Add Blog Post
           </Button>
         </div>
@@ -107,6 +110,7 @@ const ContentManagement = () => {
       {showForm && (
         <ContentForm
           content={editingContent}
+          contentType={contentType}
           onClose={handleFormClose}
           onSuccess={() => {
             handleFormClose();
@@ -172,18 +176,24 @@ const ContentManagement = () => {
               </TableBody>
             </Table>
           ) : (
-            <div className="text-center py-8">
-              <div className="mb-4">
+            <div className="text-center py-12">
+              <div className="mb-6">
                 <FileText className="h-16 w-16 text-gray-300 mx-auto mb-4" />
                 <p className="text-gray-500 mb-4">No content found</p>
               </div>
               <div className="flex justify-center space-x-3">
-                <Button onClick={handleAdd} className="bg-blue-600 hover:bg-blue-700">
-                  <Globe className="h-4 w-4 mr-2" />
+                <Button 
+                  onClick={() => handleAdd('page')} 
+                  className="bg-blue-600 hover:bg-blue-700 flex items-center gap-2"
+                >
+                  <Globe className="h-4 w-4" />
                   Create Page Content
                 </Button>
-                <Button onClick={handleAdd} className="bg-green-600 hover:bg-green-700">
-                  <FileText className="h-4 w-4 mr-2" />
+                <Button 
+                  onClick={() => handleAdd('blog')} 
+                  className="bg-green-600 hover:bg-green-700 flex items-center gap-2"
+                >
+                  <FileText className="h-4 w-4" />
                   Write Blog Post
                 </Button>
               </div>

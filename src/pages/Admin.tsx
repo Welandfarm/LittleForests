@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Navigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -78,21 +78,21 @@ const Admin = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Tabs defaultValue="products" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3">
+          <TabsList className="grid w-full grid-cols-3 mb-8">
             <TabsTrigger value="products">Products</TabsTrigger>
             <TabsTrigger value="content">Content & Blog</TabsTrigger>
             <TabsTrigger value="messages">Messages</TabsTrigger>
           </TabsList>
 
-          <TabsContent value="products">
+          <TabsContent value="products" className="mt-6">
             <ProductManagement />
           </TabsContent>
 
-          <TabsContent value="content">
+          <TabsContent value="content" className="mt-6">
             <ContentManagement />
           </TabsContent>
 
-          <TabsContent value="messages">
+          <TabsContent value="messages" className="mt-6">
             <ContactMessages />
           </TabsContent>
         </Tabs>

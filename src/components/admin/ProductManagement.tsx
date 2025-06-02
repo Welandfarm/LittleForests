@@ -86,10 +86,10 @@ const ProductManagement = () => {
         </div>
         <Button 
           onClick={handleAdd} 
-          className="bg-green-600 hover:bg-green-700 text-white font-medium"
+          className="bg-green-600 hover:bg-green-700 text-white font-medium flex items-center gap-2"
           size="lg"
         >
-          <Plus className="h-5 w-5 mr-2" />
+          <Plus className="h-5 w-5" />
           Add New Product
         </Button>
       </div>
@@ -133,7 +133,7 @@ const ProductManagement = () => {
                     </TableCell>
                     <TableCell className="font-medium">{product.name}</TableCell>
                     <TableCell>{product.category}</TableCell>
-                    <TableCell className="font-semibold text-green-600">{product.price}</TableCell>
+                    <TableCell className="font-semibold text-green-600">${product.price}</TableCell>
                     <TableCell>
                       <Badge variant={product.status === 'Available' ? 'default' : 'secondary'}>
                         {product.status}
@@ -163,10 +163,13 @@ const ProductManagement = () => {
               </TableBody>
             </Table>
           ) : (
-            <div className="text-center py-8">
-              <p className="text-gray-500 mb-4">No products found</p>
-              <Button onClick={handleAdd} className="bg-green-600 hover:bg-green-700">
-                <Plus className="h-4 w-4 mr-2" />
+            <div className="text-center py-12">
+              <p className="text-gray-500 mb-6">No products found</p>
+              <Button 
+                onClick={handleAdd} 
+                className="bg-green-600 hover:bg-green-700 text-white flex items-center gap-2"
+              >
+                <Plus className="h-4 w-4" />
                 Add Your First Product
               </Button>
             </div>

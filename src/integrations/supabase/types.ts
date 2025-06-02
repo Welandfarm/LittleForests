@@ -9,6 +9,63 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      care_tasks: {
+        Row: {
+          completed: boolean
+          created_at: string
+          due_date: string
+          id: string
+          inputs: Json | null
+          labor: Json | null
+          notes: string | null
+          task_type: string
+          tree_id: string
+          updated_at: string
+        }
+        Insert: {
+          completed?: boolean
+          created_at?: string
+          due_date: string
+          id?: string
+          inputs?: Json | null
+          labor?: Json | null
+          notes?: string | null
+          task_type: string
+          tree_id: string
+          updated_at?: string
+        }
+        Update: {
+          completed?: boolean
+          created_at?: string
+          due_date?: string
+          id?: string
+          inputs?: Json | null
+          labor?: Json | null
+          notes?: string | null
+          task_type?: string
+          tree_id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      categories: {
+        Row: {
+          description: string | null
+          id: string
+          name: string
+        }
+        Insert: {
+          description?: string | null
+          id: string
+          name: string
+        }
+        Update: {
+          description?: string | null
+          id?: string
+          name?: string
+        }
+        Relationships: []
+      }
       contact_messages: {
         Row: {
           created_at: string | null
@@ -71,6 +128,117 @@ export type Database = {
           updated_at?: string | null
         }
         Relationships: []
+      }
+      customers: {
+        Row: {
+          contact: string | null
+          email: string | null
+          id: string
+          name: string
+          phone: string | null
+        }
+        Insert: {
+          contact?: string | null
+          email?: string | null
+          id: string
+          name: string
+          phone?: string | null
+        }
+        Update: {
+          contact?: string | null
+          email?: string | null
+          id?: string
+          name?: string
+          phone?: string | null
+        }
+        Relationships: []
+      }
+      expenses: {
+        Row: {
+          amount: number
+          category: string
+          date: string
+          description: string | null
+          id: string
+          paymentmethod: string | null
+          vendor: string | null
+        }
+        Insert: {
+          amount: number
+          category: string
+          date: string
+          description?: string | null
+          id: string
+          paymentmethod?: string | null
+          vendor?: string | null
+        }
+        Update: {
+          amount?: number
+          category?: string
+          date?: string
+          description?: string | null
+          id?: string
+          paymentmethod?: string | null
+          vendor?: string | null
+        }
+        Relationships: []
+      }
+      inventory: {
+        Row: {
+          categoryid: string | null
+          cost: number | null
+          dateadded: string
+          id: string
+          location: string | null
+          name: string
+          notes: string | null
+          price: number
+          quantity: number
+          size: string | null
+          supplierid: string | null
+        }
+        Insert: {
+          categoryid?: string | null
+          cost?: number | null
+          dateadded: string
+          id: string
+          location?: string | null
+          name: string
+          notes?: string | null
+          price?: number
+          quantity?: number
+          size?: string | null
+          supplierid?: string | null
+        }
+        Update: {
+          categoryid?: string | null
+          cost?: number | null
+          dateadded?: string
+          id?: string
+          location?: string | null
+          name?: string
+          notes?: string | null
+          price?: number
+          quantity?: number
+          size?: string | null
+          supplierid?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "inventory_categoryid_fkey"
+            columns: ["categoryid"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "inventory_supplierid_fkey"
+            columns: ["supplierid"]
+            isOneToOne: false
+            referencedRelation: "suppliers"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       products: {
         Row: {
@@ -138,6 +306,104 @@ export type Database = {
         }
         Relationships: []
       }
+      sales: {
+        Row: {
+          customerid: string | null
+          date: string
+          id: string
+          items: Json
+          notes: string | null
+          paymentmethod: string | null
+          total: number
+        }
+        Insert: {
+          customerid?: string | null
+          date: string
+          id: string
+          items: Json
+          notes?: string | null
+          paymentmethod?: string | null
+          total: number
+        }
+        Update: {
+          customerid?: string | null
+          date?: string
+          id?: string
+          items?: Json
+          notes?: string | null
+          paymentmethod?: string | null
+          total?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sales_customerid_fkey"
+            columns: ["customerid"]
+            isOneToOne: false
+            referencedRelation: "customers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      suppliers: {
+        Row: {
+          contact: string | null
+          email: string | null
+          id: string
+          name: string
+          phone: string | null
+        }
+        Insert: {
+          contact?: string | null
+          email?: string | null
+          id: string
+          name: string
+          phone?: string | null
+        }
+        Update: {
+          contact?: string | null
+          email?: string | null
+          id?: string
+          name?: string
+          phone?: string | null
+        }
+        Relationships: []
+      }
+      tasks: {
+        Row: {
+          assignedto: string | null
+          completedat: string | null
+          createdat: string
+          description: string | null
+          duedate: string | null
+          id: string
+          priority: string
+          status: string
+          title: string
+        }
+        Insert: {
+          assignedto?: string | null
+          completedat?: string | null
+          createdat: string
+          description?: string | null
+          duedate?: string | null
+          id: string
+          priority?: string
+          status?: string
+          title: string
+        }
+        Update: {
+          assignedto?: string | null
+          completedat?: string | null
+          createdat?: string
+          description?: string | null
+          duedate?: string | null
+          id?: string
+          priority?: string
+          status?: string
+          title?: string
+        }
+        Relationships: []
+      }
       testimonials: {
         Row: {
           created_at: string
@@ -167,6 +433,66 @@ export type Database = {
           project?: string | null
           rating?: number | null
           text?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      trees: {
+        Row: {
+          age: number
+          care_instructions: string
+          category: string
+          created_at: string
+          health_status: string
+          height: number
+          id: string
+          image_url: string | null
+          name: string
+          next_care_date: string
+          notes: string
+          number_of_plants: number
+          planted_date: string
+          source: string
+          stock_quantity: number
+          unit_price: number
+          updated_at: string
+        }
+        Insert: {
+          age: number
+          care_instructions: string
+          category: string
+          created_at?: string
+          health_status: string
+          height: number
+          id?: string
+          image_url?: string | null
+          name: string
+          next_care_date: string
+          notes: string
+          number_of_plants?: number
+          planted_date: string
+          source: string
+          stock_quantity?: number
+          unit_price?: number
+          updated_at?: string
+        }
+        Update: {
+          age?: number
+          care_instructions?: string
+          category?: string
+          created_at?: string
+          health_status?: string
+          height?: number
+          id?: string
+          image_url?: string | null
+          name?: string
+          next_care_date?: string
+          notes?: string
+          number_of_plants?: number
+          planted_date?: string
+          source?: string
+          stock_quantity?: number
+          unit_price?: number
           updated_at?: string
         }
         Relationships: []

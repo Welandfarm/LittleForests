@@ -8,7 +8,7 @@ import { useToast } from '@/hooks/use-toast';
 import ContentForm from './ContentForm';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Edit, Plus } from 'lucide-react';
+import { Edit, Plus, Trash2, FileText, Globe } from 'lucide-react';
 
 const ContentManagement = () => {
   const [editingContent, setEditingContent] = useState(null);
@@ -80,11 +80,28 @@ const ContentManagement = () => {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold">Content Management</h2>
-        <Button onClick={handleAdd} className="bg-green-600 hover:bg-green-700">
-          <Plus className="h-4 w-4 mr-2" />
-          Add Content
-        </Button>
+        <div>
+          <h2 className="text-2xl font-bold text-gray-900">Content & Blog Management</h2>
+          <p className="text-gray-600">Create and manage website content, pages, and blog posts</p>
+        </div>
+        <div className="flex space-x-3">
+          <Button 
+            onClick={handleAdd} 
+            className="bg-blue-600 hover:bg-blue-700 text-white font-medium"
+            size="lg"
+          >
+            <FileText className="h-5 w-5 mr-2" />
+            Add Page Content
+          </Button>
+          <Button 
+            onClick={handleAdd} 
+            className="bg-green-600 hover:bg-green-700 text-white font-medium"
+            size="lg"
+          >
+            <Plus className="h-5 w-5 mr-2" />
+            Add Blog Post
+          </Button>
+        </div>
       </div>
 
       {showForm && (
@@ -100,50 +117,78 @@ const ContentManagement = () => {
 
       <Card>
         <div className="p-6">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Title</TableHead>
-                <TableHead>Type</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Created</TableHead>
-                <TableHead>Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {content?.map((item) => (
-                <TableRow key={item.id}>
-                  <TableCell className="font-medium">{item.title}</TableCell>
-                  <TableCell>{item.type}</TableCell>
-                  <TableCell>
-                    <Badge variant={item.status === 'published' ? 'default' : 'secondary'}>
-                      {item.status}
-                    </Badge>
-                  </TableCell>
-                  <TableCell>{new Date(item.created_at).toLocaleDateString()}</TableCell>
-                  <TableCell>
-                    <div className="flex space-x-2">
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        onClick={() => handleEdit(item)}
-                      >
-                        <Edit className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="destructive"
-                        onClick={() => deleteMutation.mutate(item.id)}
-                        disabled={deleteMutation.isPending}
-                      >
-                        Delete
-                      </Button>
-                    </div>
-                  </TableCell>
+          {content && content.length > 0 ? (
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Title</TableHead>
+                  <TableHead>Type</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead>Created</TableHead>
+                  <TableHead>Actions</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {content.map((item) => (
+                  <TableRow key={item.id}>
+                    <TableCell className="font-medium">{item.title}</TableCell>
+                    <TableCell>
+                      <div className="flex items-center">
+                        {item.type === 'blog' ? (
+                          <FileText className="h-4 w-4 mr-2 text-blue-500" />
+                        ) : (
+                          <Globe className="h-4 w-4 mr-2 text-green-500" />
+                        )}
+                        {item.type}
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <Badge variant={item.status === 'published' ? 'default' : 'secondary'}>
+                        {item.status}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>{new Date(item.created_at).toLocaleDateString()}</TableCell>
+                    <TableCell>
+                      <div className="flex space-x-2">
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => handleEdit(item)}
+                        >
+                          <Edit className="h-4 w-4" />
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="destructive"
+                          onClick={() => deleteMutation.mutate(item.id)}
+                          disabled={deleteMutation.isPending}
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          ) : (
+            <div className="text-center py-8">
+              <div className="mb-4">
+                <FileText className="h-16 w-16 text-gray-300 mx-auto mb-4" />
+                <p className="text-gray-500 mb-4">No content found</p>
+              </div>
+              <div className="flex justify-center space-x-3">
+                <Button onClick={handleAdd} className="bg-blue-600 hover:bg-blue-700">
+                  <Globe className="h-4 w-4 mr-2" />
+                  Create Page Content
+                </Button>
+                <Button onClick={handleAdd} className="bg-green-600 hover:bg-green-700">
+                  <FileText className="h-4 w-4 mr-2" />
+                  Write Blog Post
+                </Button>
+              </div>
+            </div>
+          )}
         </div>
       </Card>
     </div>

@@ -5,6 +5,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useToast } from '@/hooks/use-toast';
+import ImageUpload from '../ImageUpload';
 
 interface ProductFormProps {
   product?: any;
@@ -82,6 +83,13 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onClose, onSuccess }
     }));
   };
 
+  const handleImageUploaded = (url: string) => {
+    setFormData(prev => ({
+      ...prev,
+      image_url: url
+    }));
+  };
+
   return (
     <Card className="p-6">
       <div className="flex justify-between items-center mb-6">
@@ -93,84 +101,77 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onClose, onSuccess }
         </Button>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="grid md:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
-              required
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="grid md:grid-cols-2 gap-6">
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
+              <select
+                name="category"
+                value={formData.category}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                required
+              >
+                <option value="">Select Category</option>
+                <option value="Indigenous">Indigenous Trees</option>
+                <option value="Fruit Trees">Fruit Trees</option>
+                <option value="Ornamental Plants">Ornamental Plants</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Price</label>
+              <input
+                type="text"
+                name="price"
+                value={formData.price}
+                onChange={handleChange}
+                placeholder="e.g., Ksh 45"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
+              <select
+                name="status"
+                value={formData.status}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+              >
+                <option value="Available">Available</option>
+                <option value="Out of Stock">Out of Stock</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Scientific Name</label>
+              <input
+                type="text"
+                name="scientific_name"
+                value={formData.scientific_name}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+              />
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            <ImageUpload
+              onImageUploaded={handleImageUploaded}
+              currentImageUrl={formData.image_url}
             />
           </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
-            <select
-              name="category"
-              value={formData.category}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
-              required
-            >
-              <option value="">Select Category</option>
-              <option value="Indigenous">Indigenous Trees</option>
-              <option value="Fruit Trees">Fruit Trees</option>
-              <option value="Ornamental Plants">Ornamental Plants</option>
-            </select>
-          </div>
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Price</label>
-            <input
-              type="text"
-              name="price"
-              value={formData.price}
-              onChange={handleChange}
-              placeholder="e.g., Ksh 45"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
-              required
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
-            <select
-              name="status"
-              value={formData.status}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
-            >
-              <option value="Available">Available</option>
-              <option value="Out of Stock">Out of Stock</option>
-            </select>
-          </div>
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Scientific Name</label>
-          <input
-            type="text"
-            name="scientific_name"
-            value={formData.scientific_name}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Image URL</label>
-          <input
-            type="url"
-            name="image_url"
-            value={formData.image_url}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
-            placeholder="https://example.com/image.jpg"
-          />
         </div>
 
         <div>
@@ -179,7 +180,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onClose, onSuccess }
             name="description"
             value={formData.description}
             onChange={handleChange}
-            rows={3}
+            rows={4}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
           />
         </div>

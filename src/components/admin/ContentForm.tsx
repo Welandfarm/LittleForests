@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
+import ImageUpload from '../ImageUpload';
 
 interface ContentFormProps {
   content?: any;
@@ -19,7 +20,8 @@ const ContentForm: React.FC<ContentFormProps> = ({ content, contentType = 'page'
     title: '',
     content: '',
     type: contentType,
-    status: 'draft'
+    status: 'draft',
+    image_url: ''
   });
 
   const { toast } = useToast();
@@ -31,7 +33,8 @@ const ContentForm: React.FC<ContentFormProps> = ({ content, contentType = 'page'
         title: content.title || '',
         content: content.content || '',
         type: content.type || contentType,
-        status: content.status || 'draft'
+        status: content.status || 'draft',
+        image_url: content.image_url || ''
       });
     } else {
       setFormData(prev => ({
@@ -91,6 +94,13 @@ const ContentForm: React.FC<ContentFormProps> = ({ content, contentType = 'page'
     }));
   };
 
+  const handleImageUploaded = (url: string) => {
+    setFormData(prev => ({
+      ...prev,
+      image_url: url
+    }));
+  };
+
   return (
     <Card className="p-6">
       <div className="flex justify-between items-center mb-6">
@@ -102,46 +112,54 @@ const ContentForm: React.FC<ContentFormProps> = ({ content, contentType = 'page'
         </Button>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="grid md:grid-cols-2 gap-4">
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="grid md:grid-cols-2 gap-6">
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
+              <input
+                type="text"
+                name="title"
+                value={formData.title}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Type</label>
+              <select
+                name="type"
+                value={formData.type}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                required
+              >
+                <option value="page">Page</option>
+                <option value="blog">Blog Post</option>
+                <option value="announcement">Announcement</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
+              <select
+                name="status"
+                value={formData.status}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+              >
+                <option value="draft">Draft</option>
+                <option value="published">Published</option>
+              </select>
+            </div>
+          </div>
+
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
-            <input
-              type="text"
-              name="title"
-              value={formData.title}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
-              required
+            <ImageUpload
+              onImageUploaded={handleImageUploaded}
+              currentImageUrl={formData.image_url}
             />
           </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Type</label>
-            <select
-              name="type"
-              value={formData.type}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
-              required
-            >
-              <option value="page">Page</option>
-              <option value="blog">Blog Post</option>
-              <option value="announcement">Announcement</option>
-            </select>
-          </div>
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
-          <select
-            name="status"
-            value={formData.status}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
-          >
-            <option value="draft">Draft</option>
-            <option value="published">Published</option>
-          </select>
         </div>
 
         <div>

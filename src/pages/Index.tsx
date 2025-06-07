@@ -59,13 +59,13 @@ const Index = () => {
       return categorizedProducts;
     }
     
-    const categoryProducts = products.filter(p => p.category === selectedCategory);
+    // Return only the selected category with products
     return {
-      indigenous: selectedCategory === 'Indigenous Trees' ? categoryProducts : [],
-      ornamental: selectedCategory === 'Ornamental Trees' ? categoryProducts : [],
-      fruit: selectedCategory === 'Fruit Trees' ? categoryProducts : [],
+      indigenous: selectedCategory === 'Indigenous Trees' ? categorizedProducts.indigenous : [],
+      ornamental: selectedCategory === 'Ornamental Trees' ? categorizedProducts.ornamental : [],
+      fruit: selectedCategory === 'Fruit Trees' ? categorizedProducts.fruit : [],
     };
-  }, [products, selectedCategory, categorizedProducts]);
+  }, [selectedCategory, categorizedProducts]);
 
   const updateQuantity = (productId: string, change: number) => {
     setQuantities(prev => ({
@@ -229,72 +229,37 @@ const Index = () => {
             <div className="text-center py-8">Loading products...</div>
           ) : (
             <div className="space-y-8">
-              {selectedCategory === 'all' ? (
-                // Show all categories when 'all' is selected
-                <>
-                  {filteredProducts.indigenous.length > 0 && (
-                    <ProductCarousel
-                      products={filteredProducts.indigenous}
-                      categoryName="Indigenous Trees"
-                      quantities={quantities}
-                      onUpdateQuantity={updateQuantity}
-                      onAddToCart={handleAddToCart}
-                    />
-                  )}
-                  {filteredProducts.ornamental.length > 0 && (
-                    <ProductCarousel
-                      products={filteredProducts.ornamental}
-                      categoryName="Ornamental Trees"
-                      quantities={quantities}
-                      onUpdateQuantity={updateQuantity}
-                      onAddToCart={handleAddToCart}
-                    />
-                  )}
-                  {filteredProducts.fruit.length > 0 && (
-                    <ProductCarousel
-                      products={filteredProducts.fruit}
-                      categoryName="Fruit Trees"
-                      quantities={quantities}
-                      onUpdateQuantity={updateQuantity}
-                      onAddToCart={handleAddToCart}
-                    />
-                  )}
-                </>
-              ) : (
-                // Show only selected category
-                <>
-                  {filteredProducts.indigenous.length > 0 && (
-                    <ProductCarousel
-                      products={filteredProducts.indigenous}
-                      categoryName="Indigenous Trees"
-                      quantities={quantities}
-                      onUpdateQuantity={updateQuantity}
-                      onAddToCart={handleAddToCart}
-                    />
-                  )}
-                  {filteredProducts.ornamental.length > 0 && (
-                    <ProductCarousel
-                      products={filteredProducts.ornamental}
-                      categoryName="Ornamental Trees"
-                      quantities={quantities}
-                      onUpdateQuantity={updateQuantity}
-                      onAddToCart={handleAddToCart}
-                    />
-                  )}
-                  {filteredProducts.fruit.length > 0 && (
-                    <ProductCarousel
-                      products={filteredProducts.fruit}
-                      categoryName="Fruit Trees"
-                      quantities={quantities}
-                      onUpdateQuantity={updateQuantity}
-                      onAddToCart={handleAddToCart}
-                    />
-                  )}
-                </>
+              {/* Show all categories when 'all' is selected or show only the filtered categories */}
+              {filteredProducts.indigenous.length > 0 && (
+                <ProductCarousel
+                  products={filteredProducts.indigenous}
+                  categoryName="Indigenous Trees"
+                  quantities={quantities}
+                  onUpdateQuantity={updateQuantity}
+                  onAddToCart={handleAddToCart}
+                />
+              )}
+              {filteredProducts.ornamental.length > 0 && (
+                <ProductCarousel
+                  products={filteredProducts.ornamental}
+                  categoryName="Ornamental Trees"
+                  quantities={quantities}
+                  onUpdateQuantity={updateQuantity}
+                  onAddToCart={handleAddToCart}
+                />
+              )}
+              {filteredProducts.fruit.length > 0 && (
+                <ProductCarousel
+                  products={filteredProducts.fruit}
+                  categoryName="Fruit Trees"
+                  quantities={quantities}
+                  onUpdateQuantity={updateQuantity}
+                  onAddToCart={handleAddToCart}
+                />
               )}
               
-              {/* Show message if no products in selected category */}
-              {selectedCategory !== 'all' && 
+              {/* Show message if no products available */}
+              {!productsLoading && 
                filteredProducts.indigenous.length === 0 && 
                filteredProducts.ornamental.length === 0 && 
                filteredProducts.fruit.length === 0 && (

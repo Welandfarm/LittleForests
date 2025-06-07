@@ -30,41 +30,63 @@ const Index = () => {
   };
 
   // Fetch products from database
-  const { data: products = [], isLoading: productsLoading } = useQuery({
+  const { data: products = [], isLoading: productsLoading, error } = useQuery({
     queryKey: ['products'],
     queryFn: async () => {
+      console.log('Fetching products from database...');
       const { data, error } = await supabase
         .from('products')
         .select('*')
         .eq('status', 'Available')
         .order('created_at', { ascending: false });
       
-      if (error) throw error;
+      if (error) {
+        console.error('Error fetching products:', error);
+        throw error;
+      }
+      
+      console.log('Fetched products:', data);
       return data;
     },
   });
 
+  // Debug logging
+  console.log('Products loading:', productsLoading);
+  console.log('Products error:', error);
+  console.log('Products data:', products);
+  console.log('Selected category:', selectedCategory);
+
   // Categorize products
   const categorizedProducts = useMemo(() => {
+    console.log('Categorizing products...');
     const indigenous = products.filter(p => p.category === 'Indigenous Trees');
     const ornamental = products.filter(p => p.category === 'Ornamental Trees');
     const fruit = products.filter(p => p.category === 'Fruit Trees');
+    
+    console.log('Indigenous trees:', indigenous);
+    console.log('Ornamental trees:', ornamental);
+    console.log('Fruit trees:', fruit);
     
     return { indigenous, ornamental, fruit };
   }, [products]);
 
   // Filter products based on selected category
   const filteredProducts = useMemo(() => {
+    console.log('Filtering products for category:', selectedCategory);
+    
     if (selectedCategory === 'all') {
       return categorizedProducts;
     }
     
     // Return only the selected category with products
-    return {
+    const filtered = {
       indigenous: selectedCategory === 'Indigenous Trees' ? categorizedProducts.indigenous : [],
       ornamental: selectedCategory === 'Ornamental Trees' ? categorizedProducts.ornamental : [],
       fruit: selectedCategory === 'Fruit Trees' ? categorizedProducts.fruit : [],
     };
+    
+    console.log('Filtered products:', filtered);
+    return filtered;
   }, [selectedCategory, categorizedProducts]);
 
   const updateQuantity = (productId: string, change: number) => {
@@ -225,8 +247,23 @@ const Index = () => {
             onCategoryChange={setSelectedCategory}
           />
 
+          {/* Debug information */}
+          <div className="mb-4 p-4 bg-gray-100 rounded text-sm">
+            <p>Debug Info:</p>
+            <p>Loading: {productsLoading ? 'Yes' : 'No'}</p>
+            <p>Total products: {products.length}</p>
+            <p>Selected category: {selectedCategory}</p>
+            <p>Indigenous: {filteredProducts.indigenous.length}</p>
+            <p>Ornamental: {filteredProducts.ornamental.length}</p>
+            <p>Fruit: {filteredProducts.fruit.length}</p>
+          </div>
+
           {productsLoading ? (
             <div className="text-center py-8">Loading products...</div>
+          ) : error ? (
+            <div className="text-center py-8 text-red-600">
+              Error loading products: {error.message}
+            </div>
           ) : (
             <div className="space-y-8">
               {/* Show all categories when 'all' is selected or show only the filtered categories */}
@@ -265,6 +302,7 @@ const Index = () => {
                filteredProducts.fruit.length === 0 && (
                 <div className="text-center py-8">
                   <p className="text-gray-600">No products available in this category.</p>
+                  <p className="text-sm text-gray-500 mt-2">Total products in database: {products.length}</p>
                 </div>
               )}
             </div>

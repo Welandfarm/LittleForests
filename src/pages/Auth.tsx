@@ -5,7 +5,7 @@ import { Card } from "@/components/ui/card";
 import { useAuth } from '@/contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
-import { TreePine } from 'lucide-react';
+import { TreePine, Shield } from 'lucide-react';
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -62,18 +62,21 @@ const Auth = () => {
       <Card className="w-full max-w-md p-8">
         <div className="text-center mb-8">
           <div className="flex items-center justify-center space-x-2 mb-4">
+            <Shield className="h-8 w-8 text-orange-500" />
             <TreePine className="h-8 w-8 text-green-600" />
-            <span className="text-2xl font-bold">
-              <span className="text-orange-500">Little</span>
-              <span className="text-green-600">Forest</span>
-            </span>
           </div>
           <h1 className="text-2xl font-bold text-gray-900 mb-2">
-            {isLogin ? 'Welcome Back' : 'Create Account'}
+            Admin Access Only
           </h1>
-          <p className="text-gray-600">
-            {isLogin ? 'Sign in to your account' : 'Join the Little Forest community'}
+          <p className="text-gray-600 mb-4">
+            This area is restricted to authorized administrators only
           </p>
+          <div className="bg-orange-50 border border-orange-200 rounded-lg p-3 mb-6">
+            <p className="text-sm text-orange-800">
+              <Shield className="h-4 w-4 inline mr-1" />
+              If you are not an administrator, please return to the main website.
+            </p>
+          </div>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -102,7 +105,7 @@ const Auth = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
-              placeholder="your.email@example.com"
+              placeholder="admin@littleforest.co.ke"
               required
             />
           </div>
@@ -126,7 +129,7 @@ const Auth = () => {
             className="w-full bg-green-600 hover:bg-green-700 text-white"
             disabled={loading}
           >
-            {loading ? 'Processing...' : (isLogin ? 'Sign In' : 'Create Account')}
+            {loading ? 'Processing...' : (isLogin ? 'Sign In' : 'Create Admin Account')}
           </Button>
         </form>
 
@@ -136,8 +139,18 @@ const Auth = () => {
             onClick={() => setIsLogin(!isLogin)}
             className="text-green-600 hover:text-green-700 text-sm"
           >
-            {isLogin ? "Don't have an account? Sign up" : "Already have an account? Sign in"}
+            {isLogin ? "Need to create admin account?" : "Already have admin account?"}
           </button>
+        </div>
+
+        <div className="mt-6 text-center">
+          <Button
+            variant="outline"
+            onClick={() => navigate('/')}
+            className="text-gray-600 hover:text-green-600"
+          >
+            Return to Website
+          </Button>
         </div>
       </Card>
     </div>

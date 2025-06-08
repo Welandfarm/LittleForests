@@ -56,12 +56,25 @@ const Index = () => {
   console.log('Products data:', products);
   console.log('Selected category:', selectedCategory);
 
-  // Categorize products
+  // Categorize products - Updated to match actual database categories
   const categorizedProducts = useMemo(() => {
     console.log('Categorizing products...');
-    const indigenous = products.filter(p => p.category === 'Indigenous Trees');
-    const ornamental = products.filter(p => p.category === 'Ornamental Trees');
-    const fruit = products.filter(p => p.category === 'Fruit Trees');
+    // Match the actual category values from the database
+    const indigenous = products.filter(p => 
+      p.category === 'Indigenous' || 
+      p.category === 'Indigenous Trees' ||
+      p.category.toLowerCase().includes('indigenous')
+    );
+    const ornamental = products.filter(p => 
+      p.category === 'Ornamental' || 
+      p.category === 'Ornamental Trees' ||
+      p.category.toLowerCase().includes('ornamental')
+    );
+    const fruit = products.filter(p => 
+      p.category === 'Fruit' || 
+      p.category === 'Fruit Trees' ||
+      p.category.toLowerCase().includes('fruit')
+    );
     
     console.log('Indigenous trees:', indigenous);
     console.log('Ornamental trees:', ornamental);

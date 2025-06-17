@@ -17,10 +17,21 @@ const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose }) => {
     if (cartItems.length === 0) return;
 
     const orderItems = cartItems.map(item => 
-      `- ${item.quantity} x ${item.name}`
+      `- ${item.quantity} x ${item.name} (${item.price} each)`
     ).join('\n');
 
-    const message = `Hello, I'd like to order the following seedlings:\n\n${orderItems}\n\nPlease let me know the total cost and delivery details. Thank you!`;
+    const message = `Hello LittleForest! 🌱
+
+I would like to place an order for the following seedlings:
+
+${orderItems}
+
+Please confirm availability and let me know:
+- Total cost including any delivery charges
+- Delivery timeline to my location
+- Payment options available
+
+Looking forward to your response!`;
     
     const whatsappUrl = `https://wa.me/254722973557?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');

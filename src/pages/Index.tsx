@@ -16,13 +16,64 @@ import { useNavigate } from 'react-router-dom';
 
 const Index = () => {
   const navigate = useNavigate();
-  const { addToCart, getCartTotal } = useCart();
+  const { addToCart, getCartTotal, cartItems } = useCart();
   const [cartOpen, setCartOpen] = useState(false);
   const [quantities, setQuantities] = useState<{[key: string]: number}>({});
   const [selectedCategory, setSelectedCategory] = useState('all');
 
   const handleOrder = () => {
-    window.open("https://wa.me/254722973557", "_blank");
+    // If there are items in cart, create order message, otherwise general inquiry
+    if (cartItems.length > 0) {
+      const orderItems = cartItems.map(item => 
+        `- ${item.quantity} x ${item.name} (${item.price} each)`
+      ).join('\n');
+
+      const message = `Hello LittleForest! 🌱
+
+I would like to place an order for the following seedlings:
+
+${orderItems}
+
+Please confirm availability and let me know:
+- Total cost including any delivery charges
+- Delivery timeline to my location
+- Payment options available
+
+Thank you!`;
+      
+      const whatsappUrl = `https://wa.me/254722973557?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, '_blank');
+    } else {
+      // General order inquiry
+      const message = `Hello LittleForest! 🌱
+
+I'm interested in ordering some seedlings from your nursery. Could you please share:
+- Available products and current prices
+- Delivery options to my area
+- Payment methods accepted
+
+Looking forward to hearing from you!`;
+      
+      const whatsappUrl = `https://wa.me/254722973557?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, '_blank');
+    }
+  };
+
+  const handleGetInTouch = () => {
+    const message = `Hello LittleForest! 🌱
+
+I'm reaching out to learn more about your nursery services. I'm interested in:
+- Indigenous trees
+- Fruit trees  
+- Ornamental plants
+- Expert advice on planting and care
+
+Could we schedule a time to discuss my specific needs?
+
+Thank you!`;
+    
+    const whatsappUrl = `https://wa.me/254722973557?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
   };
 
   const handleLearnMore = () => {
@@ -166,7 +217,7 @@ const Index = () => {
         </div>
       </header>
 
-      {/* Hero Section with Background Image */}
+      {/* Hero Section */}
       <section 
         id="home" 
         className="py-20 relative"
@@ -359,7 +410,7 @@ const Index = () => {
             </p>
             <div className="mb-8">
               <Button 
-                onClick={handleOrder} 
+                onClick={handleGetInTouch} 
                 className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg"
               >
                 📱 Call us on WhatsApp: +254 722973557

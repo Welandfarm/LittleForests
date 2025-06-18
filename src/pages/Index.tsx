@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -310,17 +309,6 @@ Thank you!`;
             selectedCategory={selectedCategory}
             onCategoryChange={setSelectedCategory}
           />
-
-          {/* Debug information */}
-          <div className="mb-4 p-4 bg-gray-100 rounded text-sm">
-            <p>Debug Info:</p>
-            <p>Loading: {productsLoading ? 'Yes' : 'No'}</p>
-            <p>Total products: {products.length}</p>
-            <p>Selected category: {selectedCategory}</p>
-            <p>Indigenous: {filteredProducts.indigenous.length}</p>
-            <p>Ornamental: {filteredProducts.ornamental.length}</p>
-            <p>Fruit: {filteredProducts.fruit.length}</p>
-          </div>
 
           {productsLoading ? (
             <div className="text-center py-8">Loading products...</div>

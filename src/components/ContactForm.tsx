@@ -24,6 +24,13 @@ const ContactForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    // Basic validation
+    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
+      return;
+    }
+
+    console.log('Form submitted with data:', formData);
+    
     const result = await submitContactForm(formData);
     
     if (result.success) {
@@ -40,7 +47,7 @@ const ContactForm = () => {
     <Card className="p-6">
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Name *</label>
           <input 
             type="text"
             name="name"
@@ -52,7 +59,7 @@ const ContactForm = () => {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Email *</label>
           <input 
             type="email"
             name="email"
@@ -75,7 +82,7 @@ const ContactForm = () => {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Message</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Message *</label>
           <textarea 
             rows={4}
             name="message"
@@ -89,7 +96,7 @@ const ContactForm = () => {
         <Button 
           type="submit"
           className="w-full bg-green-600 hover:bg-green-700 text-white"
-          disabled={loading}
+          disabled={loading || !formData.name.trim() || !formData.email.trim() || !formData.message.trim()}
         >
           {loading ? 'Sending...' : 'Send Message'}
         </Button>

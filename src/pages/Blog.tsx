@@ -27,7 +27,7 @@ const Blog = () => {
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-green-50 to-white">
+    <div className="min-h-screen bg-stone-50">
       {/* Header */}
       <header className="bg-white shadow-sm sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -58,34 +58,34 @@ const Blog = () => {
       {/* Blog Content */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-green-800 mb-4">LittleForest Blog</h1>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+          <h1 className="text-4xl font-bold text-stone-800 mb-4">LittleForest Blog</h1>
+          <p className="text-stone-600 max-w-2xl mx-auto">
             Stay updated with the latest tips, insights, and stories from our nursery experts
           </p>
         </div>
 
         {isLoading ? (
-          <div className="text-center py-8">Loading blog posts...</div>
+          <div className="text-center py-8 text-stone-600">Loading blog posts...</div>
         ) : blogPosts?.length === 0 ? (
           <div className="text-center py-8">
-            <p className="text-gray-500">No blog posts available yet.</p>
+            <p className="text-stone-500">No blog posts available yet.</p>
           </div>
         ) : (
           <div className="space-y-8">
             {blogPosts?.map((post) => (
-              <Card key={post.id} className="p-6 hover:shadow-lg transition-shadow">
+              <Card key={post.id} className="p-6 hover:shadow-lg transition-shadow bg-white border-stone-200">
                 <div className="flex items-start justify-between mb-4">
                   <div>
-                    <h2 className="text-2xl font-bold text-green-800 mb-2">{post.title}</h2>
-                    <div className="flex items-center space-x-2 text-sm text-gray-500">
-                      <Badge variant="outline">Blog</Badge>
+                    <h2 className="text-2xl font-bold text-stone-800 mb-2">{post.title}</h2>
+                    <div className="flex items-center space-x-2 text-sm text-stone-500">
+                      <Badge variant="outline" className="text-stone-600 border-stone-300">Blog</Badge>
                       <span>•</span>
                       <span>{new Date(post.created_at).toLocaleDateString()}</span>
                     </div>
                   </div>
                 </div>
                 <div className="prose max-w-none">
-                  <div className="text-gray-700 whitespace-pre-wrap">{post.content}</div>
+                  <div className="text-stone-700 whitespace-pre-wrap leading-relaxed">{post.content}</div>
                 </div>
               </Card>
             ))}
@@ -96,7 +96,7 @@ const Blog = () => {
           <Button 
             onClick={() => navigate('/')}
             variant="outline"
-            className="text-green-600 border-green-600 hover:bg-green-50"
+            className="text-stone-600 border-stone-400 hover:bg-stone-100"
           >
             Back to Home
           </Button>

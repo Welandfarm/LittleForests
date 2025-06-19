@@ -22,7 +22,12 @@ export const useContactForm = () => {
       
       // Validate required fields
       if (!data.name?.trim() || !data.email?.trim() || !data.message?.trim()) {
-        throw new Error('Please fill in all required fields');
+        toast({
+          title: "Validation Error",
+          description: "Please fill in all required fields (Name, Email, and Message).",
+          variant: "destructive",
+        });
+        return { success: false, error: 'Validation failed' };
       }
 
       const { error } = await supabase
@@ -39,6 +44,11 @@ export const useContactForm = () => {
 
       if (error) {
         console.error('Supabase error:', error);
+        toast({
+          title: "Database Error",
+          description: "Failed to save message to database. Please try again.",
+          variant: "destructive",
+        });
         throw error;
       }
 

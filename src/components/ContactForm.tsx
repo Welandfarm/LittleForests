@@ -26,24 +26,24 @@ const ContactForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Basic validation
-    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
-      return;
-    }
-
     console.log('Form submitted with data:', formData);
     
     const result = await submitContactForm(formData);
     
     if (result.success) {
+      // Clear form on successful submission
       setFormData({
         name: '',
         email: '',
         phone: '',
         message: ''
       });
+      console.log('Form cleared after successful submission');
     }
   };
+
+  // Check if required fields are filled
+  const isFormValid = formData.name.trim() && formData.email.trim() && formData.message.trim();
 
   return (
     <Card className="p-6 max-w-2xl mx-auto">
@@ -107,7 +107,7 @@ const ContactForm = () => {
         <Button 
           type="submit"
           className="w-full bg-green-600 hover:bg-green-700 text-white"
-          disabled={loading || !formData.name.trim() || !formData.email.trim() || !formData.message.trim()}
+          disabled={loading || !isFormValid}
         >
           {loading ? 'Sending...' : 'Send Message'}
         </Button>

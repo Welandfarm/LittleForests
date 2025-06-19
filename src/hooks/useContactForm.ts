@@ -20,6 +20,11 @@ export const useContactForm = () => {
     try {
       console.log('Submitting contact form data:', data);
       
+      // Validate required fields
+      if (!data.name?.trim() || !data.email?.trim() || !data.message?.trim()) {
+        throw new Error('Please fill in all required fields');
+      }
+
       const { error } = await supabase
         .from('contact_messages')
         .insert([

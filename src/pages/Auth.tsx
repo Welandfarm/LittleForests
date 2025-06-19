@@ -5,7 +5,7 @@ import { Card } from "@/components/ui/card";
 import { useAuth } from '@/contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
-import { TreePine, Shield } from 'lucide-react';
+import { TreePine, Shield, Mail, AlertCircle } from 'lucide-react';
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -42,8 +42,9 @@ const Auth = () => {
         if (error) throw error;
         
         toast({
-          title: "Account created!",
-          description: "Please check your email to verify your account.",
+          title: "Account created successfully!",
+          description: `A verification email has been sent to ${email}. Please check your inbox and click the verification link to activate your account.`,
+          duration: 10000,
         });
       }
     } catch (error: any) {
@@ -77,6 +78,21 @@ const Auth = () => {
               If you are not an administrator, please return to the main website.
             </p>
           </div>
+          
+          {!isLogin && (
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-4">
+              <div className="flex items-start space-x-2">
+                <Mail className="h-4 w-4 text-blue-600 mt-0.5" />
+                <div className="text-left">
+                  <p className="text-sm font-medium text-blue-800">Email Verification Required</p>
+                  <p className="text-xs text-blue-700 mt-1">
+                    After creating your account, you'll receive a verification email. 
+                    Click the link in the email to activate your account.
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -151,6 +167,13 @@ const Auth = () => {
           >
             Return to Website
           </Button>
+        </div>
+        
+        <div className="mt-4 p-3 bg-gray-50 rounded-lg">
+          <p className="text-xs text-gray-600 text-center">
+            <AlertCircle className="h-3 w-3 inline mr-1" />
+            Having trouble? Contact support for assistance.
+          </p>
         </div>
       </Card>
     </div>

@@ -5,7 +5,8 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
-import { LogOut, User, Settings } from 'lucide-react';
+import { LogOut, User, Settings, Shield } from 'lucide-react';
+import { Badge } from "@/components/ui/badge";
 
 const AuthButton = () => {
   const { user, signOut, loading } = useAuth();
@@ -36,19 +37,28 @@ const AuthButton = () => {
   if (user) {
     return (
       <div className="flex items-center space-x-2">
-        <span className="text-sm text-gray-600 hidden sm:inline">
-          <User className="h-4 w-4 inline mr-1" />
-          {user.email}
-        </span>
+        <div className="text-sm text-gray-600 hidden sm:block">
+          <div className="flex items-center space-x-2">
+            <User className="h-4 w-4" />
+            <span>{user.email}</span>
+            {profile?.role === 'admin' && (
+              <Badge variant="default" className="bg-orange-500 hover:bg-orange-600">
+                <Shield className="h-3 w-3 mr-1" />
+                Admin
+              </Badge>
+            )}
+          </div>
+        </div>
         {profile?.role === 'admin' && (
           <Button 
-            variant="outline" 
+            variant="default" 
             size="sm" 
             onClick={() => navigate('/admin')}
-            className="text-gray-700 hover:text-green-600"
+            className="bg-orange-500 hover:bg-orange-600 text-white font-medium"
           >
-            <Settings className="h-4 w-4 sm:mr-1" />
-            <span className="hidden sm:inline">Admin</span>
+            <Settings className="h-4 w-4 sm:mr-2" />
+            <span className="hidden sm:inline">Admin Dashboard</span>
+            <span className="sm:hidden">Admin</span>
           </Button>
         )}
         <Button 

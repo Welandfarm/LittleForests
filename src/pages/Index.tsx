@@ -40,7 +40,7 @@ Please confirm availability and let me know:
 
 Thank you!`;
       
-      const whatsappUrl = `https://wa.me/254722973557?text=${encodeURIComponent(message)}`;
+      const whatsappUrl = `https://wa.me/254108029407?text=${encodeURIComponent(message)}`;
       window.open(whatsappUrl, '_blank');
     } else {
       // General order inquiry
@@ -53,7 +53,7 @@ I'm interested in ordering some seedlings from your nursery. Could you please sh
 
 Looking forward to hearing from you!`;
       
-      const whatsappUrl = `https://wa.me/254722973557?text=${encodeURIComponent(message)}`;
+      const whatsappUrl = `https://wa.me/254108029407?text=${encodeURIComponent(message)}`;
       window.open(whatsappUrl, '_blank');
     }
   };
@@ -71,7 +71,7 @@ Could we schedule a time to discuss my specific needs?
 
 Thank you!`;
     
-    const whatsappUrl = `https://wa.me/254722973557?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = `https://wa.me/254108029407?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
 
@@ -401,7 +401,7 @@ Thank you!`;
                 onClick={handleGetInTouch} 
                 className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg"
               >
-                📱 Call us on WhatsApp: +254 722973557
+                📱 Call us on WhatsApp: +254 108 029 407
               </Button>
               <p className="text-gray-500 mt-2">Or fill out the form below as option 2</p>
             </div>
@@ -457,7 +457,7 @@ Thank you!`;
             <div>
               <h3 className="font-semibold mb-4">Contact Info</h3>
               <ul className="space-y-2 text-sm text-green-200">
-                <li>📱 WhatsApp: +254 722973557</li>
+                <li>📱 WhatsApp: +254 108 029 407</li>
                 <li>🌐 littleforest.co.ke</li>
                 <li>📍 Kamureito Bomet</li>
               </ul>

@@ -7,6 +7,7 @@ import CartSidebar from '@/components/CartSidebar';
 import ProductCarousel from '@/components/ProductCarousel';
 import CategoryFilter from '@/components/CategoryFilter';
 import NavigationDropdown from '@/components/NavigationDropdown';
+import AuthButton from '@/components/AuthButton';
 import { useCart } from '@/contexts/CartContext';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
@@ -20,6 +21,25 @@ const Index = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [showContactForm, setShowContactForm] = useState(false);
   const navigate = useNavigate();
+
+  // Fetch content from database
+  const { data: content = {} } = useQuery({
+    queryKey: ['content'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('content')
+        .select('section_key, title, content');
+      
+      if (error) throw error;
+      
+      // Convert to object for easy access
+      const contentObj: { [key: string]: { title: string; content: string } } = {};
+      data?.forEach(item => {
+        contentObj[item.section_key] = { title: item.title || '', content: item.content || '' };
+      });
+      return contentObj;
+    },
+  });
 
   const handleOrder = () => {
     // If there are items in cart, create order message, otherwise general inquiry
@@ -154,14 +174,7 @@ Looking forward to hearing from you!`;
               </div>
             </div>
             <div className="flex items-center space-x-3">
-              <Button 
-                variant="outline" 
-                onClick={() => navigate('/admin')}
-                className="bg-blue-600 text-white hover:bg-blue-700"
-              >
-                <UserCog className="h-4 w-4 mr-1" />
-                Admin Login
-              </Button>
+              <AuthButton />
               <Button 
                 variant="outline" 
                 onClick={() => setCartOpen(true)}
@@ -207,15 +220,16 @@ Looking forward to hearing from you!`;
           <div className="mb-8">
             <div className="inline-flex items-center space-x-2 bg-green-100 px-4 py-2 rounded-full mb-6">
               <TreePine className="h-5 w-5 text-green-600" />
-              <span className="text-green-800 font-medium">15 little forests created!</span>
+              <span className="text-green-800 font-medium">
+                {content.hero_subtitle?.content || '15 little forests created!'}
+              </span>
             </div>
             <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white">
-              Shop with <span className="text-orange-500">Little</span>
+              {content.hero_title?.title || 'Shop with'} <span className="text-orange-500">Little</span>
               <span className="text-green-400">Forest</span>
             </h1>
             <p className="text-xl text-gray-100 max-w-3xl mx-auto mb-8">
-              Indigenous trees, fruit trees, and ornamental plants delivered to your doorstep. 
-              Transform your space with nature's finest offerings.
+              {content.hero_title?.content || 'Indigenous trees, fruit trees, and ornamental plants delivered to your doorstep. Transform your space with nature\'s finest offerings.'}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button onClick={handleOrder} className="bg-green-600 hover:bg-green-700 text-white px-8 py-3">
@@ -230,9 +244,11 @@ Looking forward to hearing from you!`;
       <section id="products" className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-green-800 mb-4">Shop With Us</h2>
+            <h2 className="text-4xl font-bold text-green-800 mb-4">
+              {content.shop_intro?.title || 'Shop With Us'}
+            </h2>
             <p className="text-gray-600 max-w-2xl mx-auto mb-8">
-              Discover our carefully curated selection of indigenous trees, fruit trees, and ornamental plants
+              {content.shop_intro?.content || 'Discover our carefully curated selection of indigenous trees, fruit trees, and ornamental plants'}
             </p>
           </div>
 
@@ -279,7 +295,6 @@ Looking forward to hearing from you!`;
                 />
               )}
               
-              {/* Show message if no products available */}
               {!productsLoading && 
                filteredProducts.indigenous.length === 0 && 
                filteredProducts.ornamental.length === 0 && 
@@ -298,9 +313,11 @@ Looking forward to hearing from you!`;
       <section id="contact" className="py-16 bg-green-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-green-800 mb-4">Get In Touch</h2>
+            <h2 className="text-4xl font-bold text-green-800 mb-4">
+              {content.contact_title?.title || 'Get In Touch'}
+            </h2>
             <p className="text-gray-600 max-w-2xl mx-auto mb-6">
-              Ready to start your green journey? Contact us for personalized plant recommendations and orders.
+              {content.contact_title?.content || 'Ready to start your green journey? Contact us for personalized plant recommendations and orders.'}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Button 

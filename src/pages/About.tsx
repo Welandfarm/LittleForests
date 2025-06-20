@@ -1,18 +1,38 @@
-
 import React from 'react';
 import NavigationDropdown from '@/components/NavigationDropdown';
+import AuthButton from '@/components/AuthButton';
 import { Button } from "@/components/ui/button";
-import { ShoppingCart, UserCog } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
 import { useCart } from '@/contexts/CartContext';
 import { Badge } from "@/components/ui/badge";
 import CartSidebar from '@/components/CartSidebar';
 import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
 import { useNavigate } from 'react-router-dom';
 
 const About = () => {
   const { getCartTotal } = useCart();
   const [cartOpen, setCartOpen] = useState(false);
   const navigate = useNavigate();
+
+  // Fetch content from database
+  const { data: content = {} } = useQuery({
+    queryKey: ['content'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('content')
+        .select('section_key, title, content');
+      
+      if (error) throw error;
+      
+      const contentObj: { [key: string]: { title: string; content: string } } = {};
+      data?.forEach(item => {
+        contentObj[item.section_key] = { title: item.title || '', content: item.content || '' };
+      });
+      return contentObj;
+    },
+  });
 
   const handleOrder = () => {
     const message = `Hello LittleForest! 🌱
@@ -47,14 +67,7 @@ Thank you!`;
               </div>
             </div>
             <div className="flex items-center space-x-3">
-              <Button 
-                variant="outline" 
-                onClick={() => navigate('/admin')}
-                className="bg-blue-600 text-white hover:bg-blue-700"
-              >
-                <UserCog className="h-4 w-4 mr-1" />
-                Admin Login
-              </Button>
+              <AuthButton />
               <Button 
                 variant="outline" 
                 onClick={() => setCartOpen(true)}
@@ -89,12 +102,12 @@ Thank you!`;
       <section className="py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold text-green-800 mb-8">About Little Forest</h1>
+            <h1 className="text-4xl font-bold text-green-800 mb-8">
+              {content.about_title?.title || 'About Little Forest'}
+            </h1>
             <div className="prose prose-lg mx-auto text-gray-700">
               <p className="text-lg leading-relaxed">
-                At LittleForest Nursery, we grow and supply high-quality seedlings to help farmers thrive. 
-                From grafted avocados to tree tomatoes, passion fruit, ornamental plants, and indigenous trees, 
-                every seedling is nurtured with expert care and soil health in mind.
+                {content.about_content?.content || 'At LittleForest Nursery, we grow and supply high-quality seedlings to help farmers thrive. From grafted avocados to tree tomatoes, passion fruit, ornamental plants, and indigenous trees, every seedling is nurtured with expert care and soil health in mind.'}
               </p>
               <p className="text-lg leading-relaxed mt-6">
                 Whether you're planting a few trees or starting a full orchard, we're here to guide you—offering 

@@ -1,8 +1,7 @@
-
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Leaf, TreePine, Sprout, Users, Award, Heart, ShoppingCart } from "lucide-react";
+import { Leaf, TreePine, Sprout, Users, Award, Heart, ShoppingCart, UserCog } from "lucide-react";
 import ContactForm from '@/components/ContactForm';
 import CartSidebar from '@/components/CartSidebar';
 import ProductCarousel from '@/components/ProductCarousel';
@@ -12,12 +11,15 @@ import { useCart } from '@/contexts/CartContext';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Index = () => {
   const { addToCart, getCartTotal, cartItems } = useCart();
   const [cartOpen, setCartOpen] = useState(false);
   const [quantities, setQuantities] = useState<{[key: string]: number}>({});
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [showContactForm, setShowContactForm] = useState(false);
+  const navigate = useNavigate();
 
   const handleOrder = () => {
     // If there are items in cart, create order message, otherwise general inquiry
@@ -143,12 +145,6 @@ Looking forward to hearing from you!`;
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center space-x-3">
-              <NavigationDropdown />
-              <img 
-                src="/lovable-uploads/bd17ddd8-8af4-40c1-8b3b-4234a074ae9b.png" 
-                alt="LittleForest Logo" 
-                className="h-12 w-auto"
-              />
               <div>
                 <h1 className="text-2xl font-bold">
                   <span className="text-orange-500">Little</span>
@@ -158,6 +154,14 @@ Looking forward to hearing from you!`;
               </div>
             </div>
             <div className="flex items-center space-x-3">
+              <Button 
+                variant="outline" 
+                onClick={() => navigate('/admin')}
+                className="bg-blue-600 text-white hover:bg-blue-700"
+              >
+                <UserCog className="h-4 w-4 mr-1" />
+                Admin Login
+              </Button>
               <Button 
                 variant="outline" 
                 onClick={() => setCartOpen(true)}
@@ -178,6 +182,15 @@ Looking forward to hearing from you!`;
           </div>
         </div>
       </header>
+
+      {/* Navigation Menu - Larger and positioned on left */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <div className="flex justify-start">
+          <div className="scale-125">
+            <NavigationDropdown />
+          </div>
+        </div>
+      </div>
 
       {/* Hero Section */}
       <section 
@@ -217,7 +230,7 @@ Looking forward to hearing from you!`;
       <section id="products" className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-green-800 mb-4">Our Products</h2>
+            <h2 className="text-4xl font-bold text-green-800 mb-4">Shop With Us</h2>
             <p className="text-gray-600 max-w-2xl mx-auto mb-8">
               Discover our carefully curated selection of indigenous trees, fruit trees, and ornamental plants
             </p>
@@ -289,7 +302,7 @@ Looking forward to hearing from you!`;
             <p className="text-gray-600 max-w-2xl mx-auto mb-6">
               Ready to start your green journey? Contact us for personalized plant recommendations and orders.
             </p>
-            <div className="mb-8">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Button 
                 onClick={() => {
                   const message = `Hello LittleForest! 🌱
@@ -311,13 +324,21 @@ Thank you!`;
               >
                 📱 Call us on WhatsApp: +254 108 029 407
               </Button>
-              <p className="text-gray-500 mt-2">Or fill out the form below as option 2</p>
+              <Button 
+                onClick={() => setShowContactForm(!showContactForm)}
+                variant="outline"
+                className="border-green-600 text-green-600 hover:bg-green-50 px-8 py-3 text-lg"
+              >
+                ✉️ Enter Email
+              </Button>
             </div>
           </div>
 
-          <div className="max-w-md mx-auto">
-            <ContactForm />
-          </div>
+          {showContactForm && (
+            <div className="max-w-md mx-auto">
+              <ContactForm />
+            </div>
+          )}
         </div>
       </section>
 
@@ -327,11 +348,6 @@ Thank you!`;
           <div className="grid md:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center space-x-2 mb-4">
-                <img 
-                  src="/lovable-uploads/bd17ddd8-8af4-40c1-8b3b-4234a074ae9b.png" 
-                  alt="LittleForest Logo" 
-                  className="h-8 w-auto"
-                />
                 <span className="text-xl font-bold">
                   <span className="text-orange-500">Little</span>
                   <span className="text-green-400">Forest</span>

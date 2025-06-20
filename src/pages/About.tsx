@@ -2,15 +2,17 @@
 import React from 'react';
 import NavigationDropdown from '@/components/NavigationDropdown';
 import { Button } from "@/components/ui/button";
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart, UserCog } from "lucide-react";
 import { useCart } from '@/contexts/CartContext';
 import { Badge } from "@/components/ui/badge";
 import CartSidebar from '@/components/CartSidebar';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const About = () => {
   const { getCartTotal } = useCart();
   const [cartOpen, setCartOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleOrder = () => {
     const message = `Hello LittleForest! 🌱
@@ -36,12 +38,6 @@ Thank you!`;
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center space-x-3">
-              <NavigationDropdown />
-              <img 
-                src="/lovable-uploads/bd17ddd8-8af4-40c1-8b3b-4234a074ae9b.png" 
-                alt="LittleForest Logo" 
-                className="h-12 w-auto"
-              />
               <div>
                 <h1 className="text-2xl font-bold">
                   <span className="text-orange-500">Little</span>
@@ -51,6 +47,14 @@ Thank you!`;
               </div>
             </div>
             <div className="flex items-center space-x-3">
+              <Button 
+                variant="outline" 
+                onClick={() => navigate('/admin')}
+                className="bg-blue-600 text-white hover:bg-blue-700"
+              >
+                <UserCog className="h-4 w-4 mr-1" />
+                Admin Login
+              </Button>
               <Button 
                 variant="outline" 
                 onClick={() => setCartOpen(true)}
@@ -71,6 +75,15 @@ Thank you!`;
           </div>
         </div>
       </header>
+
+      {/* Navigation Menu - Larger and positioned on left */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <div className="flex justify-start">
+          <div className="scale-125">
+            <NavigationDropdown />
+          </div>
+        </div>
+      </div>
 
       {/* About Content */}
       <section className="py-16">
@@ -103,11 +116,6 @@ Thank you!`;
           <div className="grid md:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center space-x-2 mb-4">
-                <img 
-                  src="/lovable-uploads/bd17ddd8-8af4-40c1-8b3b-4234a074ae9b.png" 
-                  alt="LittleForest Logo" 
-                  className="h-8 w-auto"
-                />
                 <span className="text-xl font-bold">
                   <span className="text-orange-500">Little</span>
                   <span className="text-green-400">Forest</span>

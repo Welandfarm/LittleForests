@@ -1,20 +1,19 @@
+
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Leaf, TreePine, Sprout, Users, Award, Heart, ShoppingCart } from "lucide-react";
 import ContactForm from '@/components/ContactForm';
-import AuthButton from '@/components/AuthButton';
 import CartSidebar from '@/components/CartSidebar';
 import ProductCarousel from '@/components/ProductCarousel';
 import CategoryFilter from '@/components/CategoryFilter';
+import NavigationDropdown from '@/components/NavigationDropdown';
 import { useCart } from '@/contexts/CartContext';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useState, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const Index = () => {
-  const navigate = useNavigate();
   const { addToCart, getCartTotal, cartItems } = useCart();
   const [cartOpen, setCartOpen] = useState(false);
   const [quantities, setQuantities] = useState<{[key: string]: number}>({});
@@ -58,27 +57,6 @@ Looking forward to hearing from you!`;
     }
   };
 
-  const handleGetInTouch = () => {
-    const message = `Hello LittleForest! 🌱
-
-I'm reaching out to learn more about your nursery services. I'm interested in:
-- Indigenous trees
-- Fruit trees  
-- Ornamental plants
-- Expert advice on planting and care
-
-Could we schedule a time to discuss my specific needs?
-
-Thank you!`;
-    
-    const whatsappUrl = `https://wa.me/254108029407?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
-  };
-
-  const handleLearnMore = () => {
-    navigate('/blog');
-  };
-
   // Fetch products from database
   const { data: products = [], isLoading: productsLoading, error } = useQuery({
     queryKey: ['products'],
@@ -100,16 +78,9 @@ Thank you!`;
     },
   });
 
-  // Debug logging
-  console.log('Products loading:', productsLoading);
-  console.log('Products error:', error);
-  console.log('Products data:', products);
-  console.log('Selected category:', selectedCategory);
-
   // Categorize products - Updated to match actual database categories
   const categorizedProducts = useMemo(() => {
     console.log('Categorizing products...');
-    // Match the actual category values from the database
     const indigenous = products.filter(p => 
       p.category === 'Indigenous' || 
       p.category === 'Indigenous Trees' ||
@@ -172,6 +143,7 @@ Thank you!`;
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center space-x-3">
+              <NavigationDropdown />
               <img 
                 src="/lovable-uploads/bd17ddd8-8af4-40c1-8b3b-4234a074ae9b.png" 
                 alt="LittleForest Logo" 
@@ -185,16 +157,7 @@ Thank you!`;
                 <p className="text-sm text-gray-600">Nurturing Nature</p>
               </div>
             </div>
-            <nav className="hidden md:flex space-x-8">
-              <a href="#home" className="text-gray-700 hover:text-green-600 transition-colors">Home</a>
-              <a href="#about" className="text-gray-700 hover:text-green-600 transition-colors">About Us</a>
-              <a href="#products" className="text-gray-700 hover:text-green-600 transition-colors">Products</a>
-              <a href="#testimonials" className="text-gray-700 hover:text-green-600 transition-colors">Stories</a>
-              <a href="#contact" className="text-gray-700 hover:text-green-600 transition-colors">Contact</a>
-              <button onClick={() => navigate('/blog')} className="text-gray-700 hover:text-green-600 transition-colors">Blog</button>
-            </nav>
             <div className="flex items-center space-x-3">
-              <AuthButton />
               <Button 
                 variant="outline" 
                 onClick={() => setCartOpen(true)}
@@ -209,7 +172,7 @@ Thank you!`;
                 )}
               </Button>
               <Button onClick={handleOrder} className="bg-orange-500 hover:bg-orange-600 text-white">
-                Order
+                Order Now
               </Button>
             </div>
           </div>
@@ -218,7 +181,6 @@ Thank you!`;
 
       {/* Hero Section */}
       <section 
-        id="home" 
         className="py-20 relative"
         style={{
           backgroundImage: 'url(/lovable-uploads/82ebeeb5-b8dd-4161-9668-d9077f5da34d.png)',
@@ -232,10 +194,10 @@ Thank you!`;
           <div className="mb-8">
             <div className="inline-flex items-center space-x-2 bg-green-100 px-4 py-2 rounded-full mb-6">
               <TreePine className="h-5 w-5 text-green-600" />
-              <span className="text-green-800 font-medium">Reliable Tree Nursery</span>
+              <span className="text-green-800 font-medium">15 little forests created!</span>
             </div>
             <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white">
-              Welcome to <span className="text-orange-500">Little</span>
+              Shop with <span className="text-orange-500">Little</span>
               <span className="text-green-400">Forest</span>
             </h1>
             <p className="text-xl text-gray-100 max-w-3xl mx-auto mb-8">
@@ -246,50 +208,7 @@ Thank you!`;
               <Button onClick={handleOrder} className="bg-green-600 hover:bg-green-700 text-white px-8 py-3">
                 Order Now
               </Button>
-              <Button onClick={handleLearnMore} className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3">
-                Learn More
-              </Button>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* About Us Section */}
-      <section id="about" className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-green-800 mb-4">About Us</h2>
-          </div>
-          <div className="max-w-4xl mx-auto text-center">
-            <p className="text-lg text-gray-700 leading-relaxed">
-              At LittleForest Nursery, we grow and supply high-quality seedlings to help farmers thrive. 
-              From grafted avocados to tree tomatoes, passion fruit, ornamental plants, and indigenous trees, 
-              every seedling is nurtured with expert care and soil health in mind. Whether you're planting 
-              a few trees or starting a full orchard, we're here to guide you—offering not just seedlings, 
-              but agronomic advice and dependable service trusted by farmers across the region.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Why Choose Us */}
-      <section className="py-16 bg-green-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-green-800 mb-4">Why Choose Little Forest?</h2>
-          </div>
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              { icon: <Leaf className="h-12 w-12 text-green-600" />, title: "Premium Quality", desc: "Hand-selected, healthy plants with guaranteed quality assurance." },
-              { icon: <Users className="h-12 w-12 text-green-600" />, title: "Expert Support", desc: "Professional guidance from our experienced horticulturists." },
-              { icon: <Heart className="h-12 w-12 text-green-600" />, title: "Eco-Friendly", desc: "Sustainable practices that help preserve our environment." }
-            ].map((item, index) => (
-              <div key={index} className="text-center p-6">
-                <div className="flex justify-center mb-4">{item.icon}</div>
-                <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
-                <p className="text-gray-600">{item.desc}</p>
-              </div>
-            ))}
           </div>
         </div>
       </section>
@@ -362,34 +281,8 @@ Thank you!`;
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section id="testimonials" className="py-16 bg-green-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-green-800 mb-4">Customer Stories</h2>
-          </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              { name: "Sarah Kimani", text: "The fruit trees I purchased are thriving! Excellent quality and fast delivery.", rating: 5 },
-              { name: "John Mwangi", text: "Professional service and healthy plants. My garden looks amazing now!", rating: 5 },
-              { name: "Grace Wanjiku", text: "Best nursery in the region. The indigenous trees are perfect for my project.", rating: 5 }
-            ].map((testimonial, index) => (
-              <Card key={index} className="p-6">
-                <div className="flex mb-4">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Heart key={i} className="h-5 w-5 text-red-500 fill-current" />
-                  ))}
-                </div>
-                <p className="text-gray-600 mb-4">"{testimonial.text}"</p>
-                <div className="font-semibold text-green-800">{testimonial.name}</div>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Updated Contact Section */}
-      <section id="contact" className="py-16">
+      {/* Contact Section */}
+      <section id="contact" className="py-16 bg-green-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-green-800 mb-4">Get In Touch</h2>
@@ -398,7 +291,22 @@ Thank you!`;
             </p>
             <div className="mb-8">
               <Button 
-                onClick={handleGetInTouch} 
+                onClick={() => {
+                  const message = `Hello LittleForest! 🌱
+
+I'm reaching out to learn more about your nursery services. I'm interested in:
+- Indigenous trees
+- Fruit trees  
+- Ornamental plants
+- Expert advice on planting and care
+
+Could we schedule a time to discuss my specific needs?
+
+Thank you!`;
+                  
+                  const whatsappUrl = `https://wa.me/254108029407?text=${encodeURIComponent(message)}`;
+                  window.open(whatsappUrl, '_blank');
+                }}
                 className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg"
               >
                 📱 Call us on WhatsApp: +254 108 029 407
@@ -437,11 +345,8 @@ Thank you!`;
             <div>
               <h3 className="font-semibold mb-4">Quick Links</h3>
               <ul className="space-y-2 text-sm text-green-200">
-                <li><a href="#home" className="hover:text-white">Home</a></li>
-                <li><a href="#about" className="hover:text-white">About Us</a></li>
-                <li><a href="#products" className="hover:text-white">Products</a></li>
-                <li><a href="#contact" className="hover:text-white">Contact</a></li>
-                <li><button onClick={() => navigate('/blog')} className="hover:text-white">Blog</button></li>
+                <li><a href="/" className="hover:text-white">Shop with us</a></li>
+                <li><a href="/about" className="hover:text-white">About Us</a></li>
               </ul>
             </div>
 

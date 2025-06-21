@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -28,14 +29,16 @@ const Index = () => {
     queryFn: async () => {
       const { data, error } = await supabase
         .from('content')
-        .select('section_key, title, content');
+        .select('id, title, content, type, status, created_by, created_at, updated_at');
       
       if (error) throw error;
       
-      // Convert to object for easy access
+      // Convert to object for easy access - using id as key for now
       const contentObj: { [key: string]: { title: string; content: string } } = {};
       data?.forEach(item => {
-        contentObj[item.section_key] = { title: item.title || '', content: item.content || '' };
+        // For now, we'll use a mapping based on title to maintain functionality
+        const key = item.title?.toLowerCase().replace(/\s+/g, '_') || '';
+        contentObj[key] = { title: item.title || '', content: item.content || '' };
       });
       return contentObj;
     },
@@ -219,18 +222,29 @@ Looking forward to hearing from you!`;
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="mb-8">
             <div className="inline-flex items-center space-x-2 bg-green-100 px-4 py-2 rounded-full mb-6">
-              <TreePine className="h-5 w-5 text-green-600" />
+              <Sprout className="h-5 w-5 text-green-600" />
               <span className="text-green-800 font-medium">
-                {content.hero_subtitle?.content || '15 little forests created!'}
+                🌱 15 Little Forests Created!
               </span>
             </div>
             <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white">
-              {content.hero_title?.title || 'Shop with'} <span className="text-orange-500">Little</span>
+              Grow your own <span className="text-orange-500">Little</span>
               <span className="text-green-400">Forest</span>
             </h1>
-            <p className="text-xl text-gray-100 max-w-3xl mx-auto mb-8">
-              {content.hero_title?.content || 'Indigenous trees, fruit trees, and ornamental plants delivered to your doorstep. Transform your space with nature\'s finest offerings.'}
+            <p className="text-xl text-gray-100 max-w-3xl mx-auto mb-4">
+              Grow your own little forest—restore water and land.
             </p>
+            
+            {/* Impact Highlight Box */}
+            <div className="bg-white bg-opacity-90 rounded-lg p-6 max-w-2xl mx-auto mb-8">
+              <p className="text-green-800 font-semibold text-lg">
+                🌱 15 Little Forests Created!
+              </p>
+              <p className="text-gray-700 mt-2">
+                Thanks to our amazing customers, we've helped communities restore 15 sites across Bomet with native trees and water-smart planting.
+              </p>
+            </div>
+            
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button onClick={handleOrder} className="bg-green-600 hover:bg-green-700 text-white px-8 py-3">
                 Order Now
@@ -245,10 +259,10 @@ Looking forward to hearing from you!`;
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-green-800 mb-4">
-              {content.shop_intro?.title || 'Shop With Us'}
+              {content.shop_with_us?.title || 'Shop With Us'}
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto mb-8">
-              {content.shop_intro?.content || 'Discover our carefully curated selection of indigenous trees, fruit trees, and ornamental plants'}
+              {content.shop_with_us?.content || 'Discover our carefully curated selection of indigenous trees, fruit trees, and ornamental plants'}
             </p>
           </div>
 
@@ -314,10 +328,10 @@ Looking forward to hearing from you!`;
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-green-800 mb-4">
-              {content.contact_title?.title || 'Get In Touch'}
+              {content.get_in_touch?.title || 'Get In Touch'}
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto mb-6">
-              {content.contact_title?.content || 'Ready to start your green journey? Contact us for personalized plant recommendations and orders.'}
+              {content.get_in_touch?.content || 'Ready to start your green journey? Contact us for personalized plant recommendations and orders.'}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Button 

@@ -1,55 +1,31 @@
-import React from 'react';
-import NavigationDropdown from '@/components/NavigationDropdown';
-import AuthButton from '@/components/AuthButton';
+
 import { Button } from "@/components/ui/button";
-import { ShoppingCart } from "lucide-react";
-import { useCart } from '@/contexts/CartContext';
-import { Badge } from "@/components/ui/badge";
-import CartSidebar from '@/components/CartSidebar';
-import { useState } from 'react';
+import { Leaf, Users, Award, Heart } from "lucide-react";
+import AuthButton from '@/components/AuthButton';
+import NavigationDropdown from '@/components/NavigationDropdown';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
-import { useNavigate } from 'react-router-dom';
 
 const About = () => {
-  const { getCartTotal } = useCart();
-  const [cartOpen, setCartOpen] = useState(false);
-  const navigate = useNavigate();
-
   // Fetch content from database
   const { data: content = {} } = useQuery({
-    queryKey: ['content'],
+    queryKey: ['about-content'],
     queryFn: async () => {
       const { data, error } = await supabase
         .from('content')
-        .select('section_key, title, content');
+        .select('id, title, content, type, status, created_by, created_at, updated_at');
       
       if (error) throw error;
       
+      // Convert to object for easy access
       const contentObj: { [key: string]: { title: string; content: string } } = {};
       data?.forEach(item => {
-        contentObj[item.section_key] = { title: item.title || '', content: item.content || '' };
+        const key = item.title?.toLowerCase().replace(/\s+/g, '_') || '';
+        contentObj[key] = { title: item.title || '', content: item.content || '' };
       });
       return contentObj;
     },
   });
-
-  const handleOrder = () => {
-    const message = `Hello LittleForest! 🌱
-
-I'm reaching out to learn more about your nursery services. I'm interested in:
-- Indigenous trees
-- Fruit trees  
-- Ornamental plants
-- Expert advice on planting and care
-
-Could we schedule a time to discuss my specific needs?
-
-Thank you!`;
-    
-    const whatsappUrl = `https://wa.me/254108029407?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
-  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-50 to-white">
@@ -68,28 +44,15 @@ Thank you!`;
             </div>
             <div className="flex items-center space-x-3">
               <AuthButton />
-              <Button 
-                variant="outline" 
-                onClick={() => setCartOpen(true)}
-                className="relative"
-              >
-                <ShoppingCart className="h-4 w-4 mr-1" />
-                Cart
-                {getCartTotal() > 0 && (
-                  <Badge className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs">
-                    {getCartTotal()}
-                  </Badge>
-                )}
-              </Button>
-              <Button onClick={handleOrder} className="bg-orange-500 hover:bg-orange-600 text-white">
-                Order Now
+              <Button onClick={() => window.location.href = '/'} className="bg-orange-500 hover:bg-orange-600 text-white">
+                Shop Now
               </Button>
             </div>
           </div>
         </div>
       </header>
 
-      {/* Navigation Menu - Larger and positioned on left */}
+      {/* Navigation Menu */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <div className="flex justify-start">
           <div className="scale-125">
@@ -98,27 +61,108 @@ Thank you!`;
         </div>
       </div>
 
-      {/* About Content */}
+      {/* Hero Section */}
+      <section className="py-20 relative bg-green-600">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white">
+            {content.about_little_forest?.title || 'About Little Forest'}
+          </h1>
+          <p className="text-xl text-green-100 max-w-3xl mx-auto">
+            {content.about_little_forest?.content || 'Your trusted partner in creating green spaces and restoring our environment'}
+          </p>
+        </div>
+      </section>
+
+      {/* Main Content */}
       <section className="py-16">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold text-green-800 mb-8">
-              {content.about_title?.title || 'About Little Forest'}
-            </h1>
-            <div className="prose prose-lg mx-auto text-gray-700">
-              <p className="text-lg leading-relaxed">
-                {content.about_content?.content || 'At LittleForest Nursery, we grow and supply high-quality seedlings to help farmers thrive. From grafted avocados to tree tomatoes, passion fruit, ornamental plants, and indigenous trees, every seedling is nurtured with expert care and soil health in mind.'}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 className="text-3xl font-bold text-green-800 mb-6">Our Story</h2>
+              <p className="text-gray-600 text-lg leading-relaxed mb-6">
+                {content.about_content?.content || `At LittleForest Nursery, we grow and supply high-quality seedlings to help farmers thrive. From grafted avocados to tree tomatoes, passion fruit, ornamental plants, and indigenous trees, every seedling is nurtured with expert care and soil health in mind.
+
+We believe in the power of trees to transform landscapes, restore ecosystems, and create sustainable livelihoods for communities across Kenya.`}
               </p>
-              <p className="text-lg leading-relaxed mt-6">
-                Whether you're planting a few trees or starting a full orchard, we're here to guide you—offering 
-                not just seedlings, but agronomic advice and dependable service trusted by farmers across the region.
-              </p>
-              <p className="text-lg leading-relaxed mt-6">
-                Our mission is to help create sustainable green spaces that benefit both people and the environment. 
-                With over 15 little forests created through our work, we're proud to be part of Kenya's reforestation 
-                and agricultural development efforts.
-              </p>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="text-center p-4 bg-green-50 rounded-lg">
+                  <div className="text-2xl font-bold text-green-600">15+</div>
+                  <div className="text-sm text-gray-600">Forests Created</div>
+                </div>
+                <div className="text-center p-4 bg-green-50 rounded-lg">
+                  <div className="text-2xl font-bold text-green-600">500+</div>
+                  <div className="text-sm text-gray-600">Trees Planted</div>
+                </div>
+              </div>
             </div>
+            
+            <div className="space-y-6">
+              <div className="flex items-start space-x-4">
+                <div className="bg-green-100 p-3 rounded-lg">
+                  <Leaf className="h-6 w-6 text-green-600" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-gray-900 mb-2">Expert Cultivation</h3>
+                  <p className="text-gray-600">Every seedling is grown with care, ensuring healthy root systems and optimal growing conditions.</p>
+                </div>
+              </div>
+              
+              <div className="flex items-start space-x-4">
+                <div className="bg-green-100 p-3 rounded-lg">
+                  <Users className="h-6 w-6 text-green-600" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-gray-900 mb-2">Community Impact</h3>
+                  <p className="text-gray-600">We work closely with local farmers and communities to restore ecosystems and create sustainable livelihoods.</p>
+                </div>
+              </div>
+              
+              <div className="flex items-start space-x-4">
+                <div className="bg-green-100 p-3 rounded-lg">
+                  <Award className="h-6 w-6 text-green-600" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-gray-900 mb-2">Quality Assurance</h3>
+                  <p className="text-gray-600">All our seedlings undergo rigorous quality checks to ensure the highest survival rates and healthy growth.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Call to Action */}
+      <section className="py-16 bg-green-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl font-bold text-green-800 mb-4">Ready to Grow Your Forest?</h2>
+          <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
+            Join us in creating a greener future. Whether you're looking for indigenous trees, fruit trees, or ornamental plants, we have the perfect seedlings for your project.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button onClick={() => window.location.href = '/'} className="bg-green-600 hover:bg-green-700 text-white px-8 py-3">
+              Shop Now
+            </Button>
+            <Button 
+              onClick={() => {
+                const message = `Hello LittleForest! 🌱
+
+I'd like to learn more about your nursery and how you can help with my project. Could we discuss:
+
+- Available tree varieties
+- Best planting practices for my area
+- Bulk ordering options
+- Expert consultation services
+
+Looking forward to growing with you!`;
+                
+                const whatsappUrl = `https://wa.me/254108029407?text=${encodeURIComponent(message)}`;
+                window.open(whatsappUrl, '_blank');
+              }}
+              variant="outline" 
+              className="border-green-600 text-green-600 hover:bg-green-50 px-8 py-3"
+            >
+              Contact Us
+            </Button>
           </div>
         </div>
       </section>
@@ -173,8 +217,6 @@ Thank you!`;
           </div>
         </div>
       </footer>
-
-      <CartSidebar isOpen={cartOpen} onClose={() => setCartOpen(false)} />
     </div>
   );
 };

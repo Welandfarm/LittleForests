@@ -22,7 +22,7 @@ const ContentManagement = () => {
       const { data, error } = await supabase
         .from('content')
         .select('*')
-        .order('section_key');
+        .order('title');
       
       if (error) throw error;
       return data;
@@ -30,11 +30,11 @@ const ContentManagement = () => {
   });
 
   const updateMutation = useMutation({
-    mutationFn: async ({ section_key, title, content }: { section_key: string, title: string, content: string }) => {
+    mutationFn: async ({ id, title, content }: { id: string, title: string, content: string }) => {
       const { error } = await supabase
         .from('content')
         .update({ title, content, updated_at: new Date().toISOString() })
-        .eq('section_key', section_key);
+        .eq('id', id);
       
       if (error) throw error;
     },
@@ -57,14 +57,14 @@ const ContentManagement = () => {
   });
 
   const handleEdit = (section: any) => {
-    setEditingSection(section.section_key);
+    setEditingSection(section.id);
     setEditingData({ title: section.title || '', content: section.content || '' });
   };
 
   const handleSave = () => {
     if (editingSection) {
       updateMutation.mutate({
-        section_key: editingSection,
+        id: editingSection,
         title: editingData.title,
         content: editingData.content
       });
@@ -76,17 +76,14 @@ const ContentManagement = () => {
     setEditingData({ title: '', content: '' });
   };
 
-  const getSectionDisplayName = (sectionKey: string) => {
+  const getSectionDisplayName = (title: string) => {
     const displayNames: { [key: string]: string } = {
-      'hero_title': 'Hero Section Title',
-      'hero_subtitle': 'Hero Section Badge Text',
-      'shop_intro': 'Shop With Us Section',
-      'contact_title': 'Get In Touch Section',
-      'contact_subtitle': 'Contact Subtitle',
-      'about_title': 'About Us Title',
-      'about_content': 'About Us Content'
+      'Shop With Us': 'Shop With Us Section',
+      'Get in Touch': 'Get In Touch Section',
+      'About Little Forest': 'About Us Section',
+      'About Content': 'About Us Content Section'
     };
-    return displayNames[sectionKey] || sectionKey;
+    return displayNames[title] || title;
   };
 
   if (isLoading) {
@@ -106,10 +103,10 @@ const ContentManagement = () => {
 
       <div className="grid gap-6">
         {content.map((section) => (
-          <Card key={section.section_key} className="p-6">
+          <Card key={section.id} className="p-6">
             <div className="flex justify-between items-start mb-4">
-              <h3 className="text-lg font-semibold">{getSectionDisplayName(section.section_key)}</h3>
-              {editingSection === section.section_key ? (
+              <h3 className="text-lg font-semibold">{getSectionDisplayName(section.title)}</h3>
+              {editingSection === section.id ? (
                 <div className="flex space-x-2">
                   <Button
                     size="sm"
@@ -140,21 +137,21 @@ const ContentManagement = () => {
               )}
             </div>
 
-            {editingSection === section.section_key ? (
+            {editingSection === section.id ? (
               <div className="space-y-4">
                 <div>
-                  <Label htmlFor={`title-${section.section_key}`}>Title</Label>
+                  <Label htmlFor={`title-${section.id}`}>Title</Label>
                   <Input
-                    id={`title-${section.section_key}`}
+                    id={`title-${section.id}`}
                     value={editingData.title}
                     onChange={(e) => setEditingData(prev => ({ ...prev, title: e.target.value }))}
                     placeholder="Enter title"
                   />
                 </div>
                 <div>
-                  <Label htmlFor={`content-${section.section_key}`}>Content</Label>
+                  <Label htmlFor={`content-${section.id}`}>Content</Label>
                   <Textarea
-                    id={`content-${section.section_key}`}
+                    id={`content-${section.id}`}
                     value={editingData.content}
                     onChange={(e) => setEditingData(prev => ({ ...prev, content: e.target.value }))}
                     placeholder="Enter content"

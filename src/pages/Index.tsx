@@ -34,9 +34,9 @@ const Index = () => {
     },
   });
 
-  // Helper function to get content by section key
-  const getContent = (sectionKey: string) => {
-    const item = content.find(c => c.section_key === sectionKey);
+  // Helper function to get content by title
+  const getContent = (titleKey: string) => {
+    const item = content.find(c => c.title === titleKey);
     return item || { title: '', content: '' };
   };
 
@@ -249,10 +249,10 @@ Looking forward to hearing from you!`;
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-green-800 mb-4">
-              {getContent('shop_intro').title || 'Shop With Us'}
+              {getContent('Shop With Us').title || 'Shop With Us'}
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto mb-8">
-              {getContent('shop_intro').content || 'Discover our carefully curated selection of indigenous trees, fruit trees, and ornamental plants'}
+              {getContent('Shop With Us').content || 'Discover our carefully curated selection of indigenous trees, fruit trees, and ornamental plants'}
             </p>
           </div>
 
@@ -368,7 +368,7 @@ Thank you!`;
                   }}
                   className="bg-green-600 hover:bg-green-700 text-white w-full mb-2"
                 >
-                  📱 WhatsApp: +254 108 029 407
+                  Contact Us
                 </Button>
                 <Button 
                   onClick={() => {

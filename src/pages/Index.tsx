@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -20,29 +19,26 @@ const Index = () => {
   const [cartOpen, setCartOpen] = useState(false);
   const [quantities, setQuantities] = useState<{[key: string]: number}>({});
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [showContactForm, setShowContactForm] = useState(false);
   const navigate = useNavigate();
 
   // Fetch content from database
-  const { data: content = {} } = useQuery({
+  const { data: content = [] } = useQuery({
     queryKey: ['content'],
     queryFn: async () => {
       const { data, error } = await supabase
         .from('content')
-        .select('id, title, content, type, status, created_by, created_at, updated_at');
+        .select('*');
       
       if (error) throw error;
-      
-      // Convert to object for easy access - using id as key for now
-      const contentObj: { [key: string]: { title: string; content: string } } = {};
-      data?.forEach(item => {
-        // For now, we'll use a mapping based on title to maintain functionality
-        const key = item.title?.toLowerCase().replace(/\s+/g, '_') || '';
-        contentObj[key] = { title: item.title || '', content: item.content || '' };
-      });
-      return contentObj;
+      return data || [];
     },
   });
+
+  // Helper function to get content by section key
+  const getContent = (sectionKey: string) => {
+    const item = content.find(c => c.section_key === sectionKey);
+    return item || { title: '', content: '' };
+  };
 
   const handleOrder = () => {
     // If there are items in cart, create order message, otherwise general inquiry
@@ -221,12 +217,6 @@ Looking forward to hearing from you!`;
         <div className="absolute inset-0 bg-black bg-opacity-40"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="mb-8">
-            <div className="inline-flex items-center space-x-2 bg-green-100 px-4 py-2 rounded-full mb-6">
-              <Sprout className="h-5 w-5 text-green-600" />
-              <span className="text-green-800 font-medium">
-                🌱 15 Little Forests Created!
-              </span>
-            </div>
             <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white">
               Grow your own <span className="text-orange-500">Little</span>
               <span className="text-green-400">Forest</span>
@@ -259,10 +249,10 @@ Looking forward to hearing from you!`;
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-green-800 mb-4">
-              {content.shop_with_us?.title || 'Shop With Us'}
+              {getContent('shop_intro').title || 'Shop With Us'}
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto mb-8">
-              {content.shop_with_us?.content || 'Discover our carefully curated selection of indigenous trees, fruit trees, and ornamental plants'}
+              {getContent('shop_intro').content || 'Discover our carefully curated selection of indigenous trees, fruit trees, and ornamental plants'}
             </p>
           </div>
 
@@ -323,56 +313,6 @@ Looking forward to hearing from you!`;
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section id="contact" className="py-16 bg-green-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-green-800 mb-4">
-              {content.get_in_touch?.title || 'Get In Touch'}
-            </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto mb-6">
-              {content.get_in_touch?.content || 'Ready to start your green journey? Contact us for personalized plant recommendations and orders.'}
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Button 
-                onClick={() => {
-                  const message = `Hello LittleForest! 🌱
-
-I'm reaching out to learn more about your nursery services. I'm interested in:
-- Indigenous trees
-- Fruit trees  
-- Ornamental plants
-- Expert advice on planting and care
-
-Could we schedule a time to discuss my specific needs?
-
-Thank you!`;
-                  
-                  const whatsappUrl = `https://wa.me/254108029407?text=${encodeURIComponent(message)}`;
-                  window.open(whatsappUrl, '_blank');
-                }}
-                className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg"
-              >
-                📱 Call us on WhatsApp: +254 108 029 407
-              </Button>
-              <Button 
-                onClick={() => setShowContactForm(!showContactForm)}
-                variant="outline"
-                className="border-green-600 text-green-600 hover:bg-green-50 px-8 py-3 text-lg"
-              >
-                ✉️ Enter Email
-              </Button>
-            </div>
-          </div>
-
-          {showContactForm && (
-            <div className="max-w-md mx-auto">
-              <ContactForm />
-            </div>
-          )}
-        </div>
-      </section>
-
       {/* Footer */}
       <footer className="bg-green-800 text-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -408,11 +348,45 @@ Thank you!`;
 
             <div>
               <h3 className="font-semibold mb-4">Contact Info</h3>
-              <ul className="space-y-2 text-sm text-green-200">
-                <li>📱 WhatsApp: +254 108 029 407</li>
-                <li>🌐 littleforest.co.ke</li>
-                <li>📍 Kamureito Bomet</li>
-              </ul>
+              <div className="space-y-2 text-sm text-green-200 mb-4">
+                <Button 
+                  onClick={() => {
+                    const message = `Hello LittleForest! 🌱
+
+I'm reaching out to learn more about your nursery services. I'm interested in:
+- Indigenous trees
+- Fruit trees  
+- Ornamental plants
+- Expert advice on planting and care
+
+Could we schedule a time to discuss my specific needs?
+
+Thank you!`;
+                    
+                    const whatsappUrl = `https://wa.me/254108029407?text=${encodeURIComponent(message)}`;
+                    window.open(whatsappUrl, '_blank');
+                  }}
+                  className="bg-green-600 hover:bg-green-700 text-white w-full mb-2"
+                >
+                  📱 WhatsApp: +254 108 029 407
+                </Button>
+                <Button 
+                  onClick={() => {
+                    const message = `Hello LittleForest! 🌱
+
+I would like to place an order. Please contact me back.
+
+Thank you!`;
+                    
+                    const whatsappUrl = `https://wa.me/254108029407?text=${encodeURIComponent(message)}`;
+                    window.open(whatsappUrl, '_blank');
+                  }}
+                  variant="outline"
+                  className="border-green-400 text-green-200 hover:bg-green-700 w-full"
+                >
+                  ✉️ Send Message
+                </Button>
+              </div>
             </div>
           </div>
 

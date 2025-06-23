@@ -8,6 +8,7 @@ import ProductCarousel from '@/components/ProductCarousel';
 import CategoryFilter from '@/components/CategoryFilter';
 import NavigationDropdown from '@/components/NavigationDropdown';
 import AuthButton from '@/components/AuthButton';
+import AdminAccessButton from '@/components/AdminAccessButton';
 import { useCart } from '@/contexts/CartContext';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
@@ -173,6 +174,7 @@ Looking forward to hearing from you!`;
               </div>
             </div>
             <div className="flex items-center space-x-3">
+              <AdminAccessButton />
               <AuthButton />
               <Button 
                 variant="outline" 

@@ -106,7 +106,7 @@ const ContactForm = () => {
         
         <Button 
           type="submit"
-          className="w-full bg-green-600 hover:bg-green-700 text-white"
+          className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold"
           disabled={loading || !isFormValid}
         >
           {loading ? 'Sending...' : 'Send Message'}

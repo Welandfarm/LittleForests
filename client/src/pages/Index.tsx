@@ -105,12 +105,17 @@ Looking forward to hearing from you!`;
       p.category === 'Fruit Trees' ||
       p.category.toLowerCase().includes('fruit')
     );
+    const honey = products.filter(p => 
+      p.category === 'Honey' ||
+      p.category.toLowerCase().includes('honey')
+    );
     
     console.log('Indigenous trees:', indigenous);
     console.log('Ornamental trees:', ornamental);
     console.log('Fruit trees:', fruit);
+    console.log('Honey products:', honey);
     
-    return { indigenous, ornamental, fruit };
+    return { indigenous, ornamental, fruit, honey };
   }, [products]);
 
   // Filter products based on selected category
@@ -126,6 +131,7 @@ Looking forward to hearing from you!`;
       indigenous: selectedCategory === 'Indigenous Trees' ? categorizedProducts.indigenous : [],
       ornamental: selectedCategory === 'Ornamental Trees' ? categorizedProducts.ornamental : [],
       fruit: selectedCategory === 'Fruit Trees' ? categorizedProducts.fruit : [],
+      honey: selectedCategory === 'Honey' ? categorizedProducts.honey : [],
     };
     
     console.log('Filtered products:', filtered);
@@ -287,6 +293,15 @@ Looking forward to hearing from you!`;
                   onAddToCart={handleAddToCart}
                 />
               )}
+              {filteredProducts.honey.length > 0 && (
+                <ProductCarousel
+                  products={filteredProducts.honey}
+                  categoryName="Organic Forest Honey"
+                  quantities={quantities}
+                  onUpdateQuantity={updateQuantity}
+                  onAddToCart={handleAddToCart}
+                />
+              )}
               
               {!productsLoading && 
                filteredProducts.indigenous.length === 0 && 
@@ -332,6 +347,7 @@ Looking forward to hearing from you!`;
                 <li><a href="#" className="hover:text-white">Indigenous Trees</a></li>
                 <li><a href="#" className="hover:text-white">Fruit Trees</a></li>
                 <li><a href="#" className="hover:text-white">Ornamental Plants</a></li>
+                <li><a href="#" className="hover:text-white">Organic Honey</a></li>
               </ul>
             </div>
 

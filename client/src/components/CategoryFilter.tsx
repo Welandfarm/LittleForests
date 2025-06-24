@@ -14,6 +14,7 @@ const categories = [
   { value: 'Indigenous Trees', label: 'Indigenous Trees', icon: <TreePine className="h-4 w-4" /> },
   { value: 'Ornamental Trees', label: 'Ornamental Trees', icon: <Leaf className="h-4 w-4" /> },
   { value: 'Fruit Trees', label: 'Fruit Trees', icon: <Apple className="h-4 w-4" /> },
+  { value: 'Honey', label: 'Organic Honey', icon: <span className="text-yellow-500">🍯</span> },
 ];
 
 const CategoryFilter: React.FC<CategoryFilterProps> = ({ selectedCategory, onCategoryChange }) => {

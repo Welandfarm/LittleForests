@@ -319,7 +319,7 @@ Looking forward to hearing from you!`;
       {/* Footer */}
       <footer className="bg-green-800 text-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-4 gap-8">
+          <div className="grid md:grid-cols-3 gap-8">
             <div>
               <div className="flex items-center space-x-2 mb-4">
                 <span className="text-xl font-bold">
@@ -328,7 +328,7 @@ Looking forward to hearing from you!`;
                 </span>
               </div>
               <p className="text-green-200 text-sm">
-                Nurturing nature, growing futures. Your trusted partner for indigenous trees, fruit trees, and ornamental plants.
+                Restoring Water Resources, One Tree at a Time.
               </p>
             </div>
 
@@ -340,56 +340,12 @@ Looking forward to hearing from you!`;
               </ul>
             </div>
 
-            <div>
-              <h3 className="font-semibold mb-4">Products</h3>
-              <ul className="space-y-2 text-sm text-green-200">
-                <li><a href="#" className="hover:text-white">Indigenous Trees</a></li>
-                <li><a href="#" className="hover:text-white">Fruit Trees</a></li>
-                <li><a href="#" className="hover:text-white">Ornamental Plants</a></li>
-                <li><a href="#" className="hover:text-white">Organic Honey</a></li>
-              </ul>
-            </div>
+
 
             <div>
               <h3 className="font-semibold mb-4">Contact Info</h3>
               <div className="space-y-2 text-sm text-green-200 mb-4">
-                <Button 
-                  onClick={() => {
-                    const message = `Hello LittleForest! 🌱
-
-I'm reaching out to learn more about your nursery services. I'm interested in:
-- Indigenous trees
-- Fruit trees  
-- Ornamental plants
-- Expert advice on planting and care
-
-Could we schedule a time to discuss my specific needs?
-
-Thank you!`;
-                    
-                    const whatsappUrl = `https://wa.me/254108029407?text=${encodeURIComponent(message)}`;
-                    window.open(whatsappUrl, '_blank');
-                  }}
-                  className="bg-green-600 hover:bg-green-700 text-white w-full mb-2"
-                >
-                  Contact Us
-                </Button>
-                <Button 
-                  onClick={() => {
-                    const message = `Hello LittleForest! 🌱
-
-I would like to place an order. Please contact me back.
-
-Thank you!`;
-                    
-                    const whatsappUrl = `https://wa.me/254108029407?text=${encodeURIComponent(message)}`;
-                    window.open(whatsappUrl, '_blank');
-                  }}
-                  variant="outline"
-                  className="border-orange-400 text-orange-200 hover:bg-orange-600 w-full"
-                >
-                  ✉️ Send Message
-                </Button>
+                <p>📱 WhatsApp: +254 108 029 407</p>
               </div>
             </div>
           </div>

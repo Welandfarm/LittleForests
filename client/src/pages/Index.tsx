@@ -167,7 +167,6 @@ Looking forward to hearing from you!`;
               </div>
             </div>
             <div className="flex items-center space-x-3">
-              <AdminAccessButton />
               <AuthButton />
               <Button 
                 variant="outline" 
@@ -217,7 +216,7 @@ Looking forward to hearing from you!`;
               <span className="text-green-400">Forest</span>
             </h1>
             <p className="text-xl text-gray-100 max-w-3xl mx-auto mb-4">
-              Grow your own little forest—restore water and land.
+              Grow a Little Forest. Restore water. Restore land.
             </p>
             
             {/* Impact Highlight Box */}
@@ -247,7 +246,7 @@ Looking forward to hearing from you!`;
               {getContent('Shop With Us').title || 'Shop With Us'}
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto mb-8">
-              {getContent('Shop With Us').content || 'Discover our carefully curated selection of indigenous trees, fruit trees, and ornamental plants'}
+              {getContent('Shop With Us').content || 'Explore our unique collection of indigenous trees, fruit trees, and ornamental plants and flowers, alongside pure, organic honey sourced from our thriving Little Forests.'}
             </p>
           </div>
 
@@ -387,7 +386,7 @@ Thank you!`;
                     window.open(whatsappUrl, '_blank');
                   }}
                   variant="outline"
-                  className="border-green-400 text-green-200 hover:bg-green-700 w-full"
+                  className="border-orange-400 text-orange-200 hover:bg-orange-600 w-full"
                 >
                   ✉️ Send Message
                 </Button>

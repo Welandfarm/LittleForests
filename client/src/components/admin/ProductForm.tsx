@@ -9,7 +9,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from '@/hooks/use-toast';
-import { X } from 'lucide-react';
+import { X, Upload, Image as ImageIcon } from 'lucide-react';
+import ImageUpload from '../ImageUpload';
 
 interface ProductFormProps {
   product?: any;
@@ -127,13 +128,23 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onClose, onSuccess }
         </div>
 
         <div>
-          <Label htmlFor="image_url">Image URL</Label>
-          <Input
-            id="image_url"
-            value={formData.image_url}
-            onChange={(e) => setFormData(prev => ({ ...prev, image_url: e.target.value }))}
-            placeholder="https://example.com/image.jpg"
-          />
+          <Label htmlFor="image_url">Product Image</Label>
+          <div className="space-y-4">
+            <ImageUpload
+              onImageUploaded={(url) => setFormData(prev => ({ ...prev, image_url: url }))}
+              currentImageUrl={formData.image_url}
+              className="w-full"
+            />
+            <div className="text-sm text-gray-500">
+              Or enter image URL directly:
+            </div>
+            <Input
+              id="image_url"
+              value={formData.image_url}
+              onChange={(e) => setFormData(prev => ({ ...prev, image_url: e.target.value }))}
+              placeholder="https://example.com/image.jpg"
+            />
+          </div>
         </div>
 
         <div>

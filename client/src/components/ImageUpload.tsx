@@ -16,6 +16,11 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onImageUploaded, currentImage
   const [preview, setPreview] = useState<string | null>(currentImageUrl || null);
   const { toast } = useToast();
 
+  // Update preview when currentImageUrl changes
+  React.useEffect(() => {
+    setPreview(currentImageUrl || null);
+  }, [currentImageUrl]);
+
   const uploadImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
     try {
       setUploading(true);

@@ -4,39 +4,7 @@ import { storage } from "./storage";
 import { insertProductSchema, insertContentSchema, insertContactMessageSchema, insertTestimonialSchema } from "@shared/schema";
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // Profile routes
-  app.get("/api/profiles/:id", async (req, res) => {
-    try {
-      const profile = await storage.getProfile(req.params.id);
-      if (!profile) {
-        return res.status(404).json({ error: "Profile not found" });
-      }
-      res.json(profile);
-    } catch (error) {
-      res.status(500).json({ error: "Failed to get profile" });
-    }
-  });
-
-  app.get("/api/profiles/email/:email", async (req, res) => {
-    try {
-      const profile = await storage.getProfileByEmail(req.params.email);
-      if (!profile) {
-        return res.status(404).json({ error: "Profile not found" });
-      }
-      res.json(profile);
-    } catch (error) {
-      res.status(500).json({ error: "Failed to get profile" });
-    }
-  });
-
-  app.post("/api/profiles", async (req, res) => {
-    try {
-      const profile = await storage.createProfile(req.body);
-      res.status(201).json(profile);
-    } catch (error) {
-      res.status(500).json({ error: "Failed to create profile" });
-    }
-  });
+  // Profile routes removed - using demo authentication
 
   // Product routes
   app.get("/api/products", async (req, res) => {

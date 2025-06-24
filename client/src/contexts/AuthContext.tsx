@@ -46,9 +46,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const signUp = async (email: string, password: string, fullName?: string) => {
-    // Check if user is authorized admin
-    const adminEmails = ['wesleykoech2022@gmail.com', 'chepkoechjoan55@gmail.com'];
-    const isAdmin = adminEmails.includes(email.toLowerCase());
+    // Only wesleykoech2022@gmail.com is admin
+    const isAdmin = email.toLowerCase() === 'wesleykoech2022@gmail.com';
     
     const mockUser: User = {
       id: `user-${Date.now()}`,
@@ -65,9 +64,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const signIn = async (email: string, password: string) => {
-    // Check if user is authorized admin
-    const adminEmails = ['wesleykoech2022@gmail.com', 'chepkoechjoan55@gmail.com'];
-    const isAdmin = adminEmails.includes(email.toLowerCase());
+    // Only wesleykoech2022@gmail.com is admin
+    const isAdmin = email.toLowerCase() === 'wesleykoech2022@gmail.com';
     
     const mockUser: User = {
       id: `user-${Date.now()}`,

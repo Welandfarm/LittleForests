@@ -15,17 +15,7 @@ import { apiClient } from '@/lib/api';
 const Admin = () => {
   const { user, loading } = useAuth();
 
-  // Check if user is admin
-  const { data: profile, isLoading: profileLoading } = useQuery({
-    queryKey: ['admin-profile', user?.id],
-    queryFn: async () => {
-      if (!user?.id) return null;
-      return await apiClient.getProfile(user.id);
-    },
-    enabled: !!user?.id,
-  });
-
-  if (loading || profileLoading) {
+  if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
@@ -40,7 +30,7 @@ const Admin = () => {
     return <Navigate to="/auth" replace />;
   }
 
-  if (profile?.role !== 'admin') {
+  if (user.role !== 'admin') {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <Card className="p-8 max-w-md mx-auto text-center">

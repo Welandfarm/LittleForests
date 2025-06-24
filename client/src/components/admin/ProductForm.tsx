@@ -91,6 +91,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onClose, onSuccess }
               <SelectItem value="Indigenous">Indigenous</SelectItem>
               <SelectItem value="Fruit Trees">Fruit Trees</SelectItem>
               <SelectItem value="Ornamental Plants">Ornamental Plants</SelectItem>
+              <SelectItem value="Honey">Honey</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -101,7 +102,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onClose, onSuccess }
             id="price"
             value={formData.price}
             onChange={(e) => setFormData(prev => ({ ...prev, price: e.target.value }))}
-            placeholder="e.g., $25.00"
+            placeholder="e.g., KSh 250"
             required
           />
         </div>

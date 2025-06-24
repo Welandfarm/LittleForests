@@ -10,7 +10,7 @@ import ContentManagement from '@/components/admin/ContentManagement';
 import ContactMessages from '@/components/admin/ContactMessages';
 import UserManagement from '@/components/admin/UserManagement';
 import { useQuery } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
+import { apiClient } from '@/lib/api';
 
 const Admin = () => {
   const { user, loading } = useAuth();
@@ -20,14 +20,7 @@ const Admin = () => {
     queryKey: ['admin-profile', user?.id],
     queryFn: async () => {
       if (!user?.id) return null;
-      const { data, error } = await supabase
-        .from('profiles')
-        .select('role')
-        .eq('id', user.id)
-        .single();
-      
-      if (error) throw error;
-      return data;
+      return await apiClient.getProfile(user.id);
     },
     enabled: !!user?.id,
   });

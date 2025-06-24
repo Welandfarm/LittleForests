@@ -4,22 +4,18 @@ import { Leaf, Users, Award, Heart } from "lucide-react";
 import AuthButton from '@/components/AuthButton';
 import NavigationDropdown from '@/components/NavigationDropdown';
 import { useQuery } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
+import { apiClient } from '@/lib/api';
 
 const About = () => {
   // Fetch content from database
   const { data: content = {} } = useQuery({
     queryKey: ['about-content'],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from('content')
-        .select('id, title, content, type, status, created_by, created_at, updated_at');
-      
-      if (error) throw error;
+      const data = await apiClient.getContent();
       
       // Convert to object for easy access
       const contentObj: { [key: string]: { title: string; content: string } } = {};
-      data?.forEach(item => {
+      data?.forEach((item: any) => {
         const key = item.title?.toLowerCase().replace(/\s+/g, '_') || '';
         contentObj[key] = { title: item.title || '', content: item.content || '' };
       });

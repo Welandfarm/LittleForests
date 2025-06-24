@@ -4,29 +4,15 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from '@/contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
+import { apiClient } from '@/lib/api';
 import { LogOut, User, Settings } from 'lucide-react';
 
 const AuthButton = () => {
   const { user, signOut, loading } = useAuth();
   const navigate = useNavigate();
 
-  // Check if user is admin
-  const { data: profile } = useQuery({
-    queryKey: ['user-profile', user?.id],
-    queryFn: async () => {
-      if (!user?.id) return null;
-      const { data, error } = await supabase
-        .from('profiles')
-        .select('role')
-        .eq('id', user.id)
-        .single();
-      
-      if (error) throw error;
-      return data;
-    },
-    enabled: !!user?.id,
-  });
+  // For demo, use user role directly
+  const profile = user ? { role: user.role } : null;
 
   if (loading) {
     return null; // Don't show anything while loading

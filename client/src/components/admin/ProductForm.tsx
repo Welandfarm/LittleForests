@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
+import { apiClient } from '@/lib/api';
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -33,16 +33,9 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onClose, onSuccess }
   const saveMutation = useMutation({
     mutationFn: async (data: typeof formData) => {
       if (product) {
-        const { error } = await supabase
-          .from('products')
-          .update({ ...data, updated_at: new Date().toISOString() })
-          .eq('id', product.id);
-        if (error) throw error;
+        return await apiClient.updateProduct(product.id, data);
       } else {
-        const { error } = await supabase
-          .from('products')
-          .insert([data]);
-        if (error) throw error;
+        return await apiClient.createProduct(data);
       }
     },
     onSuccess: () => {

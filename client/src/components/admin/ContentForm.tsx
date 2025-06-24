@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
+import { apiClient } from '@/lib/api';
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useToast } from '@/hooks/use-toast';
@@ -48,21 +48,13 @@ const ContentForm: React.FC<ContentFormProps> = ({ content, contentType = 'page'
     mutationFn: async (data: any) => {
       const contentData = {
         ...data,
-        created_by: user?.id,
-        updated_at: new Date().toISOString()
+        createdBy: user?.id
       };
 
       if (content) {
-        const { error } = await supabase
-          .from('content')
-          .update(contentData)
-          .eq('id', content.id);
-        if (error) throw error;
+        return await apiClient.updateContent(content.id, contentData);
       } else {
-        const { error } = await supabase
-          .from('content')
-          .insert([contentData]);
-        if (error) throw error;
+        return await apiClient.createContent(contentData);
       }
     },
     onSuccess: () => {

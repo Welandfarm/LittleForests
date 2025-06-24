@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { supabase } from '@/integrations/supabase/client';
+// Image upload functionality disabled for demo
 import { Button } from "@/components/ui/button";
 import { useToast } from '@/hooks/use-toast';
 import { Upload, X, Image as ImageIcon } from 'lucide-react';
@@ -50,21 +50,14 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onImageUploaded, currentImage
       const fileName = `${Math.random()}.${fileExt}`;
       const filePath = `uploads/${fileName}`;
 
-      const { error: uploadError } = await supabase.storage
-        .from('images')
-        .upload(filePath, file);
-
-      if (uploadError) {
-        throw uploadError;
-      }
-
-      const { data } = supabase.storage
-        .from('images')
-        .getPublicUrl(filePath);
-
-      const imageUrl = data.publicUrl;
-      setPreview(imageUrl);
-      onImageUploaded(imageUrl);
+      // For demo purposes, create a local preview
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const imageUrl = e.target?.result as string;
+        setPreview(imageUrl);
+        onImageUploaded(imageUrl);
+      };
+      reader.readAsDataURL(file);
 
       toast({
         title: "Image uploaded",

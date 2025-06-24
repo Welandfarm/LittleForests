@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
+import { apiClient } from '@/lib/api';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -14,15 +14,11 @@ const Blog = () => {
   const { data: blogPosts, isLoading } = useQuery({
     queryKey: ['blog-posts'],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from('content')
-        .select('*')
-        .eq('type', 'blog')
-        .eq('status', 'published')
-        .order('created_at', { ascending: false });
-      
-      if (error) throw error;
-      return data;
+      const data = await apiClient.getContent('blog');
+      // Filter for published posts and sort by created_at
+      return data
+        .filter((post: any) => post.status === 'published')
+        .sort((a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
     },
   });
 
@@ -80,7 +76,7 @@ const Blog = () => {
                     <div className="flex items-center space-x-2 text-sm text-stone-500">
                       <Badge variant="outline" className="text-stone-600 border-stone-300">Blog</Badge>
                       <span>•</span>
-                      <span>{new Date(post.created_at).toLocaleDateString()}</span>
+                      <span>{new Date(post.createdAt).toLocaleDateString()}</span>
                     </div>
                   </div>
                 </div>

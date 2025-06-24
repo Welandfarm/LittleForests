@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { supabase } from '@/integrations/supabase/client';
+import { apiClient } from '@/lib/api';
 import { useToast } from '@/hooks/use-toast';
 
 interface ContactFormData {
@@ -30,27 +30,13 @@ export const useContactForm = () => {
         return { success: false, error: 'Validation failed' };
       }
 
-      const { error } = await supabase
-        .from('contact_messages')
-        .insert([
-          {
-            name: data.name.trim(),
-            email: data.email.trim(),
-            phone: data.phone?.trim() || null,
-            message: data.message.trim(),
-            status: 'new'
-          }
-        ]);
-
-      if (error) {
-        console.error('Supabase error:', error);
-        toast({
-          title: "Database Error",
-          description: "Failed to save message to database. Please try again.",
-          variant: "destructive",
-        });
-        throw error;
-      }
+      await apiClient.createContactMessage({
+        name: data.name.trim(),
+        email: data.email.trim(),
+        phone: data.phone?.trim() || null,
+        message: data.message.trim(),
+        status: 'new'
+      });
 
       console.log('Contact form submitted successfully');
 

@@ -11,7 +11,7 @@ import AuthButton from '@/components/AuthButton';
 import AdminAccessButton from '@/components/AdminAccessButton';
 import { useCart } from '@/contexts/CartContext';
 import { useQuery } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
+import { apiClient } from '@/lib/api';
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -26,12 +26,7 @@ const Index = () => {
   const { data: content = [] } = useQuery({
     queryKey: ['content'],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from('content')
-        .select('*');
-      
-      if (error) throw error;
-      return data || [];
+      return await apiClient.getContent();
     },
   });
 
@@ -84,19 +79,11 @@ Looking forward to hearing from you!`;
     queryKey: ['products'],
     queryFn: async () => {
       console.log('Fetching products from database...');
-      const { data, error } = await supabase
-        .from('products')
-        .select('*')
-        .eq('status', 'Available')
-        .order('created_at', { ascending: false });
-      
-      if (error) {
-        console.error('Error fetching products:', error);
-        throw error;
-      }
+      const data = await apiClient.getProducts();
       
       console.log('Fetched products:', data);
-      return data;
+      // Filter for available products
+      return data.filter((product: any) => product.status === 'Available');
     },
   });
 

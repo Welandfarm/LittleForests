@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
+import { apiClient } from '@/lib/api';
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useToast } from '@/hooks/use-toast';
@@ -19,24 +19,14 @@ const ContentManagement = () => {
   const { data: content = [], isLoading } = useQuery({
     queryKey: ['admin-content'],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from('content')
-        .select('*')
-        .order('title');
-      
-      if (error) throw error;
-      return data;
+      const data = await apiClient.getContent();
+      return data.sort((a: any, b: any) => a.title.localeCompare(b.title));
     },
   });
 
   const updateMutation = useMutation({
     mutationFn: async ({ id, title, content }: { id: string, title: string, content: string }) => {
-      const { error } = await supabase
-        .from('content')
-        .update({ title, content, updated_at: new Date().toISOString() })
-        .eq('id', id);
-      
-      if (error) throw error;
+      return await apiClient.updateContent(id, { title, content });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-content'] });

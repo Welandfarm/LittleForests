@@ -100,6 +100,9 @@ LittleForest is a full-stack web application for an online seedling nursery busi
 
 ## Changelog
 - June 24, 2025. Initial setup
+- June 24, 2025. Added honey product category with admin management
+- June 24, 2025. Updated homepage messaging and styling with orange accents
+- June 24, 2025. Fixed image upload functionality with proper payload limits
 
 ## User Preferences
 

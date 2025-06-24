@@ -57,24 +57,14 @@ const About = () => {
         </div>
       </div>
 
-      {/* Hero Section */}
-      <section className="py-20 relative bg-green-600">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white">
-            About <span className="text-orange-500">Little</span><span className="text-green-400">Forest</span>
-          </h1>
-          <p className="text-xl text-green-100 max-w-3xl mx-auto">
-            Nature-inspired social enterprise restoring landscapes and empowering communities in Bomet County, Kenya
-          </p>
-        </div>
-      </section>
+
 
       {/* Main Content */}
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl font-bold text-green-800 mb-6">About Little Forest Nursery</h2>
+              <h2 className="text-3xl font-bold text-green-800 mb-6">About <span className="text-orange-500">Little</span><span className="text-green-600">Forest</span> Nursery</h2>
               <p className="text-gray-600 text-lg leading-relaxed mb-6">
                 Little Forest Nursery is a nature-inspired social-enterprise rooted in Bomet County, Kenya. We are passionate about restoring landscapes, conserving water sources, and greening spaces—one seedling at a time.
               </p>
@@ -100,7 +90,7 @@ const About = () => {
               </p>
               
               <p className="text-green-700 text-xl font-semibold mb-6">
-                Little Forest Nursery — Restoring Water Resources, One Tree at a Time.
+                <span className="text-orange-500">Little</span><span className="text-green-600">Forest</span> Nursery — Restoring Water Resources, One Tree at a Time.
               </p>
               <div className="grid grid-cols-2 gap-4">
                 <div className="text-center p-4 bg-green-50 rounded-lg">

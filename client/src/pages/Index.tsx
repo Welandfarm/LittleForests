@@ -217,10 +217,10 @@ Looking forward to hearing from you!`;
             {/* Impact Highlight Box */}
             <div className="bg-white bg-opacity-90 rounded-lg p-6 max-w-2xl mx-auto mb-8">
               <p className="text-green-800 font-semibold text-lg">
-                🌱 15 Little Forests Created!
+                🌱 Green Little Spaces in Homesteads!
               </p>
               <p className="text-gray-700 mt-2">
-                Thanks to our amazing customers, we've helped communities restore 15 sites across Bomet with native trees and water-smart planting.
+                Thanks to our amazing customers. We have helped communities own green little spaces in their homesteads!
               </p>
             </div>
             

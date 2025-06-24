@@ -61,10 +61,10 @@ const About = () => {
       <section className="py-20 relative bg-green-600">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white">
-            {content.about_little_forest?.title || 'About Little Forest'}
+            About Little Forest
           </h1>
           <p className="text-xl text-green-100 max-w-3xl mx-auto">
-            {content.about_little_forest?.content || 'Your trusted partner in creating green spaces and restoring our environment'}
+            Nature-inspired social enterprise restoring landscapes and empowering communities in Bomet County, Kenya
           </p>
         </div>
       </section>
@@ -74,20 +74,42 @@ const About = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl font-bold text-green-800 mb-6">Our Story</h2>
+              <h2 className="text-3xl font-bold text-green-800 mb-6">About Little Forest Nursery</h2>
               <p className="text-gray-600 text-lg leading-relaxed mb-6">
-                {content.about_content?.content || `At LittleForest Nursery, we grow and supply high-quality seedlings to help farmers thrive. From grafted avocados to tree tomatoes, passion fruit, ornamental plants, and indigenous trees, every seedling is nurtured with expert care and soil health in mind.
-
-We believe in the power of trees to transform landscapes, restore ecosystems, and create sustainable livelihoods for communities across Kenya.`}
+                Little Forest Nursery is a nature-inspired social-enterprise rooted in Bomet County, Kenya. We are passionate about restoring landscapes, conserving water sources, and greening spaces—one seedling at a time.
+              </p>
+              
+              <h3 className="text-xl font-semibold text-green-700 mb-4">We specialize in the propagation and sale of:</h3>
+              <ul className="text-gray-600 text-lg leading-relaxed mb-6 space-y-2">
+                <li>🌳 Indigenous tree seedlings for reforestation and water source restoration.</li>
+                <li>🍊 Fruit tree seedlings to support food security and livelihoods</li>
+                <li>🌼 Ornamental plants and flowers for greening homes, institutions and beautification</li>
+                <li>🍯 Organic forest honey, harvested from indigenous little forests.</li>
+              </ul>
+              
+              <p className="text-gray-600 text-lg leading-relaxed mb-6">
+                We help you grow your own little forest at home with a variety of indigenous and ornamental trees, so you can contribute to a greener, healthier environment from your own compound.
+              </p>
+              
+              <p className="text-gray-600 text-lg leading-relaxed mb-6">
+                Our work is grounded in the belief that growing trees is not just about greening the land—it's about healing ecosystems, empowering communities, and securing a sustainable future.
+              </p>
+              
+              <p className="text-gray-600 text-lg leading-relaxed mb-6">
+                Whether you're a farmer, a conservationist, a hotel, or a homeowner, we're here to help you grow with purpose.
+              </p>
+              
+              <p className="text-green-700 text-xl font-semibold mb-6">
+                Little Forest Nursery — Restoring Water Resources, One Tree at a Time.
               </p>
               <div className="grid grid-cols-2 gap-4">
                 <div className="text-center p-4 bg-green-50 rounded-lg">
-                  <div className="text-2xl font-bold text-green-600">15+</div>
-                  <div className="text-sm text-gray-600">Forests Created</div>
+                  <div className="text-2xl font-bold text-green-600">🌳</div>
+                  <div className="text-sm text-gray-600">Indigenous Trees</div>
                 </div>
                 <div className="text-center p-4 bg-green-50 rounded-lg">
-                  <div className="text-2xl font-bold text-green-600">500+</div>
-                  <div className="text-sm text-gray-600">Trees Planted</div>
+                  <div className="text-2xl font-bold text-green-600">🍯</div>
+                  <div className="text-sm text-gray-600">Organic Honey</div>
                 </div>
               </div>
             </div>
@@ -98,8 +120,8 @@ We believe in the power of trees to transform landscapes, restore ecosystems, an
                   <Leaf className="h-6 w-6 text-green-600" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900 mb-2">Expert Cultivation</h3>
-                  <p className="text-gray-600">Every seedling is grown with care, ensuring healthy root systems and optimal growing conditions.</p>
+                  <h3 className="font-semibold text-gray-900 mb-2">Water Source Restoration</h3>
+                  <p className="text-gray-600">Indigenous tree seedlings specifically chosen for reforestation and water source conservation.</p>
                 </div>
               </div>
               
@@ -108,8 +130,8 @@ We believe in the power of trees to transform landscapes, restore ecosystems, an
                   <Users className="h-6 w-6 text-green-600" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900 mb-2">Community Impact</h3>
-                  <p className="text-gray-600">We work closely with local farmers and communities to restore ecosystems and create sustainable livelihoods.</p>
+                  <h3 className="font-semibold text-gray-900 mb-2">Food Security & Livelihoods</h3>
+                  <p className="text-gray-600">Fruit tree seedlings and organic honey supporting sustainable livelihoods and food security.</p>
                 </div>
               </div>
               
@@ -118,8 +140,8 @@ We believe in the power of trees to transform landscapes, restore ecosystems, an
                   <Award className="h-6 w-6 text-green-600" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900 mb-2">Quality Assurance</h3>
-                  <p className="text-gray-600">All our seedlings undergo rigorous quality checks to ensure the highest survival rates and healthy growth.</p>
+                  <h3 className="font-semibold text-gray-900 mb-2">Beautification & Greening</h3>
+                  <p className="text-gray-600">Ornamental plants and flowers for greening homes, institutions, and community beautification projects.</p>
                 </div>
               </div>
             </div>

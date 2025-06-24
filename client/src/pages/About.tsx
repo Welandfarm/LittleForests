@@ -178,7 +178,7 @@ Looking forward to growing with you!`;
       {/* Footer */}
       <footer className="bg-green-800 text-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-4 gap-8">
+          <div className="grid md:grid-cols-3 gap-8">
             <div>
               <div className="flex items-center space-x-2 mb-4">
                 <span className="text-xl font-bold">
@@ -187,7 +187,7 @@ Looking forward to growing with you!`;
                 </span>
               </div>
               <p className="text-green-200 text-sm">
-                Nurturing nature, growing futures. Your trusted partner for indigenous trees, fruit trees, and ornamental plants.
+                Restoring Water Resources, One Tree at a Time.
               </p>
             </div>
 
@@ -200,27 +200,16 @@ Looking forward to growing with you!`;
             </div>
 
             <div>
-              <h3 className="font-semibold mb-4">Products</h3>
-              <ul className="space-y-2 text-sm text-green-200">
-                <li><a href="#" className="hover:text-white">Indigenous Trees</a></li>
-                <li><a href="#" className="hover:text-white">Fruit Trees</a></li>
-                <li><a href="#" className="hover:text-white">Ornamental Plants</a></li>
-              </ul>
-            </div>
-
-            <div>
               <h3 className="font-semibold mb-4">Contact Info</h3>
-              <ul className="space-y-2 text-sm text-green-200">
-                <li>📱 WhatsApp: +254 108 029 407</li>
-                <li>🌐 littleforest.co.ke</li>
-                <li>📍 Kamureito Bomet</li>
-              </ul>
+              <div className="space-y-2 text-sm text-green-200 mb-4">
+                <p>📱 WhatsApp: +254 108 029 407</p>
+              </div>
             </div>
           </div>
 
           <div className="border-t border-green-700 mt-8 pt-8 text-center">
             <p className="text-green-200 text-sm">
-              © 2024 Little Forest. All rights reserved. | Nurturing nature, growing futures.
+              © 2024 Little Forest. All rights reserved. | Restoring Water Resources, One Tree at a Time.
             </p>
           </div>
         </div>

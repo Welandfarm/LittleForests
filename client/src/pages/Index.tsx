@@ -340,8 +340,6 @@ Looking forward to hearing from you!`;
               </ul>
             </div>
 
-
-
             <div>
               <h3 className="font-semibold mb-4">Contact Info</h3>
               <div className="space-y-2 text-sm text-green-200 mb-4">
@@ -352,7 +350,7 @@ Looking forward to hearing from you!`;
 
           <div className="border-t border-green-700 mt-8 pt-8 text-center">
             <p className="text-green-200 text-sm">
-              © 2024 Little Forest. All rights reserved. | Nurturing nature, growing futures.
+              © 2024 Little Forest. All rights reserved. | Restoring Water Resources, One Tree at a Time.
             </p>
           </div>
         </div>

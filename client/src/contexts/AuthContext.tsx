@@ -46,12 +46,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const signUp = async (email: string, password: string, fullName?: string) => {
-    // For demo purposes, create a mock user
+    // Check if user is authorized admin
+    const adminEmails = ['wesleykoech2022@gmail.com', 'chepkoechjoan55@gmail.com'];
+    const isAdmin = adminEmails.includes(email.toLowerCase());
+    
     const mockUser: User = {
       id: `user-${Date.now()}`,
       email,
       fullName,
-      role: 'admin' // Make all users admin for demo
+      role: isAdmin ? 'admin' : 'user'
     };
     
     setUser(mockUser);
@@ -62,11 +65,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const signIn = async (email: string, password: string) => {
-    // For demo purposes, create a mock user
+    // Check if user is authorized admin
+    const adminEmails = ['wesleykoech2022@gmail.com', 'chepkoechjoan55@gmail.com'];
+    const isAdmin = adminEmails.includes(email.toLowerCase());
+    
     const mockUser: User = {
       id: `user-${Date.now()}`,
       email,
-      role: 'admin' // Make all users admin for demo
+      role: isAdmin ? 'admin' : 'user'
     };
     
     setUser(mockUser);

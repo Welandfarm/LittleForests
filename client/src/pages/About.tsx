@@ -61,7 +61,7 @@ const About = () => {
       <section className="py-20 relative bg-green-600">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white">
-            About Little Forest
+            About <span className="text-orange-500">Little</span><span className="text-green-400">Forest</span>
           </h1>
           <p className="text-xl text-green-100 max-w-3xl mx-auto">
             Nature-inspired social enterprise restoring landscapes and empowering communities in Bomet County, Kenya

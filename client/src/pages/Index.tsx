@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Leaf, TreePine, Sprout, Users, Award, Heart, ShoppingCart, UserCog } from "lucide-react";
+import { Leaf, TreePine, Sprout, Users, Award, Heart, ShoppingCart, UserCog, Settings } from "lucide-react";
 import ContactForm from '@/components/ContactForm';
 import CartSidebar from '@/components/CartSidebar';
 import ProductCarousel from '@/components/ProductCarousel';
@@ -14,6 +14,7 @@ import { useQuery } from '@tanstack/react-query';
 import { apiClient } from '@/lib/api';
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/contexts/AuthContext';
 
 const Index = () => {
   const { addToCart, getCartTotal, cartItems } = useCart();
@@ -21,6 +22,7 @@ const Index = () => {
   const [quantities, setQuantities] = useState<{[key: string]: number}>({});
   const [selectedCategory, setSelectedCategory] = useState('all');
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   // Fetch content from database
   const { data: content = [] } = useQuery({
@@ -168,6 +170,18 @@ Looking forward to hearing from you!`;
             </div>
             <div className="flex items-center space-x-3">
               <AuthButton />
+              
+              {/* Admin Dashboard Button - Always visible for easy access */}
+              <Button 
+                onClick={() => navigate('/admin')}
+                variant="outline"
+                className="border-blue-600 text-blue-600 hover:bg-blue-50 flex items-center gap-2"
+              >
+                <Settings className="h-4 w-4" />
+                <span className="hidden sm:inline">Admin Dashboard</span>
+                <span className="sm:hidden">Admin</span>
+              </Button>
+              
               <Button 
                 variant="outline" 
                 onClick={() => setCartOpen(true)}
@@ -188,6 +202,28 @@ Looking forward to hearing from you!`;
           </div>
         </div>
       </header>
+
+      {/* Admin Quick Access Banner - Show when not logged in */}
+      {!user && (
+        <div className="bg-blue-50 border-b border-blue-200">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <Settings className="h-5 w-5 text-blue-600" />
+                <span className="text-blue-800 font-medium">Website Administrator?</span>
+                <span className="text-blue-600">Access the admin dashboard to manage products and content</span>
+              </div>
+              <Button 
+                onClick={() => navigate('/admin')}
+                size="sm"
+                className="bg-blue-600 hover:bg-blue-700 text-white"
+              >
+                Go to Admin Dashboard
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Navigation Menu - Larger and positioned on left */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -248,6 +284,25 @@ Looking forward to hearing from you!`;
             <p className="text-gray-600 max-w-2xl mx-auto mb-8">
               {getContent('Shop With Us').content || 'Explore our unique collection of indigenous trees, fruit trees, and ornamental plants and flowers, alongside pure, organic honey sourced from our thriving Little Forests.'}
             </p>
+            
+            {/* Admin Quick Add Products Notice */}
+            {products.length === 0 && (
+              <div className="bg-orange-50 border border-orange-200 rounded-lg p-6 max-w-2xl mx-auto mb-8">
+                <div className="flex items-center justify-center space-x-2 mb-3">
+                  <Settings className="h-5 w-5 text-orange-600" />
+                  <span className="text-orange-800 font-semibold">No Products Yet</span>
+                </div>
+                <p className="text-orange-700 mb-4">
+                  Get started by adding your first products to the shop. Use the admin dashboard to add indigenous trees, fruit trees, ornamental plants, and honey products.
+                </p>
+                <Button 
+                  onClick={() => navigate('/admin')}
+                  className="bg-orange-600 hover:bg-orange-700 text-white"
+                >
+                  Add Products Now
+                </Button>
+              </div>
+            )}
           </div>
 
           {/* Category Filter */}
@@ -305,7 +360,9 @@ Looking forward to hearing from you!`;
               {!productsLoading && 
                filteredProducts.indigenous.length === 0 && 
                filteredProducts.ornamental.length === 0 && 
-               filteredProducts.fruit.length === 0 && (
+               filteredProducts.fruit.length === 0 && 
+               filteredProducts.honey.length === 0 && 
+               products.length > 0 && (
                 <div className="text-center py-8">
                   <p className="text-gray-600">No products available in this category.</p>
                   <p className="text-sm text-gray-500 mt-2">Total products in database: {products.length}</p>

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '@/lib/api';
@@ -8,7 +7,7 @@ import { useToast } from '@/hooks/use-toast';
 import ProductForm from './ProductForm';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Edit, Plus, Trash2 } from 'lucide-react';
+import { Edit, Plus, Trash2, TreePine, Apple, Leaf, Package } from 'lucide-react';
 
 const ProductManagement = () => {
   const [editingProduct, setEditingProduct] = useState(null);
@@ -30,6 +29,7 @@ const ProductManagement = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-products'] });
+      queryClient.invalidateQueries({ queryKey: ['products'] });
       toast({
         title: "Product deleted",
         description: "The product has been successfully deleted.",
@@ -59,6 +59,14 @@ const ProductManagement = () => {
     setEditingProduct(null);
   };
 
+  const getCategoryIcon = (category: string) => {
+    if (category.toLowerCase().includes('indigenous')) return <TreePine className="h-4 w-4 text-green-600" />;
+    if (category.toLowerCase().includes('fruit')) return <Apple className="h-4 w-4 text-red-500" />;
+    if (category.toLowerCase().includes('ornamental')) return <Leaf className="h-4 w-4 text-purple-500" />;
+    if (category.toLowerCase().includes('honey')) return <span className="text-yellow-500">🍯</span>;
+    return <Package className="h-4 w-4 text-gray-500" />;
+  };
+
   if (isLoading) {
     return (
       <Card className="p-6">
@@ -84,6 +92,29 @@ const ProductManagement = () => {
         </Button>
       </div>
 
+      {/* Category Guide */}
+      <Card className="p-4 bg-blue-50 border-blue-200">
+        <h3 className="font-semibold text-blue-800 mb-2">Product Categories</h3>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+          <div className="flex items-center space-x-2">
+            <TreePine className="h-4 w-4 text-green-600" />
+            <span>Indigenous Trees</span>
+          </div>
+          <div className="flex items-center space-x-2">
+            <Apple className="h-4 w-4 text-red-500" />
+            <span>Fruit Trees</span>
+          </div>
+          <div className="flex items-center space-x-2">
+            <Leaf className="h-4 w-4 text-purple-500" />
+            <span>Ornamental Plants</span>
+          </div>
+          <div className="flex items-center space-x-2">
+            <span className="text-yellow-500">🍯</span>
+            <span>Honey</span>
+          </div>
+        </div>
+      </Card>
+
       {showForm && (
         <ProductForm
           product={editingProduct}
@@ -91,6 +122,7 @@ const ProductManagement = () => {
           onSuccess={() => {
             handleFormClose();
             queryClient.invalidateQueries({ queryKey: ['admin-products'] });
+            queryClient.invalidateQueries({ queryKey: ['products'] });
           }}
         />
       )}
@@ -113,17 +145,33 @@ const ProductManagement = () => {
                 {products.map((product) => (
                   <TableRow key={product.id}>
                     <TableCell>
-                      {product.image_url && (
+                      {product.image_url ? (
                         <img 
                           src={product.image_url} 
                           alt={product.name}
                           className="w-12 h-12 object-cover rounded"
                         />
+                      ) : (
+                        <div className="w-12 h-12 bg-gray-100 rounded flex items-center justify-center">
+                          {getCategoryIcon(product.category)}
+                        </div>
                       )}
                     </TableCell>
-                    <TableCell className="font-medium">{product.name}</TableCell>
-                    <TableCell>{product.category}</TableCell>
-                    <TableCell className="font-semibold text-green-600">${product.price}</TableCell>
+                    <TableCell className="font-medium">
+                      <div>
+                        <div>{product.name}</div>
+                        {product.scientific_name && (
+                          <div className="text-xs text-gray-500 italic">{product.scientific_name}</div>
+                        )}
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex items-center space-x-2">
+                        {getCategoryIcon(product.category)}
+                        <span>{product.category}</span>
+                      </div>
+                    </TableCell>
+                    <TableCell className="font-semibold text-green-600">{product.price}</TableCell>
                     <TableCell>
                       <Badge variant={product.status === 'Available' ? 'default' : 'secondary'}>
                         {product.status}
@@ -154,7 +202,9 @@ const ProductManagement = () => {
             </Table>
           ) : (
             <div className="text-center py-12">
-              <p className="text-gray-500 mb-6">No products found</p>
+              <TreePine className="h-16 w-16 text-gray-300 mx-auto mb-4" />
+              <h3 className="text-lg font-medium text-gray-900 mb-2">No products yet</h3>
+              <p className="text-gray-500 mb-6">Get started by adding your first product to the shop</p>
               <Button 
                 onClick={handleAdd} 
                 className="bg-green-600 hover:bg-green-700 text-white flex items-center gap-2"

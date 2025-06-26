@@ -1,6 +1,6 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
-import { storage } from "./storage";
+import { storage } from "./supabase-storage";
 import bcrypt from "bcrypt";
 import { insertProductSchema, insertContentSchema, insertContactMessageSchema, insertTestimonialSchema, insertProfileSchema, insertAdminUserSchema } from "@shared/schema";
 
@@ -67,6 +67,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const products = await storage.getProducts();
       res.json(products);
     } catch (error) {
+      console.error("Products API error:", error);
       res.status(500).json({ error: "Failed to get products" });
     }
   });
@@ -126,6 +127,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         : await storage.getContent();
       res.json(content);
     } catch (error) {
+      console.error("Content API error:", error);
       res.status(500).json({ error: "Failed to get content" });
     }
   });

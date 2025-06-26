@@ -61,18 +61,10 @@ app.use((req, res, next) => {
 // It is the only port that is not firewalled.
 const port = 5000;
 
-// Only start server in development or non-Vercel environments
-if (process.env.NODE_ENV !== 'production') {
-  server.listen({
-    port,
-    host: "0.0.0.0",
-    reusePort: true,
-  }, () => {
-    log(`serving on port ${port}`);
-  });
-}
-
-// Export the app for Vercel
-export default app;
-
-})();
+server.listen({
+  port,
+  host: "0.0.0.0",
+  reusePort: true,
+}, () => {
+  log(`serving on port ${port}`);
+});

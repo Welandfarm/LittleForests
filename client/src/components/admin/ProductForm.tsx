@@ -23,9 +23,9 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onClose, onSuccess }
     description: product?.description || '',
     category: product?.category || '',
     price: product?.price || '',
-    scientific_name: product?.scientific_name || '',
+    scientificName: product?.scientificName || product?.scientific_name || '',
     status: product?.status || 'Available',
-    image_url: product?.image_url || ''
+    imageUrl: product?.imageUrl || product?.image_url || ''
   });
   
   const { toast } = useToast();
@@ -126,11 +126,11 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onClose, onSuccess }
             </div>
 
             <div>
-              <Label htmlFor="scientific_name">Scientific Name</Label>
+              <Label htmlFor="scientificName">Scientific Name</Label>
               <Input
-                id="scientific_name"
-                value={formData.scientific_name}
-                onChange={(e) => setFormData(prev => ({ ...prev, scientific_name: e.target.value }))}
+                id="scientificName"
+                value={formData.scientificName}
+                onChange={(e) => setFormData(prev => ({ ...prev, scientificName: e.target.value }))}
                 placeholder="e.g., Melia volkensii"
               />
               <p className="text-xs text-gray-500 mt-1">Optional - helps with plant identification</p>
@@ -153,20 +153,20 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onClose, onSuccess }
 
           <div className="space-y-4">
             <div>
-              <Label htmlFor="image_url">Product Image</Label>
+              <Label htmlFor="imageUrl">Product Image</Label>
               <div className="space-y-4">
                 <ImageUpload
-                  onImageUploaded={(url) => setFormData(prev => ({ ...prev, image_url: url }))}
-                  currentImageUrl={formData.image_url}
+                  onImageUploaded={(url) => setFormData(prev => ({ ...prev, imageUrl: url }))}
+                  currentImageUrl={formData.imageUrl}
                   className="w-full"
                 />
                 <div className="text-sm text-gray-500">
                   Or enter image URL directly:
                 </div>
                 <Input
-                  id="image_url"
-                  value={formData.image_url}
-                  onChange={(e) => setFormData(prev => ({ ...prev, image_url: e.target.value }))}
+                  id="imageUrl"
+                  value={formData.imageUrl}
+                  onChange={(e) => setFormData(prev => ({ ...prev, imageUrl: e.target.value }))}
                   placeholder="https://example.com/image.jpg"
                 />
               </div>

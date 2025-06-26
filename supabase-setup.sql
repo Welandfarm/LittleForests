@@ -15,13 +15,15 @@ CREATE TABLE IF NOT EXISTS products (
   category TEXT NOT NULL,
   price TEXT NOT NULL,
   description TEXT,
+  scientific_name TEXT,
   image_url TEXT,
-  status TEXT DEFAULT 'active',
-  featured BOOLEAN DEFAULT false,
-  stock_quantity INTEGER DEFAULT 0,
+  status TEXT DEFAULT 'Available',
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
+
+-- Add missing column to existing table if it doesn't exist
+ALTER TABLE products ADD COLUMN IF NOT EXISTS scientific_name TEXT;
 
 -- Create content table
 CREATE TABLE IF NOT EXISTS content (

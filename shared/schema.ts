@@ -19,11 +19,12 @@ export const products = pgTable("products", {
   category: text("category").notNull(),
   price: text("price").notNull(),
   description: text("description"),
-  scientificName: text("scientific_name"),
-  imageUrl: text("image_url"),
-  status: text("status").default("Available"),
-  createdAt: timestamp("created_at").defaultNow(),
-  updatedAt: timestamp("updated_at").defaultNow(),
+  image_url: text("image_url"),
+  status: text("status").default("active"),
+  featured: boolean("featured").default(false),
+  stock_quantity: integer("stock_quantity").default(0),
+  created_at: timestamp("created_at").defaultNow(),
+  updated_at: timestamp("updated_at").defaultNow(),
 });
 
 // Content table for blog posts and static content

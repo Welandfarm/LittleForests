@@ -90,6 +90,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const product = await storage.createProduct(validatedData);
       res.status(201).json(product);
     } catch (error) {
+      console.error('Product creation error:', error);
       res.status(400).json({ error: "Failed to create product" });
     }
   });

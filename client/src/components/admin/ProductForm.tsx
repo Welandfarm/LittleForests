@@ -23,9 +23,8 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onClose, onSuccess }
     description: product?.description || '',
     category: product?.category || '',
     price: product?.price || '',
-    scientificName: product?.scientificName || product?.scientific_name || '',
-    status: product?.status || 'Available',
-    imageUrl: product?.imageUrl || product?.image_url || ''
+    status: product?.status || 'active',
+    image_url: product?.image_url || ''
   });
   
   const { toast } = useToast();
@@ -125,16 +124,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onClose, onSuccess }
               <p className="text-xs text-gray-500 mt-1">Include currency symbol (KSh, $, etc.)</p>
             </div>
 
-            <div>
-              <Label htmlFor="scientificName">Scientific Name</Label>
-              <Input
-                id="scientificName"
-                value={formData.scientificName}
-                onChange={(e) => setFormData(prev => ({ ...prev, scientificName: e.target.value }))}
-                placeholder="e.g., Melia volkensii"
-              />
-              <p className="text-xs text-gray-500 mt-1">Optional - helps with plant identification</p>
-            </div>
+
 
             <div>
               <Label htmlFor="status">Availability Status</Label>
@@ -143,9 +133,9 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onClose, onSuccess }
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="Available">Available</SelectItem>
-                  <SelectItem value="Limited">Limited Stock</SelectItem>
-                  <SelectItem value="Out of Stock">Out of Stock</SelectItem>
+                  <SelectItem value="active">Available</SelectItem>
+                  <SelectItem value="limited">Limited Stock</SelectItem>
+                  <SelectItem value="out_of_stock">Out of Stock</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -153,20 +143,20 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onClose, onSuccess }
 
           <div className="space-y-4">
             <div>
-              <Label htmlFor="imageUrl">Product Image</Label>
+              <Label htmlFor="image_url">Product Image</Label>
               <div className="space-y-4">
                 <ImageUpload
-                  onImageUploaded={(url) => setFormData(prev => ({ ...prev, imageUrl: url }))}
-                  currentImageUrl={formData.imageUrl}
+                  onImageUploaded={(url) => setFormData(prev => ({ ...prev, image_url: url }))}
+                  currentImageUrl={formData.image_url}
                   className="w-full"
                 />
                 <div className="text-sm text-gray-500">
                   Or enter image URL directly:
                 </div>
                 <Input
-                  id="imageUrl"
-                  value={formData.imageUrl}
-                  onChange={(e) => setFormData(prev => ({ ...prev, imageUrl: e.target.value }))}
+                  id="image_url"
+                  value={formData.image_url}
+                  onChange={(e) => setFormData(prev => ({ ...prev, image_url: e.target.value }))}
                   placeholder="https://example.com/image.jpg"
                 />
               </div>

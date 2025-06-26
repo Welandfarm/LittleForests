@@ -86,18 +86,22 @@ Looking forward to hearing from you!`;
       
       console.log('Fetched products:', data);
       // Filter for available products
-      return data.filter((product: any) => product.status === 'Available');
+      return data.filter((product: any) => product.status === 'active' || product.status === 'Available');
     },
   });
 
   // Categorize products - Updated to match actual database categories
   const categorizedProducts = useMemo(() => {
     console.log('Categorizing products...');
-    const indigenous = products.filter(p => 
-      p.category === 'Indigenous' || 
-      p.category === 'Indigenous Trees' ||
-      p.category.toLowerCase().includes('indigenous')
-    );
+    console.log('Products to categorize:', products);
+    
+    const indigenous = products.filter(p => {
+      console.log(`Checking product ${p.name} with category "${p.category}" for indigenous match`);
+      return p.category === 'Indigenous' || 
+             p.category === 'Indigenous Trees' ||
+             p.category.toLowerCase().includes('indigenous');
+    });
+    
     const ornamental = products.filter(p => 
       p.category === 'Ornamental' || 
       p.category === 'Ornamental Trees' ||

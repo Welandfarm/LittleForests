@@ -13,22 +13,22 @@ const UserManagement = () => {
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
-  const { data: users, isLoading } = useQuery({
+  const { data: users = [], isLoading } = useQuery({
     queryKey: ['admin-users'],
     queryFn: async () => {
-      // For demo, return empty array - user management not needed
-      return [];
+      try {
+        const profiles = await apiClient.getProfiles();
+        return Array.isArray(profiles) ? profiles : [];
+      } catch (error) {
+        console.error('Failed to fetch users:', error);
+        return [];
+      }
     },
   });
 
   const promoteUserMutation = useMutation({
     mutationFn: async ({ userId, newRole }: { userId: string, newRole: 'admin' | 'user' }) => {
-      const { error } = await supabase
-        .from('profiles')
-        .update({ role: newRole })
-        .eq('id', userId);
-      
-      if (error) throw error;
+      await apiClient.updateProfile(userId, { role: newRole });
     },
     onSuccess: (_, { newRole }) => {
       queryClient.invalidateQueries({ queryKey: ['admin-users'] });

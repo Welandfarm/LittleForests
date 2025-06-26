@@ -38,6 +38,17 @@ class ApiClient {
     });
   }
 
+  async updateProfile(id: string, profile: any) {
+    return this.request(`/profiles/${id}`, {
+      method: 'PATCH',
+      body: JSON.stringify(profile),
+    });
+  }
+
+  async getProfiles() {
+    return this.request('/profiles');
+  }
+
   // Product methods
   async getProducts() {
     return this.request('/products');

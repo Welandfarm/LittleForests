@@ -15,6 +15,7 @@ export const db = drizzle(client);
 
 export interface IStorage {
   // Profile methods
+  getProfiles(): Promise<Profile[]>;
   getProfile(id: string): Promise<Profile | undefined>;
   getProfileByEmail(email: string): Promise<Profile | undefined>;
   createProfile(profile: InsertProfile): Promise<Profile>;
@@ -48,6 +49,10 @@ export interface IStorage {
 
 export class DatabaseStorage implements IStorage {
   // Profile methods
+  async getProfiles(): Promise<Profile[]> {
+    return await db.select().from(profiles);
+  }
+
   async getProfile(id: string): Promise<Profile | undefined> {
     const result = await db.select().from(profiles).where(eq(profiles.id, id));
     return result[0];

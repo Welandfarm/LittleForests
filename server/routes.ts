@@ -1,10 +1,64 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertProductSchema, insertContentSchema, insertContactMessageSchema, insertTestimonialSchema } from "@shared/schema";
+import { insertProductSchema, insertContentSchema, insertContactMessageSchema, insertTestimonialSchema, insertProfileSchema } from "@shared/schema";
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // Profile routes removed - using demo authentication
+  // Profile routes
+  app.get("/api/profiles", async (req, res) => {
+    try {
+      const profiles = await storage.getProfiles();
+      res.json(profiles);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to get profiles" });
+    }
+  });
+
+  app.get("/api/profiles/:id", async (req, res) => {
+    try {
+      const profile = await storage.getProfile(req.params.id);
+      if (!profile) {
+        return res.status(404).json({ error: "Profile not found" });
+      }
+      res.json(profile);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to get profile" });
+    }
+  });
+
+  app.get("/api/profiles/email/:email", async (req, res) => {
+    try {
+      const profile = await storage.getProfileByEmail(decodeURIComponent(req.params.email));
+      if (!profile) {
+        return res.status(404).json({ error: "Profile not found" });
+      }
+      res.json(profile);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to get profile" });
+    }
+  });
+
+  app.post("/api/profiles", async (req, res) => {
+    try {
+      const validatedData = insertProfileSchema.parse(req.body);
+      const profile = await storage.createProfile(validatedData);
+      res.status(201).json(profile);
+    } catch (error) {
+      res.status(400).json({ error: "Failed to create profile" });
+    }
+  });
+
+  app.patch("/api/profiles/:id", async (req, res) => {
+    try {
+      const profile = await storage.updateProfile(req.params.id, req.body);
+      if (!profile) {
+        return res.status(404).json({ error: "Profile not found" });
+      }
+      res.json(profile);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to update profile" });
+    }
+  });
 
   // Product routes
   app.get("/api/products", async (req, res) => {

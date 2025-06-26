@@ -1,7 +1,8 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertProductSchema, insertContentSchema, insertContactMessageSchema, insertTestimonialSchema, insertProfileSchema } from "@shared/schema";
+import bcrypt from "bcrypt";
+import { insertProductSchema, insertContentSchema, insertContactMessageSchema, insertTestimonialSchema, insertProfileSchema, insertAdminUserSchema } from "@shared/schema";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Profile routes
@@ -237,6 +238,84 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       res.status(500).json({ error: "Failed to delete testimonial" });
     }
+  });
+
+  // Admin authentication routes
+  app.post("/api/admin/login", async (req, res) => {
+    try {
+      const { email, password } = req.body;
+      
+      // Check if email is authorized
+      const authorizedEmails = ['wesleykoech2022@gmail.com', 'chepkoechjoan55@gmail.com'];
+      if (!authorizedEmails.includes(email)) {
+        return res.status(401).json({ error: "Unauthorized email" });
+      }
+
+      // Get admin user from database
+      const adminUser = await storage.getAdminUserByEmail(email);
+      if (!adminUser) {
+        return res.status(401).json({ error: "Invalid credentials" });
+      }
+
+      // Verify password
+      const isValidPassword = await bcrypt.compare(password, adminUser.passwordHash);
+      if (!isValidPassword) {
+        return res.status(401).json({ error: "Invalid credentials" });
+      }
+
+      // Store admin session (simplified - in production use proper session management)
+      res.json({ 
+        success: true, 
+        user: { 
+          id: adminUser.id, 
+          email: adminUser.email 
+        },
+        token: Buffer.from(`${adminUser.id}:${adminUser.email}`).toString('base64')
+      });
+    } catch (error) {
+      console.error('Admin login error:', error);
+      res.status(500).json({ error: "Login failed" });
+    }
+  });
+
+  app.post("/api/admin/verify", async (req, res) => {
+    try {
+      const { token } = req.body;
+      
+      if (!token) {
+        return res.status(401).json({ error: "No token provided" });
+      }
+
+      // Decode token (simplified - in production use proper JWT)
+      const decoded = Buffer.from(token, 'base64').toString('utf-8');
+      const [userId, email] = decoded.split(':');
+      
+      // Verify user exists and is authorized
+      const authorizedEmails = ['wesleykoech2022@gmail.com', 'chepkoechjoan55@gmail.com'];
+      if (!authorizedEmails.includes(email)) {
+        return res.status(401).json({ error: "Unauthorized" });
+      }
+
+      const adminUser = await storage.getAdminUserByEmail(email);
+      if (!adminUser || adminUser.id !== userId) {
+        return res.status(401).json({ error: "Invalid token" });
+      }
+
+      res.json({ 
+        success: true, 
+        user: { 
+          id: adminUser.id, 
+          email: adminUser.email 
+        }
+      });
+    } catch (error) {
+      console.error('Admin verify error:', error);
+      res.status(401).json({ error: "Invalid token" });
+    }
+  });
+
+  app.post("/api/admin/logout", async (req, res) => {
+    res.json({ success: true });
   });
 
   const httpServer = createServer(app);

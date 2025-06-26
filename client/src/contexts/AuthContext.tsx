@@ -9,10 +9,13 @@ interface User {
 
 interface AuthContextType {
   user: User | null;
+  adminUser: User | null;
   loading: boolean;
   signUp: (email: string, password: string, fullName?: string) => Promise<any>;
   signIn: (email: string, password: string) => Promise<any>;
+  adminSignIn: (email: string, password: string) => Promise<any>;
   signOut: () => Promise<void>;
+  adminSignOut: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -27,6 +30,7 @@ export const useAuth = () => {
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [adminUser, setAdminUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -42,8 +46,50 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         localStorage.removeItem('auth-user');
       }
     }
+
+    // Check for existing admin token
+    const adminToken = localStorage.getItem('admin-token');
+    const adminUserData = localStorage.getItem('admin-user');
+    
+    if (adminToken && adminUserData) {
+      try {
+        const adminData = JSON.parse(adminUserData);
+        setAdminUser(adminData);
+        // Verify admin token with server
+        verifyAdminToken(adminToken);
+      } catch (error) {
+        localStorage.removeItem('admin-token');
+        localStorage.removeItem('admin-user');
+      }
+    }
+    
     setLoading(false);
   }, []);
+
+  const verifyAdminToken = async (token: string) => {
+    try {
+      const response = await fetch('/api/admin/verify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token })
+      });
+      
+      if (!response.ok) {
+        throw new Error('Invalid token');
+      }
+      
+      const data = await response.json();
+      if (data.success) {
+        setAdminUser(data.user);
+      } else {
+        throw new Error('Token verification failed');
+      }
+    } catch (error) {
+      localStorage.removeItem('admin-token');
+      localStorage.removeItem('admin-user');
+      setAdminUser(null);
+    }
+  };
 
   const signUp = async (email: string, password: string, fullName?: string) => {
     // Only wesleykoech2022@gmail.com is admin
@@ -86,12 +132,54 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     localStorage.removeItem('auth-user');
   };
 
+  const adminSignIn = async (email: string, password: string) => {
+    try {
+      const response = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Login failed');
+      }
+
+      if (data.success) {
+        setAdminUser(data.user);
+        localStorage.setItem('admin-token', data.token);
+        localStorage.setItem('admin-user', JSON.stringify(data.user));
+        return data;
+      } else {
+        throw new Error('Login failed');
+      }
+    } catch (error: any) {
+      throw new Error(error.message || 'Network error');
+    }
+  };
+
+  const adminSignOut = async () => {
+    try {
+      await fetch('/api/admin/logout', { method: 'POST' });
+    } catch (error) {
+      // Continue with logout even if API call fails
+    }
+    
+    setAdminUser(null);
+    localStorage.removeItem('admin-token');
+    localStorage.removeItem('admin-user');
+  };
+
   const value = {
     user,
+    adminUser,
     loading,
     signUp,
     signIn,
+    adminSignIn,
     signOut,
+    adminSignOut,
   };
 
   return (

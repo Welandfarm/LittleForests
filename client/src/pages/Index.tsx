@@ -23,7 +23,7 @@ const Index = () => {
   const [quantities, setQuantities] = useState<{[key: string]: number}>({});
   const [selectedCategory, setSelectedCategory] = useState('all');
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user, adminUser } = useAuth();
 
   // Fetch content from database
   const { data: content = [] } = useQuery({
@@ -172,16 +172,18 @@ Looking forward to hearing from you!`;
             <div className="flex items-center space-x-3">
               <AuthButton />
               
-              {/* Admin Dashboard Button - Always visible for easy access */}
-              <Button 
-                onClick={() => navigate('/admin')}
-                variant="outline"
-                className="border-blue-600 text-blue-600 hover:bg-blue-50 flex items-center gap-2"
-              >
-                <Settings className="h-4 w-4" />
-                <span className="hidden sm:inline">Admin Dashboard</span>
-                <span className="sm:hidden">Admin</span>
-              </Button>
+              {/* Admin Dashboard Button - Only visible for authorized admin users */}
+              {adminUser && (
+                <Button 
+                  onClick={() => navigate('/admin')}
+                  variant="outline"
+                  className="border-blue-600 text-blue-600 hover:bg-blue-50 flex items-center gap-2"
+                >
+                  <Settings className="h-4 w-4" />
+                  <span className="hidden sm:inline">Admin Dashboard</span>
+                  <span className="sm:hidden">Admin</span>
+                </Button>
+              )}
               
               <Button 
                 variant="outline" 
@@ -204,27 +206,7 @@ Looking forward to hearing from you!`;
         </div>
       </header>
 
-      {/* Admin Quick Access Banner - Show when not logged in */}
-      {!user && (
-        <div className="bg-blue-50 border-b border-blue-200">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-2">
-                <Settings className="h-5 w-5 text-blue-600" />
-                <span className="text-blue-800 font-medium">Website Administrator?</span>
-                <span className="text-blue-600">Access the admin dashboard to manage products and content</span>
-              </div>
-              <Button 
-                onClick={() => navigate('/admin')}
-                size="sm"
-                className="bg-blue-600 hover:bg-blue-700 text-white"
-              >
-                Go to Admin Dashboard
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
+
 
       {/* Navigation Menu - Larger and positioned on left */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">

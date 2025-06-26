@@ -1,12 +1,13 @@
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 import { 
-  profiles, products, content, contactMessages, testimonials,
+  profiles, products, content, contactMessages, testimonials, adminUsers,
   type Profile, type InsertProfile,
   type Product, type InsertProduct,
   type Content, type InsertContent,
   type ContactMessage, type InsertContactMessage,
-  type Testimonial, type InsertTestimonial
+  type Testimonial, type InsertTestimonial,
+  type AdminUser, type InsertAdminUser
 } from "@shared/schema";
 import { eq } from "drizzle-orm";
 
@@ -45,6 +46,10 @@ export interface IStorage {
   createTestimonial(testimonial: InsertTestimonial): Promise<Testimonial>;
   updateTestimonial(id: string, testimonial: Partial<InsertTestimonial>): Promise<Testimonial | undefined>;
   deleteTestimonial(id: string): Promise<boolean>;
+  
+  // Admin user methods
+  getAdminUserByEmail(email: string): Promise<AdminUser | undefined>;
+  createAdminUser(user: InsertAdminUser): Promise<AdminUser>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -165,6 +170,17 @@ export class DatabaseStorage implements IStorage {
   async deleteTestimonial(id: string): Promise<boolean> {
     const result = await db.delete(testimonials).where(eq(testimonials.id, id));
     return result.length > 0;
+  }
+
+  // Admin user methods
+  async getAdminUserByEmail(email: string): Promise<AdminUser | undefined> {
+    const result = await db.select().from(adminUsers).where(eq(adminUsers.email, email));
+    return result[0];
+  }
+
+  async createAdminUser(user: InsertAdminUser): Promise<AdminUser> {
+    const result = await db.insert(adminUsers).values(user).returning();
+    return result[0];
   }
 }
 

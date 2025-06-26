@@ -13,7 +13,7 @@ import { apiClient } from '@/lib/api';
 import { TreePine, Package, FileText, MessageSquare, Users, Home, Settings } from 'lucide-react';
 
 const Admin = () => {
-  const { user, loading } = useAuth();
+  const { adminUser, loading, adminSignOut } = useAuth();
 
   // Get stats for dashboard overview
   const { data: stats } = useQuery({
@@ -47,22 +47,9 @@ const Admin = () => {
     );
   }
 
-  // Allow access to admin dashboard even without authentication for demo purposes
-  // In production, you'd want proper authentication
-  const isAdmin = !user || user.role === 'admin' || user.email === 'wesleykoech2022@gmail.com';
-
-  if (user && !isAdmin) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <Card className="p-8 max-w-md mx-auto text-center">
-          <h1 className="text-2xl font-bold text-red-600 mb-4">Access Denied</h1>
-          <p className="text-gray-600 mb-4">You don't have permission to access this page.</p>
-          <Button onClick={() => window.location.href = '/'}>
-            Return to Home
-          </Button>
-        </Card>
-      </div>
-    );
+  // Redirect to admin login if not authenticated
+  if (!adminUser) {
+    return <Navigate to="/admin-login" replace />;
   }
 
   return (
@@ -84,15 +71,23 @@ const Admin = () => {
               </div>
             </div>
             <div className="flex items-center space-x-3">
+              <span className="text-sm text-gray-600">
+                Welcome, {adminUser.email}
+              </span>
               <Button onClick={() => window.location.href = '/'} variant="outline" className="flex items-center gap-2">
                 <Home className="h-4 w-4" />
                 View Website
               </Button>
-              {!user && (
-                <Button onClick={() => window.location.href = '/auth'} className="bg-green-600 hover:bg-green-700">
-                  Sign In
-                </Button>
-              )}
+              <Button 
+                onClick={async () => {
+                  await adminSignOut();
+                  window.location.href = '/';
+                }}
+                variant="outline"
+                className="border-red-600 text-red-600 hover:bg-red-50"
+              >
+                Sign Out
+              </Button>
             </div>
           </div>
         </div>

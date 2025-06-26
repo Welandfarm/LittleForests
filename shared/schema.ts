@@ -61,6 +61,15 @@ export const testimonials = pgTable("testimonials", {
   updatedAt: timestamp("updated_at").defaultNow(),
 });
 
+// Admin users table for secure authentication
+export const adminUsers = pgTable("admin_users", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  email: text("email").unique().notNull(),
+  passwordHash: text("password_hash").notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
 // Schema exports
 export const insertProfileSchema = createInsertSchema(profiles);
 export const selectProfileSchema = createSelectSchema(profiles);
@@ -72,6 +81,8 @@ export const insertContactMessageSchema = createInsertSchema(contactMessages);
 export const selectContactMessageSchema = createSelectSchema(contactMessages);
 export const insertTestimonialSchema = createInsertSchema(testimonials);
 export const selectTestimonialSchema = createSelectSchema(testimonials);
+export const insertAdminUserSchema = createInsertSchema(adminUsers);
+export const selectAdminUserSchema = createSelectSchema(adminUsers);
 
 // Type exports
 export type Profile = typeof profiles.$inferSelect;
@@ -84,3 +95,5 @@ export type ContactMessage = typeof contactMessages.$inferSelect;
 export type InsertContactMessage = typeof contactMessages.$inferInsert;
 export type Testimonial = typeof testimonials.$inferSelect;
 export type InsertTestimonial = typeof testimonials.$inferInsert;
+export type AdminUser = typeof adminUsers.$inferSelect;
+export type InsertAdminUser = typeof adminUsers.$inferInsert;

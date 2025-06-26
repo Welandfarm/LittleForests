@@ -14,8 +14,10 @@ interface Product {
   category: string;
   price: string;
   image_url?: string;
+  imageUrl?: string;
   description?: string;
   status: string;
+  [key: string]: any;
 }
 
 interface ProductCarouselProps {
@@ -49,7 +51,7 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
               <Card className="overflow-hidden hover:shadow-lg transition-shadow h-full">
                 <div className="relative">
                   <img 
-                    src={product.image_url || "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=300&fit=crop"} 
+                    src={product.image_url || product.imageUrl || "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=300&fit=crop"} 
                     alt={product.name}
                     className="w-full h-48 object-cover"
                   />

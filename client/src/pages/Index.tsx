@@ -15,6 +15,7 @@ import { apiClient } from '@/lib/api';
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
+import nurseryImage from '@assets/WhatsApp Image 2025-06-23 at 08.50.06_acf3391e_1750916123359.jpg';
 
 const Index = () => {
   const { addToCart, getCartTotal, cartItems } = useCart();
@@ -238,7 +239,7 @@ Looking forward to hearing from you!`;
       <section 
         className="py-20 relative"
         style={{
-          backgroundImage: 'url(/lovable-uploads/82ebeeb5-b8dd-4161-9668-d9077f5da34d.png)',
+          backgroundImage: `url(${nurseryImage})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat'

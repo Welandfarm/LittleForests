@@ -103,6 +103,9 @@ LittleForest is a full-stack web application for an online seedling nursery busi
 - June 24, 2025. Added honey product category with admin management
 - June 24, 2025. Updated homepage messaging and styling with orange accents
 - June 24, 2025. Fixed image upload functionality with proper payload limits
+- June 26, 2025. Successfully migrated from Supabase to PostgreSQL database
+- June 26, 2025. Fixed image upload mapping between database schema and frontend forms
+- June 26, 2025. Updated homepage background with authentic nursery photo
 
 ## User Preferences
 

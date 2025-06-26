@@ -62,7 +62,7 @@ app.use((req, res, next) => {
 const port = 5000;
 
 // Only start server in development or non-Vercel environments
-if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
+if (process.env.NODE_ENV !== 'production') {
   server.listen({
     port,
     host: "0.0.0.0",
@@ -74,3 +74,5 @@ if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
 
 // Export the app for Vercel
 export default app;
+
+})();

@@ -259,8 +259,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(401).json({ error: "Invalid credentials" });
       }
 
-      // Verify password
-      const isValidPassword = await bcrypt.compare(password, adminUser.passwordHash);
+      // Verify password - use the database field name since Supabase returns raw field names
+      const passwordHash = (adminUser as any).password_hash || adminUser.passwordHash;
+      const isValidPassword = await bcrypt.compare(password, passwordHash);
       if (!isValidPassword) {
         return res.status(401).json({ error: "Invalid credentials" });
       }

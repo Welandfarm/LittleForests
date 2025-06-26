@@ -3,6 +3,7 @@ import React from 'react';
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { Plus, Minus } from "lucide-react";
 import { useCart } from '@/contexts/CartContext';
@@ -25,6 +26,7 @@ interface ProductCarouselProps {
   categoryName: string;
   quantities: {[key: string]: number};
   onUpdateQuantity: (productId: string, change: number) => void;
+  onSetQuantity: (productId: string, quantity: number) => void;
   onAddToCart: (product: Product) => void;
 }
 
@@ -32,7 +34,8 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
   products, 
   categoryName, 
   quantities, 
-  onUpdateQuantity, 
+  onUpdateQuantity,
+  onSetQuantity, 
   onAddToCart 
 }) => {
   return (
@@ -81,7 +84,17 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
                       >
                         <Minus className="h-3 w-3" />
                       </Button>
-                      <span className="w-8 text-center">{quantities[product.id] || 1}</span>
+                      <Input
+                        type="number"
+                        min="1"
+                        max="999"
+                        value={quantities[product.id] || 1}
+                        onChange={(e) => {
+                          const value = parseInt(e.target.value) || 1;
+                          onSetQuantity(product.id, Math.max(1, Math.min(999, value)));
+                        }}
+                        className="w-16 text-center text-sm"
+                      />
                       <Button
                         variant="outline"
                         size="sm"

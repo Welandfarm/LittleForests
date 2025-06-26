@@ -92,35 +92,27 @@ Looking forward to hearing from you!`;
 
   // Categorize products - Updated to match actual database categories
   const categorizedProducts = useMemo(() => {
-    console.log('Categorizing products...');
-    console.log('Products to categorize:', products);
+    const indigenous = products.filter((p: any) => 
+      p.category === 'Indigenous' || 
+      p.category === 'Indigenous Trees' ||
+      p.category.toLowerCase().includes('indigenous')
+    );
     
-    const indigenous = products.filter(p => {
-      console.log(`Checking product ${p.name} with category "${p.category}" for indigenous match`);
-      return p.category === 'Indigenous' || 
-             p.category === 'Indigenous Trees' ||
-             p.category.toLowerCase().includes('indigenous');
-    });
-    
-    const ornamental = products.filter(p => 
+    const ornamental = products.filter((p: any) => 
       p.category === 'Ornamental' || 
       p.category === 'Ornamental Trees' ||
+      p.category === 'Ornamental Plants' ||
       p.category.toLowerCase().includes('ornamental')
     );
-    const fruit = products.filter(p => 
+    const fruit = products.filter((p: any) => 
       p.category === 'Fruit' || 
       p.category === 'Fruit Trees' ||
       p.category.toLowerCase().includes('fruit')
     );
-    const honey = products.filter(p => 
+    const honey = products.filter((p: any) => 
       p.category === 'Honey' ||
       p.category.toLowerCase().includes('honey')
     );
-    
-    console.log('Indigenous trees:', indigenous);
-    console.log('Ornamental trees:', ornamental);
-    console.log('Fruit trees:', fruit);
-    console.log('Honey products:', honey);
     
     return { indigenous, ornamental, fruit, honey };
   }, [products]);
@@ -149,6 +141,13 @@ Looking forward to hearing from you!`;
     setQuantities(prev => ({
       ...prev,
       [productId]: Math.max(1, (prev[productId] || 1) + change)
+    }));
+  };
+
+  const setQuantity = (productId: string, quantity: number) => {
+    setQuantities(prev => ({
+      ...prev,
+      [productId]: Math.max(1, quantity)
     }));
   };
 
@@ -313,6 +312,7 @@ Looking forward to hearing from you!`;
                   categoryName="Indigenous Trees"
                   quantities={quantities}
                   onUpdateQuantity={updateQuantity}
+                  onSetQuantity={setQuantity}
                   onAddToCart={handleAddToCart}
                 />
               )}
@@ -322,6 +322,7 @@ Looking forward to hearing from you!`;
                   categoryName="Ornamental Trees"
                   quantities={quantities}
                   onUpdateQuantity={updateQuantity}
+                  onSetQuantity={setQuantity}
                   onAddToCart={handleAddToCart}
                 />
               )}
@@ -331,6 +332,7 @@ Looking forward to hearing from you!`;
                   categoryName="Fruit Trees"
                   quantities={quantities}
                   onUpdateQuantity={updateQuantity}
+                  onSetQuantity={setQuantity}
                   onAddToCart={handleAddToCart}
                 />
               )}
@@ -340,6 +342,7 @@ Looking forward to hearing from you!`;
                   categoryName="Organic Forest Honey"
                   quantities={quantities}
                   onUpdateQuantity={updateQuantity}
+                  onSetQuantity={setQuantity}
                   onAddToCart={handleAddToCart}
                 />
               )}

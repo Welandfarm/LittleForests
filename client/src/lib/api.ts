@@ -19,6 +19,11 @@ class ApiClient {
       throw new Error(error.error || 'Request failed');
     }
 
+    // Handle 204 No Content responses (like DELETE)
+    if (response.status === 204) {
+      return {} as T;
+    }
+
     return response.json();
   }
 

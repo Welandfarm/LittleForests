@@ -15,7 +15,7 @@ import { apiClient } from '@/lib/api';
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
-import nurseryImage from '@assets/WhatsApp Image 2025-06-23 at 08.50.06_acf3391e_1750916123359.jpg';
+import nurseryImage from '@assets/For Front page_1751302445978.jpg';
 
 const Index = () => {
   const { addToCart, getCartTotal, cartItems } = useCart();

@@ -176,16 +176,9 @@ const About = () => {
             </Button>
             <Button 
               onClick={() => {
-                const message = `Hello LittleForest! 🌱
-
-I'd like to learn more about your nursery and how you can help with my project. Could we discuss:
-
-- Available tree varieties
-- Best planting practices for my area
-- Bulk ordering options
-- Expert consultation services
-
-Looking forward to growing with you!`;
+                const message = `Hi
+I'd like to make inquiries about the seedlings and honey.
+Thank you!`;
                 
                 const whatsappUrl = `https://wa.me/254108029407?text=${encodeURIComponent(message)}`;
                 window.open(whatsappUrl, '_blank');

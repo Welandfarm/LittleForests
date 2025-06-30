@@ -114,6 +114,7 @@ LittleForest is a full-stack web application for an online seedling nursery busi
 - June 30, 2025. Updated homepage background with new nursery photo showing seedling cultivation
 - June 30, 2025. Improved "Available" button styling from black to white background with black text
 - June 30, 2025. Added clickable WhatsApp contact links throughout the application for better user engagement
+- June 30, 2025. Updated WhatsApp message templates for order and contact buttons to use simplified, professional language
 
 ## User Preferences
 

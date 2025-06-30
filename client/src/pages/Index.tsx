@@ -46,31 +46,21 @@ const Index = () => {
         `- ${item.quantity} x ${item.name} (${item.price} each)`
       ).join('\n');
 
-      const message = `Hello LittleForest! 🌱
+      const message = `Hi
 
 I would like to place an order for the following seedlings:
 
 ${orderItems}
 
-Please confirm availability and let me know:
-- Total cost including any delivery charges
-- Delivery timeline to my location
-- Payment options available
-
-Thank you!`;
+Please confirm availability and let me know`;
       
       const whatsappUrl = `https://wa.me/254108029407?text=${encodeURIComponent(message)}`;
       window.open(whatsappUrl, '_blank');
     } else {
       // General order inquiry
-      const message = `Hello LittleForest! 🌱
-
-I'm interested in ordering some seedlings from your nursery. Could you please share:
-- Available products and current prices
-- Delivery options to my area
-- Payment methods accepted
-
-Looking forward to hearing from you!`;
+      const message = `Hi
+I'd like to make inquiries about the seedlings and honey.
+Thank you!`;
       
       const whatsappUrl = `https://wa.me/254108029407?text=${encodeURIComponent(message)}`;
       window.open(whatsappUrl, '_blank');

@@ -59,7 +59,10 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
                     className="w-full h-48 object-cover"
                   />
                   <div className="absolute top-2 right-2">
-                    <Badge variant={product.status === 'Available' ? "default" : "secondary"}>
+                    <Badge 
+                      variant={product.status === 'Available' ? "outline" : "secondary"}
+                      className={product.status === 'Available' ? "bg-white text-black border-gray-300" : ""}
+                    >
                       {product.status}
                     </Badge>
                   </div>

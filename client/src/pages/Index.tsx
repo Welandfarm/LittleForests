@@ -390,7 +390,16 @@ Looking forward to hearing from you!`;
             <div>
               <h3 className="font-semibold mb-4">Contact Info</h3>
               <div className="space-y-2 text-sm text-green-200 mb-4">
-                <p>📱 WhatsApp: +254 108 029 407</p>
+                <p>📱 WhatsApp: 
+                  <a 
+                    href="https://wa.me/254108029407?text=Hello%20LittleForest!%20I'm%20interested%20in%20your%20seedlings%20and%20would%20like%20to%20learn%20more." 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-green-300 hover:text-white underline ml-1"
+                  >
+                    +254 108 029 407
+                  </a>
+                </p>
               </div>
             </div>
           </div>

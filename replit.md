@@ -110,6 +110,10 @@ LittleForest is a full-stack web application for an online seedling nursery busi
 - June 26, 2025. Created hidden admin login at /admin-login accessible only to wesleykoech2022@gmail.com and chepkoechjoan55@gmail.com
 - June 26, 2025. Added clean public interface that hides all admin access when not logged in
 - June 26, 2025. Migrated from PostgreSQL back to Supabase for better scalability and deployment flexibility
+- June 30, 2025. Successfully migrated from Replit Agent to Replit environment with full functionality
+- June 30, 2025. Updated homepage background with new nursery photo showing seedling cultivation
+- June 30, 2025. Improved "Available" button styling from black to white background with black text
+- June 30, 2025. Added clickable WhatsApp contact links throughout the application for better user engagement
 
 ## User Preferences
 

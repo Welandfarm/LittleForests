@@ -59,81 +59,105 @@ const About = () => {
 
 
 
-      {/* Main Content */}
-      <section className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-3xl font-bold text-green-800 mb-6">About <span className="text-orange-500">Little</span><span className="text-green-600">Forest</span> Nursery</h2>
-              <p className="text-gray-600 text-lg leading-relaxed mb-6">
+      {/* About Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-green-800 mb-8">
+              About <span className="text-orange-500">Little</span><span className="text-green-600">Forest</span> Nursery
+            </h2>
+            <div className="max-w-4xl mx-auto">
+              <p className="text-xl text-gray-700 leading-relaxed mb-8">
                 Little Forest Nursery is a nature-inspired social-enterprise rooted in Bomet County, Kenya. We are passionate about restoring landscapes, conserving water sources, and greening spaces—one seedling at a time.
               </p>
               
-              <h3 className="text-xl font-semibold text-green-700 mb-4">We specialize in the propagation and sale of:</h3>
-              <ul className="text-gray-600 text-lg leading-relaxed mb-6 space-y-2">
-                <li>🌳 Indigenous tree seedlings for reforestation and water source restoration.</li>
-                <li>🍊 Fruit tree seedlings to support food security and livelihoods</li>
-                <li>🌼 Ornamental plants and flowers for greening homes, institutions and beautification</li>
-                <li>🍯 Organic forest honey, harvested from indigenous little forests.</li>
-              </ul>
-              
-              <p className="text-gray-600 text-lg leading-relaxed mb-6">
+              <p className="text-lg text-gray-600 leading-relaxed mb-8">
                 We help you grow your own little forest at home with a variety of indigenous and ornamental trees, so you can contribute to a greener, healthier environment from your own compound.
               </p>
               
-              <p className="text-gray-600 text-lg leading-relaxed mb-6">
+              <p className="text-lg text-gray-600 leading-relaxed mb-8">
                 Our work is grounded in the belief that growing trees is not just about greening the land—it's about healing ecosystems, empowering communities, and securing a sustainable future.
               </p>
               
-              <p className="text-gray-600 text-lg leading-relaxed mb-6">
-                Whether you're a farmer, a conservationist, a hotel, or a homeowner, we're here to help you grow with purpose.
-              </p>
-              
-              <p className="text-green-700 text-xl font-semibold mb-6">
-                <span className="text-orange-500">Little</span><span className="text-green-600">Forest</span> Nursery — Restoring Water Resources, One Tree at a Time.
-              </p>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="text-center p-4 bg-green-50 rounded-lg">
-                  <div className="text-2xl font-bold text-green-600">🌳</div>
-                  <div className="text-sm text-gray-600">Indigenous Trees</div>
-                </div>
-                <div className="text-center p-4 bg-green-50 rounded-lg">
-                  <div className="text-2xl font-bold text-green-600">🍯</div>
-                  <div className="text-sm text-gray-600">Organic Honey</div>
-                </div>
+              <div className="bg-green-50 p-8 rounded-2xl mb-12">
+                <p className="text-2xl font-semibold text-green-700 mb-4">
+                  <span className="text-orange-500">Little</span><span className="text-green-600">Forest</span> Nursery — Restoring Water Resources, One Tree at a Time.
+                </p>
+                <p className="text-lg text-gray-600">
+                  Whether you're a farmer, a conservationist, a hotel, or a homeowner, we're here to help you grow with purpose.
+                </p>
               </div>
             </div>
+          </div>
+          
+          {/* What We Offer */}
+          <div className="mb-20">
+            <h3 className="text-3xl font-bold text-green-800 text-center mb-12">What We Offer</h3>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+              <div className="text-center p-6 bg-green-50 rounded-xl hover:shadow-lg transition-shadow">
+                <div className="text-5xl mb-4">🌳</div>
+                <h4 className="text-xl font-semibold text-green-700 mb-3">Indigenous Trees</h4>
+                <p className="text-gray-600">Seedlings for reforestation and water source restoration</p>
+              </div>
+              <div className="text-center p-6 bg-orange-50 rounded-xl hover:shadow-lg transition-shadow">
+                <div className="text-5xl mb-4">🍊</div>
+                <h4 className="text-xl font-semibold text-orange-600 mb-3">Fruit Trees</h4>
+                <p className="text-gray-600">Supporting food security and sustainable livelihoods</p>
+              </div>
+              <div className="text-center p-6 bg-purple-50 rounded-xl hover:shadow-lg transition-shadow">
+                <div className="text-5xl mb-4">🌼</div>
+                <h4 className="text-xl font-semibold text-purple-600 mb-3">Ornamental Plants</h4>
+                <p className="text-gray-600">For greening homes, institutions and beautification</p>
+              </div>
+              <div className="text-center p-6 bg-yellow-50 rounded-xl hover:shadow-lg transition-shadow">
+                <div className="text-5xl mb-4">🍯</div>
+                <h4 className="text-xl font-semibold text-yellow-600 mb-3">Organic Honey</h4>
+                <p className="text-gray-600">Harvested from indigenous little forests</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Our Impact */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h3 className="text-3xl md:text-4xl font-bold text-green-800 mb-6">Our Impact Areas</h3>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Through our carefully selected seedlings and sustainable practices, we're making a difference in three key areas
+            </p>
+          </div>
+          
+          <div className="grid lg:grid-cols-3 gap-12">
+            <div className="text-center group">
+              <div className="bg-green-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-green-200 transition-colors">
+                <Leaf className="h-10 w-10 text-green-600" />
+              </div>
+              <h4 className="text-2xl font-semibold text-gray-900 mb-4">Water Source Restoration</h4>
+              <p className="text-lg text-gray-600 leading-relaxed">
+                Indigenous tree seedlings specifically chosen for reforestation and water source conservation. Our native species help restore natural water cycles and protect watersheds for future generations.
+              </p>
+            </div>
             
-            <div className="space-y-6">
-              <div className="flex items-start space-x-4">
-                <div className="bg-green-100 p-3 rounded-lg">
-                  <Leaf className="h-6 w-6 text-green-600" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-gray-900 mb-2">Water Source Restoration</h3>
-                  <p className="text-gray-600">Indigenous tree seedlings specifically chosen for reforestation and water source conservation.</p>
-                </div>
+            <div className="text-center group">
+              <div className="bg-orange-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-orange-200 transition-colors">
+                <Users className="h-10 w-10 text-orange-600" />
               </div>
-              
-              <div className="flex items-start space-x-4">
-                <div className="bg-green-100 p-3 rounded-lg">
-                  <Users className="h-6 w-6 text-green-600" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-gray-900 mb-2">Food Security & Livelihoods</h3>
-                  <p className="text-gray-600">Fruit tree seedlings and organic honey supporting sustainable livelihoods and food security.</p>
-                </div>
+              <h4 className="text-2xl font-semibold text-gray-900 mb-4">Food Security & Livelihoods</h4>
+              <p className="text-lg text-gray-600 leading-relaxed">
+                Fruit tree seedlings and organic honey supporting sustainable livelihoods and food security. We empower communities with productive trees that provide nutrition and income for years to come.
+              </p>
+            </div>
+            
+            <div className="text-center group">
+              <div className="bg-purple-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-purple-200 transition-colors">
+                <Award className="h-10 w-10 text-purple-600" />
               </div>
-              
-              <div className="flex items-start space-x-4">
-                <div className="bg-green-100 p-3 rounded-lg">
-                  <Award className="h-6 w-6 text-green-600" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-gray-900 mb-2">Beautification & Greening</h3>
-                  <p className="text-gray-600">Ornamental plants and flowers for greening homes, institutions, and community beautification projects.</p>
-                </div>
-              </div>
+              <h4 className="text-2xl font-semibold text-gray-900 mb-4">Beautification & Greening</h4>
+              <p className="text-lg text-gray-600 leading-relaxed">
+                Ornamental plants and flowers for greening homes, institutions, and community beautification projects. Creating healthier, more beautiful spaces that improve quality of life and environmental health.
+              </p>
             </div>
           </div>
         </div>

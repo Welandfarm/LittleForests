@@ -80,21 +80,11 @@ export class DatabaseStorage implements IStorage {
 
   // Product methods
   async getProducts(): Promise<Product[]> {
-    const result = await db.select().from(products);
-    return result.map(product => ({
-      ...product,
-      image_url: product.imageUrl // Map imageUrl to image_url for frontend consistency
-    } as any));
+    return await db.select().from(products);
   }
 
   async getProduct(id: string): Promise<Product | undefined> {
     const result = await db.select().from(products).where(eq(products.id, id));
-    if (result[0]) {
-      return {
-        ...result[0],
-        image_url: result[0].imageUrl
-      } as Product;
-    }
     return result[0];
   }
 

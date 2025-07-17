@@ -92,38 +92,55 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const signUp = async (email: string, password: string, fullName?: string) => {
-    // Only wesleykoech2022@gmail.com is admin
-    const isAdmin = email.toLowerCase() === 'wesleykoech2022@gmail.com';
-    
-    const mockUser: User = {
-      id: `user-${Date.now()}`,
-      email,
-      fullName,
-      role: isAdmin ? 'admin' : 'user'
-    };
-    
-    setUser(mockUser);
-    localStorage.setItem('auth-token', 'demo-token');
-    localStorage.setItem('auth-user', JSON.stringify(mockUser));
-    
-    return { error: null };
+    try {
+      const response = await fetch('/api/auth/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password, fullName })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        return { error: data.error || 'Signup failed' };
+      }
+
+      if (data.user) {
+        setUser(data.user);
+        localStorage.setItem('auth-token', data.token || 'token');
+        localStorage.setItem('auth-user', JSON.stringify(data.user));
+      }
+
+      return { error: null };
+    } catch (error: any) {
+      return { error: error.message || 'Network error' };
+    }
   };
 
   const signIn = async (email: string, password: string) => {
-    // Only wesleykoech2022@gmail.com is admin
-    const isAdmin = email.toLowerCase() === 'wesleykoech2022@gmail.com';
-    
-    const mockUser: User = {
-      id: `user-${Date.now()}`,
-      email,
-      role: isAdmin ? 'admin' : 'user'
-    };
-    
-    setUser(mockUser);
-    localStorage.setItem('auth-token', 'demo-token');
-    localStorage.setItem('auth-user', JSON.stringify(mockUser));
-    
-    return { error: null };
+    try {
+      const response = await fetch('/api/auth/signin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        return { error: data.error || 'Signin failed' };
+      }
+
+      if (data.user) {
+        setUser(data.user);
+        localStorage.setItem('auth-token', data.token || 'token');
+        localStorage.setItem('auth-user', JSON.stringify(data.user));
+      }
+
+      return { error: null };
+    } catch (error: any) {
+      return { error: error.message || 'Network error' };
+    }
   };
 
   const signOut = async () => {

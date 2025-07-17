@@ -1,6 +1,6 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
-import { storage } from "./supabase-storage";
+import { storage } from "./storage";
 import bcrypt from "bcrypt";
 import { insertProductSchema, insertContentSchema, insertContactMessageSchema, insertTestimonialSchema, insertProfileSchema, insertAdminUserSchema } from "@shared/schema";
 
@@ -319,6 +319,50 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   app.post("/api/admin/logout", async (req, res) => {
+    res.json({ success: true });
+  });
+
+  // Regular user authentication routes (simplified for demo)
+  app.post("/api/auth/signup", async (req, res) => {
+    try {
+      const { email, password, fullName } = req.body;
+      
+      // Create profile in database
+      const profile = await storage.createProfile({
+        email,
+        fullName,
+        role: 'user'
+      });
+      
+      res.json({ 
+        user: profile,
+        token: 'demo-token'
+      });
+    } catch (error) {
+      res.status(400).json({ error: "Signup failed" });
+    }
+  });
+
+  app.post("/api/auth/signin", async (req, res) => {
+    try {
+      const { email, password } = req.body;
+      
+      // Get profile from database
+      const profile = await storage.getProfileByEmail(email);
+      if (!profile) {
+        return res.status(401).json({ error: "Invalid credentials" });
+      }
+      
+      res.json({ 
+        user: profile,
+        token: 'demo-token'
+      });
+    } catch (error) {
+      res.status(500).json({ error: "Signin failed" });
+    }
+  });
+
+  app.post("/api/auth/signout", async (req, res) => {
     res.json({ success: true });
   });
 

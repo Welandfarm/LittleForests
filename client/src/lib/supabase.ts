@@ -1,14 +1,30 @@
-import { createClient } from '@supabase/supabase-js';
+// This file has been migrated to use PostgreSQL backend instead of Supabase
+// All authentication now happens through API endpoints
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+export const api = {
+  async signUp(email: string, password: string, fullName?: string) {
+    const response = await fetch('/api/auth/signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password, fullName })
+    });
+    return response.json();
+  },
 
-if (!supabaseUrl) {
-  throw new Error('VITE_SUPABASE_URL is required');
-}
+  async signIn(email: string, password: string) {
+    const response = await fetch('/api/auth/signin', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+    return response.json();
+  },
 
-if (!supabaseAnonKey) {
-  throw new Error('VITE_SUPABASE_ANON_KEY is required');
-}
-
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+  async signOut() {
+    const response = await fetch('/api/auth/signout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' }
+    });
+    return response.json();
+  }
+};

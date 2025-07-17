@@ -420,7 +420,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/integration/products", async (req, res) => {
     try {
       console.log('Fetching products from Vercel dashboard...');
-      const response = await fetch('https://litteforest.vercel.app/api/products');
+      // Add timestamp to prevent caching
+      const timestamp = Date.now();
+      const response = await fetch(`https://litteforest.vercel.app/api/products?_t=${timestamp}`);
       if (!response.ok) {
         throw new Error(`Vercel API responded with ${response.status}`);
       }

@@ -440,7 +440,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return {
           id: product.id,
           name: product.plant_name,
-          category: product.category,
+          category: product.category || 'Indigenous Trees', // Default category if empty
           price: `KSH ${product.price}`,
           description: product.description,
           status: isAvailable ? 'Available' : 'Out of Stock',

@@ -75,8 +75,8 @@ Thank you!`;
       const data = await apiClient.getProducts();
       
       console.log('Fetched products:', data);
-      // Filter for available products
-      return data.filter((product: any) => product.status === 'active' || product.status === 'Available');
+      // Include all products (available and out of stock) for better customer experience
+      return data;
     },
   });
 
@@ -85,7 +85,8 @@ Thank you!`;
     const indigenous = products.filter((p: any) => 
       p.category === 'Indigenous' || 
       p.category === 'Indigenous Trees' ||
-      p.category.toLowerCase().includes('indigenous')
+      p.category.toLowerCase().includes('indigenous') ||
+      !p.category || p.category === '' // Include products without category
     );
     
     const ornamental = products.filter((p: any) => 

@@ -115,6 +115,9 @@ LittleForest is a full-stack web application for an online seedling nursery busi
 - June 30, 2025. Improved "Available" button styling from black to white background with black text
 - June 30, 2025. Added clickable WhatsApp contact links throughout the application for better user engagement
 - June 30, 2025. Updated WhatsApp message templates for order and contact buttons to use simplified, professional language
+- July 17, 2025. Successfully migrated from PostgreSQL to Supabase database for better integration flexibility
+- July 17, 2025. Configured API integration endpoints for Vercel dashboard to manage public website inventory
+- July 17, 2025. Set up cross-platform integration between Replit admin app and Vercel dashboard analytics
 
 ## User Preferences
 

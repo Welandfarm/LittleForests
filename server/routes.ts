@@ -1,6 +1,6 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
-import { storage } from "./storage";
+import { storage } from "./supabase-storage";
 import bcrypt from "bcrypt";
 import { insertProductSchema, insertContentSchema, insertContactMessageSchema, insertTestimonialSchema, insertProfileSchema, insertAdminUserSchema } from "@shared/schema";
 
@@ -364,6 +364,105 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/auth/signout", async (req, res) => {
     res.json({ success: true });
+  });
+
+  // API Integration endpoints for Vercel app
+  // These endpoints allow the Vercel dashboard to manage products on the public website
+
+  // Inventory sync endpoint - allows Vercel app to update stock quantities
+  app.put("/api/integration/inventory/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { stock_quantity, status } = req.body;
+      
+      const product = await storage.updateProduct(id, {
+        stock_quantity,
+        status: stock_quantity > 0 ? 'active' : 'out_of_stock'
+      });
+      
+      if (!product) {
+        return res.status(404).json({ error: "Product not found" });
+      }
+      
+      res.json({ success: true, product });
+    } catch (error) {
+      console.error('Inventory sync error:', error);
+      res.status(500).json({ error: "Failed to sync inventory" });
+    }
+  });
+
+  // Bulk inventory sync
+  app.post("/api/integration/inventory/bulk", async (req, res) => {
+    try {
+      const { products } = req.body; // Array of {id, stock_quantity, status}
+      
+      const results = [];
+      for (const item of products) {
+        try {
+          const product = await storage.updateProduct(item.id, {
+            stock_quantity: item.stock_quantity,
+            status: item.stock_quantity > 0 ? 'active' : 'out_of_stock'
+          });
+          results.push({ id: item.id, success: true, product });
+        } catch (error) {
+          results.push({ id: item.id, success: false, error: error.message });
+        }
+      }
+      
+      res.json({ success: true, results });
+    } catch (error) {
+      console.error('Bulk inventory sync error:', error);
+      res.status(500).json({ error: "Failed to sync inventory" });
+    }
+  });
+
+  // Product management for Vercel dashboard
+  app.get("/api/integration/products", async (req, res) => {
+    try {
+      const products = await storage.getProducts();
+      res.json(products);
+    } catch (error) {
+      console.error('Products integration error:', error);
+      res.status(500).json({ error: "Failed to get products" });
+    }
+  });
+
+  // Sales reporting endpoint for analytics
+  app.post("/api/integration/sales", async (req, res) => {
+    try {
+      const { productId, quantity, amount, date } = req.body;
+      
+      // Log sale in content table as sales record
+      const sale = await storage.createContent({
+        title: `Sale - ${productId}`,
+        content: JSON.stringify({ productId, quantity, amount, date }),
+        type: 'sale',
+        status: 'published'
+      });
+      
+      // Update product stock if available
+      const product = await storage.getProduct(productId);
+      if (product && product.stock_quantity) {
+        await storage.updateProduct(productId, {
+          stock_quantity: Math.max(0, product.stock_quantity - quantity)
+        });
+      }
+      
+      res.json({ success: true, sale });
+    } catch (error) {
+      console.error('Sales recording error:', error);
+      res.status(500).json({ error: "Failed to record sale" });
+    }
+  });
+
+  // Health check for integration
+  app.get("/api/integration/health", async (req, res) => {
+    res.json({ 
+      status: "healthy", 
+      timestamp: new Date().toISOString(),
+      version: "1.0.0",
+      database: "supabase"
+    });
   });
 
   const httpServer = createServer(app);

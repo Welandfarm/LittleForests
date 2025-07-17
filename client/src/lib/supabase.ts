@@ -1,30 +1,6 @@
-// This file has been migrated to use PostgreSQL backend instead of Supabase
-// All authentication now happens through API endpoints
+import { createClient } from '@supabase/supabase-js';
 
-export const api = {
-  async signUp(email: string, password: string, fullName?: string) {
-    const response = await fetch('/api/auth/signup', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password, fullName })
-    });
-    return response.json();
-  },
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || import.meta.env.NEXT_PUBLIC_SUPABASE_URL || 'https://mjsuwlpixcregiikiusd.supabase.co';
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || import.meta.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1qc3V3bHBpeGNyZWdpaWtpdXNkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk0Njc0NzcsImV4cCI6MjA2NTA0MzQ3N30.Anz7mqQLkGIMGcvPtfT1ELORA2DqEIHLsIge5DfQYxc';
 
-  async signIn(email: string, password: string) {
-    const response = await fetch('/api/auth/signin', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password })
-    });
-    return response.json();
-  },
-
-  async signOut() {
-    const response = await fetch('/api/auth/signout', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' }
-    });
-    return response.json();
-  }
-};
+export const supabase = createClient(supabaseUrl, supabaseAnonKey);

@@ -63,10 +63,16 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
                   />
                   <div className="absolute top-2 right-2">
                     <Badge 
-                      variant={(product.status === 'Available' || product.availability_status === 'Available') ? "outline" : "secondary"}
-                      className={(product.status === 'Available' || product.availability_status === 'Available') ? "bg-white text-black border-gray-300" : ""}
+                      variant={product.status === 'Available' ? "outline" : "secondary"}
+                      className={product.status === 'Available' ? 
+                        "bg-white text-black border-gray-300" : 
+                        "bg-red-100 text-red-800 border-red-300"
+                      }
                     >
-                      {product.status || product.availability_status || 'Available'}
+                      {product.status}
+                      {product.stock_quantity !== undefined && (
+                        <span className="ml-1 text-xs">({product.stock_quantity})</span>
+                      )}
                     </Badge>
                   </div>
                   <div className="absolute top-2 left-2">
@@ -113,11 +119,14 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
                     </div>
                     <Button 
                       size="sm" 
-                      disabled={!(product.status === 'Available' || product.availability_status === 'Available')}
+                      disabled={product.status === 'Out of Stock' || product.stock_quantity === 0}
                       onClick={() => onAddToCart(product)}
-                      className="bg-green-600 hover:bg-green-700"
+                      className={product.status === 'Out of Stock' ? 
+                        "bg-gray-400 cursor-not-allowed" : 
+                        "bg-green-600 hover:bg-green-700"
+                      }
                     >
-                      Add to Cart
+                      {product.status === 'Out of Stock' ? 'Out of Stock' : 'Add to Cart'}
                     </Button>
                   </div>
                 </div>

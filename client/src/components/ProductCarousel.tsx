@@ -11,13 +11,16 @@ import { useState } from 'react';
 
 interface Product {
   id: string;
-  name: string;
+  name?: string;
+  plant_name?: string;
   category: string;
-  price: string;
+  price: string | number;
   image_url?: string;
   imageUrl?: string;
   description?: string;
-  status: string;
+  status?: string;
+  availability_status?: string;
+  quantity?: number;
   [key: string]: any;
 }
 
@@ -55,15 +58,15 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
                 <div className="relative">
                   <img 
                     src={product.image_url || product.imageUrl || "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=300&fit=crop"} 
-                    alt={product.name}
+                    alt={product.name || product.plant_name}
                     className="w-full h-48 object-cover"
                   />
                   <div className="absolute top-2 right-2">
                     <Badge 
-                      variant={product.status === 'Available' ? "outline" : "secondary"}
-                      className={product.status === 'Available' ? "bg-white text-black border-gray-300" : ""}
+                      variant={(product.status === 'Available' || product.availability_status === 'Available') ? "outline" : "secondary"}
+                      className={(product.status === 'Available' || product.availability_status === 'Available') ? "bg-white text-black border-gray-300" : ""}
                     >
-                      {product.status}
+                      {product.status || product.availability_status || 'Available'}
                     </Badge>
                   </div>
                   <div className="absolute top-2 left-2">
@@ -73,10 +76,12 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
                   </div>
                 </div>
                 <div className="p-6">
-                  <h4 className="text-xl font-semibold mb-2">{product.name}</h4>
+                  <h4 className="text-xl font-semibold mb-2">{product.name || product.plant_name}</h4>
                   <p className="text-gray-600 mb-4 text-sm">{product.description}</p>
                   <div className="flex justify-between items-center mb-4">
-                    <span className="text-2xl font-bold text-green-600">{product.price}</span>
+                    <span className="text-2xl font-bold text-green-600">
+                      {typeof product.price === 'number' ? `KSH ${product.price}` : product.price}
+                    </span>
                   </div>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-2">
@@ -108,7 +113,7 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
                     </div>
                     <Button 
                       size="sm" 
-                      disabled={product.status !== 'Available'}
+                      disabled={!(product.status === 'Available' || product.availability_status === 'Available')}
                       onClick={() => onAddToCart(product)}
                       className="bg-green-600 hover:bg-green-700"
                     >

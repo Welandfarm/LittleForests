@@ -416,14 +416,47 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Product management for Vercel dashboard
+  // Product management for Vercel dashboard - fetch from external API
   app.get("/api/integration/products", async (req, res) => {
     try {
-      const products = await storage.getProducts();
-      res.json(products);
+      console.log('Fetching products from Vercel dashboard...');
+      const response = await fetch('https://litteforest.vercel.app/api/products');
+      if (!response.ok) {
+        throw new Error(`Vercel API responded with ${response.status}`);
+      }
+      const data = await response.json();
+      console.log('Raw Vercel API response:', JSON.stringify(data, null, 2));
+      
+      const products = data.success ? data.products : data;
+      console.log('Successfully fetched products from Vercel dashboard:', products?.length || 'unknown length');
+      
+      // Map Vercel format to expected format
+      const mappedProducts = products.map(product => ({
+        id: product.id,
+        name: product.plant_name,
+        category: product.category,
+        price: `KSH ${product.price}`,
+        description: product.description,
+        status: product.quantity > 0 ? 'Available' : 'Out of Stock',
+        stock_quantity: product.quantity,
+        image_url: product.image_url || null,
+        created_at: product.created_at,
+        updated_at: product.updated_at
+      }));
+      
+      console.log('Mapped products:', JSON.stringify(mappedProducts.slice(0, 1), null, 2));
+      res.json(mappedProducts);
     } catch (error) {
       console.error('Products integration error:', error);
-      res.status(500).json({ error: "Failed to get products" });
+      // Fallback to local data if Vercel API is unavailable
+      try {
+        const localProducts = await storage.getProducts();
+        console.log('Using local fallback products:', localProducts.length);
+        res.json(localProducts);
+      } catch (localError) {
+        console.error('Local fallback also failed:', localError);
+        res.status(500).json({ error: "Failed to get products from both Vercel and local storage" });
+      }
     }
   });
 

@@ -405,7 +405,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           });
           results.push({ id: item.id, success: true, product });
         } catch (error) {
-          results.push({ id: item.id, success: false, error: error.message });
+          results.push({ id: item.id, success: false, error: error instanceof Error ? error.message : 'Unknown error' });
         }
       }
       
@@ -433,7 +433,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.log('Successfully fetched products from Vercel dashboard:', products?.length || 'unknown length');
       
       // Map Vercel format to expected format with enhanced availability logic
-      const mappedProducts = products.map(product => {
+      const mappedProducts = products.map((product: any) => {
         const quantity = product.quantity || 0;
         const isAvailable = quantity > 0 && product.ready_for_sale !== false;
         
@@ -450,7 +450,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           updated_at: product.updated_at,
           ready_for_sale: product.ready_for_sale
         };
-      }).filter(product => product.ready_for_sale !== false); // Only show products ready for sale
+      }).filter((product: any) => product.ready_for_sale !== false); // Only show products ready for sale
       
       console.log('Mapped products:', JSON.stringify(mappedProducts.slice(0, 1), null, 2));
       res.json(mappedProducts);

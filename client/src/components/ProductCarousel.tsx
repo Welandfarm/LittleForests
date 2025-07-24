@@ -42,8 +42,8 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
   onAddToCart 
 }) => {
   return (
-    <div className="mb-8">
-      <h3 className="text-2xl font-bold text-green-800 mb-4">{categoryName}</h3>
+    <div className="mb-8 animate-slide-up">
+      <h3 className="text-2xl font-bold text-green-800 mb-4 animate-fade-in-delay">{categoryName}</h3>
       <Carousel 
         className="w-full"
         opts={{
@@ -53,14 +53,14 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
       >
         <CarouselContent className="-ml-2 md:-ml-4">
           {products.map((product) => (
-            <CarouselItem key={product.id} className="pl-2 md:pl-4 basis-1/2 md:basis-1/3 lg:basis-1/4">
-              <Card className="overflow-hidden hover:shadow-lg transition-shadow h-full">
+            <CarouselItem key={product.id} className="pl-2 md:pl-4 basis-1/2 md:basis-1/3 lg:basis-1/4 animate-fade-in">
+              <Card className="overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 ease-out h-full group">
                 <div className="relative bg-white">
                   <div className="aspect-square w-full flex items-center justify-center bg-gradient-to-br from-green-50 to-gray-50 p-2">
                     <img 
                       src={product.image_url || product.imageUrl || "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=300&fit=crop"} 
                       alt={product.name || product.plant_name}
-                      className="w-full h-full object-cover rounded-lg shadow-sm"
+                      className="w-full h-full object-cover rounded-lg shadow-sm transition-transform duration-300 group-hover:scale-105"
                     />
                   </div>
                   <div className="absolute top-2 right-2">
@@ -125,7 +125,7 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
                       onClick={() => onAddToCart(product)}
                       className={product.status === 'Out of Stock' ? 
                         "bg-gray-400 cursor-not-allowed" : 
-                        "bg-green-600 hover:bg-green-700"
+                        "bg-green-600 hover:bg-green-700 hover:scale-105 transition-all duration-200 active:scale-95"
                       }
                     >
                       {product.status === 'Out of Stock' ? 'Out of Stock' : 'Add to Cart'}

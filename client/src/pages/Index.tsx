@@ -182,7 +182,7 @@ Thank you!`;
               <Button 
                 variant="outline" 
                 onClick={() => setCartOpen(true)}
-                className="relative"
+                className="relative hover:scale-105 transition-transform duration-200"
               >
                 <ShoppingCart className="h-4 w-4 mr-1" />
                 Cart
@@ -192,7 +192,7 @@ Thank you!`;
                   </Badge>
                 )}
               </Button>
-              <Button onClick={handleOrder} className="bg-orange-500 hover:bg-orange-600 text-white">
+              <Button onClick={handleOrder} className="bg-orange-500 hover:bg-orange-600 text-white hover:scale-105 transition-transform duration-200">
                 Order Now
               </Button>
             </div>
@@ -222,7 +222,7 @@ Thank you!`;
         }}
       >
         <div className="absolute inset-0 bg-black bg-opacity-40"></div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center animate-slide-up">
           <div className="mb-8">
             <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white">
               Grow your own <span className="text-orange-500">Little</span>
@@ -243,7 +243,7 @@ Thank you!`;
             </div>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button onClick={handleOrder} className="bg-green-600 hover:bg-green-700 text-white px-8 py-3">
+              <Button onClick={handleOrder} className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 animate-bounce-gentle hover:scale-105 transition-transform duration-200">
                 Order Now
               </Button>
             </div>
@@ -254,8 +254,8 @@ Thank you!`;
       {/* Products Section */}
       <section id="products" className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-green-800 mb-4">
+          <div className="text-center mb-12 animate-fade-in">
+            <h2 className="text-4xl font-bold text-green-800 mb-4 animate-fade-in-delay">
               {getContent('Shop With Us').title || 'Shop With Us'}
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto mb-8">

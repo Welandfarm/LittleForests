@@ -59,7 +59,7 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
                   <img 
                     src={product.image_url || product.imageUrl || "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=300&fit=crop"} 
                     alt={product.name || product.plant_name}
-                    className="w-full h-48 object-cover"
+                    className="w-full h-48 object-contain bg-gray-50"
                   />
                   <div className="absolute top-2 right-2">
                     <Badge 

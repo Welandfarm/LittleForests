@@ -427,13 +427,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
         throw new Error(`Vercel API responded with ${response.status}`);
       }
       const data = await response.json();
-      console.log('Raw Vercel API response:', JSON.stringify(data, null, 2));
+      console.log('Raw Vercel API response (first product):', JSON.stringify(data.products?.[0] || data[0], null, 2));
       
       const products = data.success ? data.products : data;
       console.log('Successfully fetched products from Vercel dashboard:', products?.length || 'unknown length');
       
       // Map Vercel format to expected format with enhanced availability logic
       const mappedProducts = products.map((product: any) => {
+        console.log('Processing product:', JSON.stringify({
+          plant_name: product.plant_name,
+          quantity: product.quantity,
+          ready_for_sale: product.ready_for_sale,
+          price: product.price
+        }, null, 2));
+        
         const quantity = product.quantity || 0;
         const isAvailable = quantity > 0 && product.ready_for_sale !== false;
         
@@ -451,11 +458,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
           ready_for_sale: product.ready_for_sale
         };
       }).filter((product: any) => {
-        // Only show products that are explicitly ready for sale (true) and available
+        // Only show products that are explicitly ready for sale (true) 
         const isReadyForSale = product.ready_for_sale === true;
-        const hasStock = product.quantity > 0;
-        console.log(`Product ${product.plant_name}: ready_for_sale=${product.ready_for_sale}, quantity=${product.quantity}, showing=${isReadyForSale && hasStock}`);
-        return isReadyForSale && hasStock;
+        const hasStock = product.stock_quantity > 0;
+        console.log(`Product ${product.name}: ready_for_sale=${product.ready_for_sale}, stock_quantity=${product.stock_quantity}, showing=${isReadyForSale}`);
+        return isReadyForSale; // Remove stock requirement for now to see all ready products
       });
       
       console.log('Mapped products:', JSON.stringify(mappedProducts.slice(0, 1), null, 2));

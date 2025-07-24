@@ -450,7 +450,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
           updated_at: product.updated_at,
           ready_for_sale: product.ready_for_sale
         };
-      }).filter((product: any) => product.ready_for_sale !== false); // Only show products ready for sale
+      }).filter((product: any) => {
+        // Only show products that are explicitly ready for sale (true) and available
+        const isReadyForSale = product.ready_for_sale === true;
+        const hasStock = product.quantity > 0;
+        console.log(`Product ${product.plant_name}: ready_for_sale=${product.ready_for_sale}, quantity=${product.quantity}, showing=${isReadyForSale && hasStock}`);
+        return isReadyForSale && hasStock;
+      });
       
       console.log('Mapped products:', JSON.stringify(mappedProducts.slice(0, 1), null, 2));
       res.json(mappedProducts);

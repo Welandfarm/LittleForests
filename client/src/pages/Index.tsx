@@ -15,6 +15,7 @@ import { apiClient } from '@/lib/api';
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
+import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import nurseryImage from '@assets/For Front page_1751302445978.jpg';
 
 const Index = () => {
@@ -24,6 +25,9 @@ const Index = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const navigate = useNavigate();
   const { user, adminUser } = useAuth();
+  
+  // Initialize scroll animations
+  useScrollAnimation();
 
   // Fetch content from database
   const { data: content = [] } = useQuery({
@@ -254,8 +258,8 @@ Thank you!`;
       {/* Products Section */}
       <section id="products" className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12 animate-fade-in">
-            <h2 className="text-4xl font-bold text-green-800 mb-4 animate-fade-in-delay">
+          <div className="text-center mb-12 scroll-animate">
+            <h2 className="text-4xl font-bold text-green-800 mb-4">
               {getContent('Shop With Us').title || 'Shop With Us'}
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto mb-8">
@@ -283,10 +287,12 @@ Thank you!`;
           </div>
 
           {/* Category Filter */}
-          <CategoryFilter 
-            selectedCategory={selectedCategory}
-            onCategoryChange={setSelectedCategory}
-          />
+          <div className="scroll-animate-right">
+            <CategoryFilter 
+              selectedCategory={selectedCategory}
+              onCategoryChange={setSelectedCategory}
+            />
+          </div>
 
           {productsLoading ? (
             <div className="text-center py-8">Loading products...</div>
@@ -357,7 +363,7 @@ Thank you!`;
       {/* Footer */}
       <footer className="bg-green-800 text-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-8 scroll-animate">
             <div>
               <div className="flex items-center space-x-2 mb-4">
                 <span className="text-xl font-bold">

@@ -132,6 +132,7 @@ LittleForest is a full-stack web application for an online seedling nursery busi
 - July 24, 2025. Fixed inventory filtering to properly hide products marked as "not ready for sale" in Vercel dashboard
 - July 24, 2025. Improved database schema synchronization and resolved TypeScript errors for clean execution
 - July 24, 2025. Optimized product image display with square aspect ratio, object-cover styling, and 4-product grid layout for professional e-commerce appearance
+- July 24, 2025. Added comprehensive scroll-triggered animations using Intersection Observer API for engaging user experience throughout the website
 
 ## User Preferences
 

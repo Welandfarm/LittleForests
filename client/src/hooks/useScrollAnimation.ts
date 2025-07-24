@@ -11,16 +11,32 @@ export const useScrollAnimation = () => {
     };
 
     const observer = new IntersectionObserver(observerCallback, {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
+      threshold: 0.05,
+      rootMargin: '50px 0px -50px 0px'
     });
 
-    // Observe all scroll animation elements
-    const elements = document.querySelectorAll('.scroll-animate, .scroll-animate-left, .scroll-animate-right, .scroll-animate-scale');
-    elements.forEach((el) => observer.observe(el));
+    // Function to observe elements
+    const observeElements = () => {
+      const elements = document.querySelectorAll('.scroll-animate, .scroll-animate-left, .scroll-animate-right, .scroll-animate-scale');
+      elements.forEach((el) => observer.observe(el));
+    };
+
+    // Initial observation
+    observeElements();
+
+    // Re-observe when DOM changes (for dynamic content)
+    const mutationObserver = new MutationObserver(() => {
+      observeElements();
+    });
+
+    mutationObserver.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
 
     return () => {
-      elements.forEach((el) => observer.unobserve(el));
+      observer.disconnect();
+      mutationObserver.disconnect();
     };
   }, []);
 };

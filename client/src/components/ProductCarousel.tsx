@@ -45,7 +45,7 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
     <div className="mb-8 scroll-animate-left">
       <h3 className="text-2xl font-bold text-green-800 mb-4">{categoryName}</h3>
       <Carousel 
-        className="w-full"
+        className="w-full scroll-animate-right"
         opts={{
           align: "start",
           loop: true,
@@ -53,7 +53,7 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
       >
         <CarouselContent className="-ml-2 md:-ml-4">
           {products.map((product) => (
-            <CarouselItem key={product.id} className="pl-2 md:pl-4 basis-1/2 md:basis-1/3 lg:basis-1/4 scroll-animate-scale">
+            <CarouselItem key={product.id} className="pl-2 md:pl-4 basis-1/2 md:basis-1/3 lg:basis-1/4">
               <Card className="overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 ease-out h-full group">
                 <div className="relative bg-white">
                   <div className="aspect-square w-full flex items-center justify-center bg-gradient-to-br from-green-50 to-gray-50 p-2">

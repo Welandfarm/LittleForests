@@ -55,12 +55,14 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
           {products.map((product) => (
             <CarouselItem key={product.id} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
               <Card className="overflow-hidden hover:shadow-lg transition-shadow h-full">
-                <div className="relative">
-                  <img 
-                    src={product.image_url || product.imageUrl || "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=300&fit=crop"} 
-                    alt={product.name || product.plant_name}
-                    className="w-full h-48 object-contain bg-gray-50"
-                  />
+                <div className="relative bg-white">
+                  <div className="h-48 w-full flex items-center justify-center bg-gradient-to-br from-green-50 to-gray-50 p-4">
+                    <img 
+                      src={product.image_url || product.imageUrl || "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=300&fit=crop"} 
+                      alt={product.name || product.plant_name}
+                      className="max-h-full max-w-full object-contain rounded-sm shadow-sm"
+                    />
+                  </div>
                   <div className="absolute top-2 right-2">
                     <Badge 
                       variant={product.status === 'Available' ? "outline" : "secondary"}

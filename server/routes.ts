@@ -427,9 +427,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
         throw new Error(`Vercel API responded with ${response.status}`);
       }
       const data = await response.json();
-      console.log('Raw Vercel API response (first product):', JSON.stringify(data.products?.[0] || data[0], null, 2));
-      
       const products = data.success ? data.products : data;
+      console.log('Raw Vercel API response - total products:', products?.length);
+      console.log('First product structure:', JSON.stringify(products?.[0], null, 2));
       console.log('Successfully fetched products from Vercel dashboard:', products?.length || 'unknown length');
       
       // Map Vercel format to expected format with enhanced availability logic

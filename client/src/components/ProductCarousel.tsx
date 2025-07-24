@@ -53,14 +53,14 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
       >
         <CarouselContent className="-ml-2 md:-ml-4">
           {products.map((product) => (
-            <CarouselItem key={product.id} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
+            <CarouselItem key={product.id} className="pl-2 md:pl-4 basis-1/2 md:basis-1/3 lg:basis-1/4">
               <Card className="overflow-hidden hover:shadow-lg transition-shadow h-full">
                 <div className="relative bg-white">
-                  <div className="h-48 w-full flex items-center justify-center bg-gradient-to-br from-green-50 to-gray-50 p-4">
+                  <div className="aspect-square w-full flex items-center justify-center bg-gradient-to-br from-green-50 to-gray-50 p-2">
                     <img 
                       src={product.image_url || product.imageUrl || "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=300&fit=crop"} 
                       alt={product.name || product.plant_name}
-                      className="max-h-full max-w-full object-contain rounded-sm shadow-sm"
+                      className="w-full h-full object-cover rounded-lg shadow-sm"
                     />
                   </div>
                   <div className="absolute top-2 right-2">

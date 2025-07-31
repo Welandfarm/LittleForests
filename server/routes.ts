@@ -430,24 +430,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const products = data.success ? data.products : data;
       console.log('Raw Vercel API response - total products:', products?.length);
       console.log('First product structure:', JSON.stringify(products?.[0], null, 2));
+      console.log('Image fields in first product:', {
+        image_url: products?.[0]?.image_url,
+        imageUrl: products?.[0]?.imageUrl,
+        image: products?.[0]?.image,
+        photo: products?.[0]?.photo,
+        productImage: products?.[0]?.productImage
+      });
       console.log('Successfully fetched products from Vercel dashboard:', products?.length || 'unknown length');
       
       // Map Vercel format to expected format with enhanced availability logic
       const mappedProducts = products.map((product: any) => {
         console.log('Processing product:', JSON.stringify({
-          plant_name: product.plant_name,
+          name: product.name,
           quantity: product.quantity,
-          ready_for_sale: product.ready_for_sale,
+          inStock: product.inStock,
           price: product.price
         }, null, 2));
         
         const quantity = product.quantity || 0;
-        const isAvailable = quantity > 0 && product.ready_for_sale !== false;
+        // Since ready_for_sale is undefined in Vercel API, use inStock and quantity > 0 as availability criteria
+        const isAvailable = quantity > 0 && product.inStock !== false;
         
         return {
           id: product.id,
-          name: product.plant_name,
-          category: product.category || 'Indigenous Trees', // Default category if empty
+          name: product.name,
+          category: product.category || 'Indigenous Trees',
           price: `KSH ${product.price}`,
           description: product.description,
           status: isAvailable ? 'Available' : 'Out of Stock',
@@ -455,14 +463,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
           image_url: product.image_url || null,
           created_at: product.created_at,
           updated_at: product.updated_at,
-          ready_for_sale: product.ready_for_sale
+          ready_for_sale: isAvailable // Set this based on stock and inStock status
         };
       }).filter((product: any) => {
-        // Only show products that are explicitly ready for sale (true) 
-        const isReadyForSale = product.ready_for_sale === true;
+        // Show products that have stock and are marked as in stock
         const hasStock = product.stock_quantity > 0;
-        console.log(`Product ${product.name}: ready_for_sale=${product.ready_for_sale}, stock_quantity=${product.stock_quantity}, showing=${isReadyForSale}`);
-        return isReadyForSale; // Remove stock requirement for now to see all ready products
+        const isInStock = product.ready_for_sale === true;
+        console.log(`Product ${product.name}: has_stock=${hasStock}, ready_for_sale=${product.ready_for_sale}, showing=${hasStock && isInStock}`);
+        return hasStock && isInStock;
       });
       
       console.log('Mapped products:', JSON.stringify(mappedProducts.slice(0, 1), null, 2));

@@ -17,7 +17,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import FloatingLeaves from '@/components/FloatingLeaves';
-import GrowthTimeline from '@/components/GrowthTimeline';
+
 import nurseryImage from '@assets/For Front page_1751302445978.jpg';
 
 const Index = () => {
@@ -363,9 +363,6 @@ Thank you!`;
               )}
             </div>
           )}
-          
-          {/* Growth Timeline Component */}
-          <GrowthTimeline />
         </div>
       </section>
 

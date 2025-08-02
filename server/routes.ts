@@ -416,19 +416,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Product management for Vercel dashboard - fetch from external API
+  // Product management for Replit dashboard - fetch from external API
   app.get("/api/integration/products", async (req, res) => {
     try {
-      console.log('Fetching products from Vercel dashboard...');
+      console.log('Fetching products from Replit dashboard...');
       // Add timestamp to prevent caching
       const timestamp = Date.now();
-      const response = await fetch(`https://litteforest.vercel.app/api/products?_t=${timestamp}`);
+      const response = await fetch(`https://416d8116-6e6e-4808-8543-c23ff0e7dc09-00-4i1nyrkjignp.picard.replit.dev/api/products?_t=${timestamp}`);
       if (!response.ok) {
-        throw new Error(`Vercel API responded with ${response.status}`);
+        throw new Error(`Replit dashboard API responded with ${response.status}`);
       }
       const data = await response.json();
       const products = data.success ? data.products : data;
-      console.log('Raw Vercel API response - total products:', products?.length);
+      console.log('Raw Replit dashboard API response - total products:', products?.length);
       console.log('First product structure:', JSON.stringify(products?.[0], null, 2));
       console.log('Image fields in first product:', {
         image_url: products?.[0]?.image_url,
@@ -437,9 +437,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
         photo: products?.[0]?.photo,
         productImage: products?.[0]?.productImage
       });
-      console.log('Successfully fetched products from Vercel dashboard:', products?.length || 'unknown length');
+      console.log('Successfully fetched products from Replit dashboard:', products?.length || 'unknown length');
       
-      // Map Vercel format to expected format with enhanced availability logic
+      // Map Replit dashboard format to expected format with enhanced availability logic
       const mappedProducts = products.map((product: any) => {
         console.log('Processing product:', JSON.stringify({
           name: product.name,
@@ -449,7 +449,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }, null, 2));
         
         const quantity = product.quantity || 0;
-        // Since ready_for_sale is undefined in Vercel API, use inStock and quantity > 0 as availability criteria
+        // Since ready_for_sale is undefined in Replit dashboard API, use inStock and quantity > 0 as availability criteria
         const isAvailable = quantity > 0 && product.inStock !== false;
         
         return {
@@ -477,14 +477,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(mappedProducts);
     } catch (error) {
       console.error('Products integration error:', error);
-      // Fallback to local data if Vercel API is unavailable
+      // Fallback to local data if Replit dashboard API is unavailable
       try {
         const localProducts = await storage.getProducts();
         console.log('Using local fallback products:', localProducts.length);
         res.json(localProducts);
       } catch (localError) {
         console.error('Local fallback also failed:', localError);
-        res.status(500).json({ error: "Failed to get products from both Vercel and local storage" });
+        res.status(500).json({ error: "Failed to get products from both Replit dashboard and local storage" });
       }
     }
   });

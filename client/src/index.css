@@ -179,15 +179,15 @@
 
 @keyframes growTree {
   0% { 
-    height: 0%;
+    height: 0px;
     opacity: 0;
   }
   50% {
-    height: 60%;
+    height: 30px;
     opacity: 0.8;
   }
   100% { 
-    height: 100%;
+    height: 60px;
     opacity: 1;
   }
 }
@@ -206,10 +206,10 @@
 
 @keyframes shimmer {
   0% {
-    background-position: -200px 0;
+    transform: translateX(-100%);
   }
   100% {
-    background-position: calc(200px + 100%) 0;
+    transform: translateX(100%);
   }
 }
 

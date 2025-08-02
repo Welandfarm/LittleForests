@@ -16,6 +16,8 @@ import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
+import FloatingLeaves from '@/components/FloatingLeaves';
+import GrowthTimeline from '@/components/GrowthTimeline';
 import nurseryImage from '@assets/For Front page_1751302445978.jpg';
 
 const Index = () => {
@@ -39,7 +41,7 @@ const Index = () => {
 
   // Helper function to get content by title
   const getContent = (titleKey: string) => {
-    const item = content.find(c => c.title === titleKey);
+    const item = (content as any[]).find((c: any) => c.title === titleKey);
     return item || { title: '', content: '' };
   };
 
@@ -86,25 +88,26 @@ Thank you!`;
 
   // Categorize products - Updated to match actual database categories
   const categorizedProducts = useMemo(() => {
-    const indigenous = products.filter((p: any) => 
+    const productList = products as any[];
+    const indigenous = productList.filter((p: any) => 
       p.category === 'Indigenous' || 
       p.category === 'Indigenous Trees' ||
       p.category.toLowerCase().includes('indigenous') ||
       !p.category || p.category === '' // Include products without category
     );
     
-    const ornamental = products.filter((p: any) => 
+    const ornamental = productList.filter((p: any) => 
       p.category === 'Ornamental' || 
       p.category === 'Ornamental Trees' ||
       p.category === 'Ornamental Plants' ||
       p.category.toLowerCase().includes('ornamental')
     );
-    const fruit = products.filter((p: any) => 
+    const fruit = productList.filter((p: any) => 
       p.category === 'Fruit' || 
       p.category === 'Fruit Trees' ||
       p.category.toLowerCase().includes('fruit')
     );
-    const honey = products.filter((p: any) => 
+    const honey = productList.filter((p: any) => 
       p.category === 'Honey' ||
       p.category.toLowerCase().includes('honey')
     );
@@ -153,7 +156,10 @@ Thank you!`;
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-green-50 to-white">
+    <div className="min-h-screen bg-gradient-to-b from-green-50 to-white relative overflow-x-hidden">
+      {/* Floating leaves background */}
+      <FloatingLeaves />
+      
       {/* Header */}
       <header className="bg-white shadow-sm sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -357,6 +363,9 @@ Thank you!`;
               )}
             </div>
           )}
+          
+          {/* Growth Timeline Component */}
+          <GrowthTimeline />
         </div>
       </section>
 

@@ -55,13 +55,51 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
           {products.map((product) => (
             <CarouselItem key={product.id} className="pl-2 md:pl-4 basis-1/2 md:basis-1/3 lg:basis-1/4">
               <Card className="overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 ease-out h-full group">
-                <div className="relative bg-white">
-                  <div className="aspect-square w-full flex items-center justify-center bg-gradient-to-br from-green-50 to-gray-50 p-2">
+                <div className="relative bg-white overflow-hidden">
+                  <div className="aspect-square w-full flex items-center justify-center bg-gradient-to-br from-green-50 to-gray-50 p-2 relative">
+                    {/* Static Image */}
                     <img 
                       src={product.image_url || product.imageUrl || "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=300&fit=crop"} 
                       alt={product.name || product.plant_name}
-                      className="w-full h-full object-cover rounded-lg shadow-sm transition-transform duration-300 group-hover:scale-105"
+                      className="w-full h-full object-cover rounded-lg shadow-sm transition-all duration-500 group-hover:opacity-0 group-hover:scale-110"
                     />
+                    
+                    {/* Video overlay that appears on hover */}
+                    <video 
+                      className="absolute inset-2 w-full h-full object-cover rounded-lg shadow-sm opacity-0 group-hover:opacity-100 transition-all duration-500 scale-105 group-hover:scale-100"
+                      autoPlay 
+                      muted 
+                      loop
+                      playsInline
+                      onMouseEnter={(e) => {
+                        const video = e.currentTarget;
+                        if (video) {
+                          setTimeout(() => {
+                            video.play().catch(() => {
+                              // Video play failed, which is fine - videos don't exist yet
+                            });
+                          }, 200);
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        const video = e.currentTarget;
+                        if (video) {
+                          video.pause();
+                          video.currentTime = 0;
+                        }
+                      }}
+                    >
+                      <source src={`/videos/${(product.category || 'indigenous').toLowerCase().replace(' trees', '').replace(' ', '-')}-growing.mp4`} type="video/mp4" />
+                      <source src={`/videos/${(product.category || 'indigenous').toLowerCase().replace(' trees', '').replace(' ', '-')}-growing.webm`} type="video/webm" />
+                      {/* Fallback to generic plant growth video */}
+                      <source src="/videos/plant-growing.mp4" type="video/mp4" />
+                      <source src="/videos/plant-growing.webm" type="video/webm" />
+                    </video>
+                    
+                    {/* Growth animation overlay */}
+                    <div className="absolute inset-2 w-full h-full pointer-events-none opacity-0 group-hover:opacity-30 transition-opacity duration-700">
+                      <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1 bg-green-500 animate-grow-tree"></div>
+                    </div>
                   </div>
                   <div className="absolute top-2 right-2">
                     <Badge 

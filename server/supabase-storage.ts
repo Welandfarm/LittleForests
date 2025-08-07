@@ -103,25 +103,62 @@ export class SupabaseStorage implements IStorage {
     return data || undefined;
   }
 
-  // Product methods
+  // Product methods - reading from inventory table managed by dashboard
   async getProducts(): Promise<Product[]> {
     const { data, error } = await supabaseAdmin
-      .from('products')
-      .select('*');
+      .from('inventory')
+      .select('*')
+      .eq('ready_for_sale', true)
+      .eq('item_type', 'Plant');
     
     if (error) throw error;
-    return data || [];
+    
+    // Transform inventory data to Product format
+    const products = data?.map(item => ({
+      id: item.id,
+      name: item.plant_name,
+      category: item.category,
+      price: `KSH ${item.price}`,
+      description: item.description || `${item.scientific_name} - ${item.status} seedling`,
+      imageUrl: item.image_url,
+      image_url: item.image_url,
+      status: 'active',
+      featured: false,
+      stock_quantity: item.quantity,
+      created_at: item.created_at,
+      updated_at: item.updated_at
+    })) || [];
+    
+    return products;
   }
 
   async getProduct(id: string): Promise<Product | undefined> {
     const { data, error } = await supabaseAdmin
-      .from('products')
+      .from('inventory')
       .select('*')
       .eq('id', id)
+      .eq('ready_for_sale', true)
       .single();
     
     if (error && error.code !== 'PGRST116') throw error;
-    return data || undefined;
+    
+    if (!data) return undefined;
+    
+    // Transform inventory item to Product format
+    return {
+      id: data.id,
+      name: data.plant_name,
+      category: data.category,
+      price: `KSH ${data.price}`,
+      description: data.description || `${data.scientific_name} - ${data.status} seedling`,
+      imageUrl: data.image_url,
+      image_url: data.image_url,
+      status: 'active',
+      featured: false,
+      stock_quantity: data.quantity,
+      created_at: data.created_at,
+      updated_at: data.updated_at
+    };
   }
 
   async createProduct(product: InsertProduct): Promise<Product> {

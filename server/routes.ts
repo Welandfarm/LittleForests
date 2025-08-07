@@ -1,10 +1,32 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./supabase-storage";
+import { supabaseAdmin } from "./supabase";
 import bcrypt from "bcrypt";
 import { insertProductSchema, insertContentSchema, insertContactMessageSchema, insertTestimonialSchema, insertProfileSchema, insertAdminUserSchema } from "@shared/schema";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Categories route - get available categories dynamically
+  app.get("/api/categories", async (req, res) => {
+    try {
+      const { data, error } = await supabaseAdmin
+        .from('inventory')
+        .select('category')
+        .eq('ready_for_sale', true)
+        .in('item_type', ['Plant', 'Honey'])
+        .not('category', 'is', null);
+      
+      if (error) throw error;
+      
+      // Get unique categories
+      const uniqueCategories = [...new Set(data?.map(item => item.category) || [])];
+      res.json(uniqueCategories.sort());
+    } catch (error) {
+      console.error("Categories API error:", error);
+      res.status(500).json({ error: "Failed to get categories" });
+    }
+  });
+
   // Profile routes
   app.get("/api/profiles", async (req, res) => {
     try {

@@ -115,25 +115,38 @@ Thank you!`;
     return { indigenous, ornamental, fruit, honey };
   }, [products]);
 
-  // Filter products based on selected category
+  // Filter products based on selected category - now fully dynamic
   const filteredProducts = useMemo(() => {
     console.log('Filtering products for category:', selectedCategory);
+    
+    const productList = products as any[];
     
     if (selectedCategory === 'all') {
       return categorizedProducts;
     }
     
-    // Return only the selected category with products
+    // Dynamic filtering for any category
+    const matchingProducts = productList.filter((p: any) => 
+      p.category === selectedCategory ||
+      p.category?.toLowerCase() === selectedCategory.toLowerCase()
+    );
+    
+    // Return products organized by the selected category for display
     const filtered = {
-      indigenous: selectedCategory === 'Indigenous Trees' ? categorizedProducts.indigenous : [],
-      ornamental: selectedCategory === 'Ornamental Trees' ? categorizedProducts.ornamental : [],
-      fruit: selectedCategory === 'Fruit Trees' ? categorizedProducts.fruit : [],
-      honey: selectedCategory === 'Honey' ? categorizedProducts.honey : [],
+      indigenous: selectedCategory.toLowerCase().includes('indigenous') ? matchingProducts : [],
+      ornamental: selectedCategory.toLowerCase().includes('ornamental') ? matchingProducts : [],
+      fruit: selectedCategory.toLowerCase().includes('fruit') ? matchingProducts : [],
+      honey: selectedCategory.toLowerCase().includes('honey') ? matchingProducts : [],
+      // For new categories, put them in a general "other" group
+      other: !selectedCategory.toLowerCase().includes('indigenous') && 
+             !selectedCategory.toLowerCase().includes('ornamental') && 
+             !selectedCategory.toLowerCase().includes('fruit') && 
+             !selectedCategory.toLowerCase().includes('honey') ? matchingProducts : [],
     };
     
     console.log('Filtered products:', filtered);
     return filtered;
-  }, [selectedCategory, categorizedProducts]);
+  }, [selectedCategory, categorizedProducts, products]);
 
   const updateQuantity = (productId: string, change: number) => {
     setQuantities(prev => ({
@@ -350,11 +363,23 @@ Thank you!`;
                 />
               )}
               
+              {filteredProducts.other && filteredProducts.other.length > 0 && (
+                <ProductCarousel
+                  products={filteredProducts.other}
+                  categoryName={selectedCategory !== 'all' ? selectedCategory : 'Other Products'}
+                  quantities={quantities}
+                  onUpdateQuantity={updateQuantity}
+                  onSetQuantity={setQuantity}
+                  onAddToCart={handleAddToCart}
+                />
+              )}
+              
               {!productsLoading && 
                filteredProducts.indigenous.length === 0 && 
                filteredProducts.ornamental.length === 0 && 
                filteredProducts.fruit.length === 0 && 
                filteredProducts.honey.length === 0 && 
+               (!filteredProducts.other || filteredProducts.other.length === 0) && 
                products.length > 0 && (
                 <div className="text-center py-8">
                   <p className="text-gray-600">No products available in this category.</p>

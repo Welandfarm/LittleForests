@@ -2,43 +2,43 @@ import { supabaseAdmin } from './supabase';
 
 async function checkReadyProducts() {
   try {
-    console.log('Checking products ready for sale...');
+    console.log('Checking all ready-for-sale products by category...');
     
-    // Check products marked as ready for sale
-    const { data: readyProducts, error } = await supabaseAdmin
+    const { data, error } = await supabaseAdmin
       .from('inventory')
-      .select('*')
+      .select('category, plant_name, item_type')
       .eq('ready_for_sale', true)
-      .eq('item_type', 'Plant');
+      .in('item_type', ['Plant', 'Honey']);
     
-    if (error) {
-      console.error('Error fetching ready products:', error);
-      return;
-    }
+    if (error) throw error;
     
-    console.log(`Found ${readyProducts?.length || 0} products ready for sale`);
-    
-    if (readyProducts && readyProducts.length > 0) {
-      console.log('Ready products:', readyProducts);
-    } else {
-      console.log('No products are marked as ready_for_sale: true');
-      console.log('Checking first few inventory items to see their status...');
-      
-      const { data: allItems, error: allError } = await supabaseAdmin
-        .from('inventory')
-        .select('plant_name, ready_for_sale, image_url, price, category')
-        .eq('item_type', 'Plant')
-        .limit(10);
-        
-      if (!allError && allItems) {
-        console.log('Sample inventory items:', allItems);
+    // Group by category
+    const categoryMap = new Map();
+    data?.forEach(item => {
+      const category = item.category;
+      if (!categoryMap.has(category)) {
+        categoryMap.set(category, []);
       }
+      categoryMap.get(category).push({
+        name: item.plant_name,
+        type: item.item_type
+      });
+    });
+    
+    console.log('\nProducts by category:');
+    for (const [category, products] of categoryMap.entries()) {
+      console.log(`\n${category}:`);
+      products.forEach((product, index) => {
+        console.log(`  ${index + 1}. ${product.name} (${product.type})`);
+      });
     }
+    
+    console.log(`\nTotal categories: ${categoryMap.size}`);
+    console.log(`Total products: ${data?.length}`);
     
   } catch (error) {
     console.error('Error:', error);
   }
 }
 
-// Run the check
 checkReadyProducts();

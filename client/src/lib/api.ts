@@ -54,9 +54,9 @@ class ApiClient {
     return this.request('/profiles');
   }
 
-  // Product methods - use integration endpoint for real inventory
+  // Product methods
   async getProducts() {
-    return this.request('/integration/products');
+    return this.request('/products');
   }
 
   async getProduct(id: string) {

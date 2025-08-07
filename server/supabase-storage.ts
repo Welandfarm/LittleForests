@@ -109,7 +109,7 @@ export class SupabaseStorage implements IStorage {
       .from('inventory')
       .select('*')
       .eq('ready_for_sale', true)
-      .eq('item_type', 'Plant');
+      .in('item_type', ['Plant', 'Honey']);
     
     if (error) throw error;
     
@@ -138,6 +138,7 @@ export class SupabaseStorage implements IStorage {
       .select('*')
       .eq('id', id)
       .eq('ready_for_sale', true)
+      .in('item_type', ['Plant', 'Honey'])
       .single();
     
     if (error && error.code !== 'PGRST116') throw error;

@@ -84,12 +84,12 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
                       <div className="absolute inset-0 border-2 border-green-400/40 rounded-lg animate-pulse"></div>
                     </div>
                   </div>
-                  <div className="absolute top-2 right-2">
+                  <div className="absolute top-2 right-2 z-10">
                     <Badge 
                       variant={product.status === 'Available' ? "outline" : "secondary"}
                       className={product.status === 'Available' ? 
-                        "bg-white text-black border-gray-300" : 
-                        "bg-red-100 text-red-800 border-red-300"
+                        "bg-white text-black border-gray-300 text-xs" : 
+                        "bg-red-100 text-red-800 border-red-300 text-xs"
                       }
                     >
                       {product.status}
@@ -98,8 +98,8 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
                       )}
                     </Badge>
                   </div>
-                  <div className="absolute top-2 left-2">
-                    <Badge variant="outline" className="bg-white">
+                  <div className="absolute bottom-2 left-2 z-10">
+                    <Badge variant="outline" className="bg-white text-xs">
                       {product.category}
                     </Badge>
                   </div>

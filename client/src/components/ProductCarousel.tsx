@@ -64,24 +64,10 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
                       className="w-full h-full object-cover rounded-lg shadow-sm transition-all duration-500 group-hover:scale-105 group-hover:brightness-110"
                     />
                     
-                    {/* Animated overlay effects on hover */}
-                    <div className="absolute inset-2 w-full h-full pointer-events-none opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-lg">
-                      {/* Shimmering effect overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer"></div>
-                      
-                      {/* Growing plant animation */}
-                      <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2">
-                        <div className="w-0.5 bg-green-400 animate-grow-tree opacity-80"></div>
-                        <div className="absolute -top-1 -left-1 w-2 h-2 bg-green-300 rounded-full animate-pulse"></div>
-                      </div>
-                      
-                      {/* Floating particles */}
-                      <div className="absolute top-1/4 left-1/4 w-1 h-1 bg-green-300 rounded-full animate-float-1 opacity-60"></div>
-                      <div className="absolute top-1/3 right-1/4 w-1 h-1 bg-green-400 rounded-full animate-float-2 opacity-60"></div>
-                      <div className="absolute bottom-1/3 left-1/3 w-1 h-1 bg-green-200 rounded-full animate-float-3 opacity-60"></div>
-                      
-                      {/* Subtle border glow */}
-                      <div className="absolute inset-0 border-2 border-green-400/40 rounded-lg animate-pulse"></div>
+                    {/* Subtle hover overlay - much more minimal */}
+                    <div className="absolute inset-2 w-full h-full pointer-events-none opacity-0 group-hover:opacity-100 transition-all duration-300 rounded-lg">
+                      {/* Very subtle brightness overlay only */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-transparent via-transparent to-white/10 rounded-lg"></div>
                     </div>
                   </div>
                   <div className="absolute top-2 right-2 z-10">

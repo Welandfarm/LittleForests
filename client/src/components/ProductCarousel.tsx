@@ -61,13 +61,27 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
                     <img 
                       src={product.image_url || product.imageUrl || "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=300&fit=crop"} 
                       alt={product.name || product.plant_name}
-                      className="w-full h-full object-cover rounded-lg shadow-sm transition-all duration-500 group-hover:scale-105 group-hover:brightness-110"
+                      className="w-full h-full object-cover rounded-lg shadow-sm transition-all duration-500 group-hover:scale-125 group-hover:brightness-125"
                     />
                     
-                    {/* Subtle hover overlay - much more minimal */}
-                    <div className="absolute inset-2 w-full h-full pointer-events-none opacity-0 group-hover:opacity-100 transition-all duration-300 rounded-lg">
-                      {/* Very subtle brightness overlay only */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-transparent via-transparent to-white/10 rounded-lg"></div>
+                    {/* Strong dramatic hover effects without green */}
+                    <div className="absolute inset-2 w-full h-full pointer-events-none opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-lg">
+                      {/* Dramatic flickering light overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shimmer"></div>
+                      <div className="absolute inset-0 bg-gradient-to-l from-transparent via-yellow/20 to-transparent animate-pulse"></div>
+                      
+                      {/* Floating light particles */}
+                      <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-white rounded-full animate-float-1 opacity-80 shadow-lg"></div>
+                      <div className="absolute top-1/3 right-1/4 w-1.5 h-1.5 bg-yellow-200 rounded-full animate-float-2 opacity-70 shadow-md"></div>
+                      <div className="absolute bottom-1/3 left-1/3 w-1 h-1 bg-white rounded-full animate-float-3 opacity-60"></div>
+                      <div className="absolute top-1/2 right-1/3 w-1.5 h-1.5 bg-orange-200 rounded-full animate-float-1 opacity-75"></div>
+                      
+                      {/* Strong border glow effect */}
+                      <div className="absolute inset-0 border-2 border-white/60 rounded-lg animate-pulse shadow-xl"></div>
+                      
+                      {/* Additional sparkle effects */}
+                      <div className="absolute top-1/6 left-1/2 w-1 h-1 bg-white rounded-full animate-pulse opacity-80"></div>
+                      <div className="absolute bottom-1/4 right-1/2 w-1 h-1 bg-yellow-300 rounded-full animate-pulse opacity-70"></div>
                     </div>
                   </div>
                   <div className="absolute top-2 right-2 z-10">

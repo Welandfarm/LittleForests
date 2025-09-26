@@ -1,7 +1,6 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
-import { storage } from "./supabase-storage";
-import { supabaseAdmin } from "./supabase";
+import { storage } from "./storage";
 import bcrypt from "bcrypt";
 import { insertProductSchema, insertContentSchema, insertContactMessageSchema, insertTestimonialSchema, insertProfileSchema, insertAdminUserSchema } from "@shared/schema";
 
@@ -9,17 +8,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Categories route - get available categories dynamically
   app.get("/api/categories", async (req, res) => {
     try {
-      const { data, error } = await supabaseAdmin
-        .from('inventory')
-        .select('category')
-        .eq('ready_for_sale', true)
-        .in('item_type', ['Plant', 'Honey'])
-        .not('category', 'is', null);
+      const products = await storage.getProducts();
       
-      if (error) throw error;
+      // Get unique categories from products
+      const categories = products
+        .filter(product => product.category && product.status === 'active')
+        .map(product => product.category);
       
-      // Get unique categories
-      const uniqueCategories = [...new Set(data?.map(item => item.category) || [])];
+      const uniqueCategories = Array.from(new Set(categories));
       res.json(uniqueCategories.sort());
     } catch (error) {
       console.error("Categories API error:", error);

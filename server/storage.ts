@@ -174,4 +174,9 @@ export class DatabaseStorage implements IStorage {
   }
 }
 
-export const storage = new DatabaseStorage();
+// Switch to Supabase storage when credentials are available
+import { SupabaseStorage } from './supabase-storage';
+
+export const storage = process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY 
+  ? new SupabaseStorage() 
+  : new DatabaseStorage();

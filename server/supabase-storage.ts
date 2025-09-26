@@ -153,7 +153,6 @@ export class SupabaseStorage implements IStorage {
       price: `KSH ${data.price}`,
       description: data.description || `${data.scientific_name} - ${data.status} seedling`,
       imageUrl: data.image_url,
-      image_url: data.image_url,
       status: 'Available',
       featured: false,
       stock_quantity: data.quantity,

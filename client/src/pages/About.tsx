@@ -159,15 +159,14 @@ const About = () => {
                       <AccordionContent className="px-6 pb-6">
                         <div className="grid md:grid-cols-2 gap-6">
                           <div className="space-y-4">
-                            <h4 className="font-semibold text-gray-900">Story</h4>
                             <p className="text-gray-600">
-                              Mumetet Spring had lost much of its surrounding vegetation due to deforestation and nearby farming. As a result, water flow reduced, and contamination from both animals and people was common. Together with the community, we planted indigenous trees to restore the catchment and constructed a protected water point to reduce direct contact with the spring.
+                              Mumetet Spring had lost much of its surrounding vegetation due to deforestation and nearby farming. As a result, water flow reduced and contamination from both animals and people was common. Together with the community, we planted indigenous trees to restore the catchment and constructed a protected water point to reduce direct contact with the spring.
                             </p>
                             <p className="text-gray-600">
-                              Today, the spring flows more reliably, provides cleaner and safer water for over 70 households, and has new life around it through restored biodiversity.
+                              Today, community members can collect water more easily and safely. The protected structure ensures that water remains clean, reliable, and available for households throughout the year, while the restored vegetation helps secure the source for future generations.
                             </p>
                             <blockquote className="border-l-4 border-green-500 pl-4 italic text-gray-700">
-                              "Now we have clean water close to our homes. Our children no longer suffer from waterborne diseases as before," shared one resident with joy.
+                              "Fetching water has become much easier. The water point is clean and safe, and we no longer worry about contamination when collecting it for our families," shared Ann, a resident.
                             </blockquote>
                           </div>
                           <div className="bg-gray-100 rounded-lg p-6 flex items-center justify-center">
@@ -189,7 +188,6 @@ const About = () => {
                         <AccordionContent className="px-6 pb-6">
                           <div className="grid md:grid-cols-2 gap-6">
                             <div className="space-y-4">
-                              <h4 className="font-semibold text-gray-900">Story</h4>
                               <p className="text-gray-600">
                                 Coming soon: We are preparing the story of {springName} Spring, highlighting the challenges faced, the actions taken, and the impact created with the community.
                               </p>

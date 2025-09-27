@@ -12,10 +12,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // Get unique categories from products
       const categories = products
-        .filter(product => product.category && product.status === 'active')
+        .filter(product => product.category && product.status === 'Available')
         .map(product => product.category);
       
       const uniqueCategories = Array.from(new Set(categories));
+      res.set('Cache-Control', 'no-cache'); // Prevent caching issues
       res.json(uniqueCategories.sort());
     } catch (error) {
       console.error("Categories API error:", error);

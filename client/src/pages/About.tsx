@@ -1,6 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Leaf, Users, Award, Heart } from "lucide-react";
 import AuthButton from '@/components/AuthButton';
 import NavigationDropdown from '@/components/NavigationDropdown';
@@ -125,36 +126,129 @@ const About = () => {
               </div>
             </TabsContent>
             
-            <TabsContent value="impact" className="mt-8">
-              <div className="grid lg:grid-cols-3 gap-8">
-                <div className="text-center group">
+            <TabsContent value="impact" className="mt-8 space-y-12">
+              {/* Water Source Restoration Section */}
+              <div>
+                <div className="text-center group mb-8">
                   <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-green-200 transition-colors">
                     <Leaf className="h-8 w-8 text-green-600" />
                   </div>
-                  <h4 className="text-xl font-semibold text-gray-900 mb-3">Water Source Restoration</h4>
-                  <p className="text-gray-600">
-                    Indigenous tree seedlings specifically chosen for reforestation and water source conservation.
-                  </p>
+                  <h3 className="text-2xl font-semibold text-gray-900 mb-4">Restoring Springs and Streams</h3>
+                  <div className="max-w-4xl mx-auto text-left">
+                    <p className="text-gray-600 mb-4">
+                      Springs act as a major source of water for many communities, yet these vital ecosystems face challenges arising from massive deforestation, farming, and contamination from direct contact with humans and animals.
+                    </p>
+                    <p className="text-gray-600 mb-4">
+                      Our focus is to bring back these water sources to life and secure high water quality for both the present and the next generation. We do this by:
+                    </p>
+                    <ul className="list-disc list-inside text-gray-600 mb-6 space-y-2">
+                      <li>Growing indigenous trees to replenish lost vegetation</li>
+                      <li>Constructing water points to avoid contamination</li>
+                    </ul>
+                  </div>
                 </div>
-                
-                <div className="text-center group">
+
+                {/* Springs Accordion */}
+                <div className="max-w-4xl mx-auto">
+                  <Accordion type="single" collapsible className="space-y-4">
+                    {/* Mumetet Spring - Complete Story */}
+                    <AccordionItem value="mumetet" className="border border-green-200 rounded-lg">
+                      <AccordionTrigger className="px-6 py-4 hover:bg-green-50">
+                        <span className="text-lg font-semibold text-green-800">Mumetet Spring</span>
+                      </AccordionTrigger>
+                      <AccordionContent className="px-6 pb-6">
+                        <div className="grid md:grid-cols-2 gap-6">
+                          <div className="space-y-4">
+                            <h4 className="font-semibold text-gray-900">Story</h4>
+                            <p className="text-gray-600">
+                              Mumetet Spring had lost much of its surrounding vegetation due to deforestation and nearby farming. As a result, water flow reduced, and contamination from both animals and people was common. Together with the community, we planted indigenous trees to restore the catchment and constructed a protected water point to reduce direct contact with the spring.
+                            </p>
+                            <p className="text-gray-600">
+                              Today, the spring flows more reliably, provides cleaner and safer water for over 70 households, and has new life around it through restored biodiversity.
+                            </p>
+                            <blockquote className="border-l-4 border-green-500 pl-4 italic text-gray-700">
+                              "Now we have clean water close to our homes. Our children no longer suffer from waterborne diseases as before," shared one resident with joy.
+                            </blockquote>
+                          </div>
+                          <div className="bg-gray-100 rounded-lg p-6 flex items-center justify-center">
+                            <div className="text-center text-gray-500">
+                              <div className="text-4xl mb-2">📷</div>
+                              <p>Placeholder for 2–3 photos or a short video clip</p>
+                            </div>
+                          </div>
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+
+                    {/* Other Springs - Coming Soon */}
+                    {['Masese', 'Choronok', 'Chebululu', 'Korabi', 'Tabet', 'Milimani', 'Bondet', 'Anabomoi', 'Chemeres', 'Kibochi'].map((springName) => (
+                      <AccordionItem key={springName} value={springName.toLowerCase()} className="border border-green-200 rounded-lg">
+                        <AccordionTrigger className="px-6 py-4 hover:bg-green-50">
+                          <span className="text-lg font-semibold text-green-800">{springName} Spring</span>
+                        </AccordionTrigger>
+                        <AccordionContent className="px-6 pb-6">
+                          <div className="grid md:grid-cols-2 gap-6">
+                            <div className="space-y-4">
+                              <h4 className="font-semibold text-gray-900">Story</h4>
+                              <p className="text-gray-600">
+                                Coming soon: We are preparing the story of {springName} Spring, highlighting the challenges faced, the actions taken, and the impact created with the community.
+                              </p>
+                            </div>
+                            <div className="bg-gray-100 rounded-lg p-6 flex items-center justify-center">
+                              <div className="text-center text-gray-500">
+                                <div className="text-4xl mb-2">📷</div>
+                                <p>Placeholder for photos or videos</p>
+                              </div>
+                            </div>
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
+                    ))}
+                  </Accordion>
+                </div>
+              </div>
+
+              {/* Food Security & Livelihoods Section */}
+              <div>
+                <div className="text-center group mb-8">
                   <div className="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-orange-200 transition-colors">
                     <Users className="h-8 w-8 text-orange-600" />
                   </div>
-                  <h4 className="text-xl font-semibold text-gray-900 mb-3">Food Security & Livelihoods</h4>
-                  <p className="text-gray-600">
-                    Fruit tree seedlings and organic honey supporting sustainable livelihoods and food security.
-                  </p>
+                  <h3 className="text-2xl font-semibold text-gray-900 mb-4">Promoting Food Security and Livelihoods</h3>
+                  <div className="max-w-4xl mx-auto">
+                    <p className="text-gray-600 mb-6">
+                      We are working with communities to improve nutrition and income through sustainable practices. This includes introducing fruit trees, supporting small-scale farming, and exploring beekeeping and honey production.
+                    </p>
+                  </div>
                 </div>
                 
-                <div className="text-center group">
+                {/* Empty accordion container for future projects */}
+                <div className="max-w-4xl mx-auto">
+                  <Accordion type="single" collapsible className="space-y-4">
+                    {/* Future project stories will be added here */}
+                  </Accordion>
+                </div>
+              </div>
+
+              {/* Beautification & Greening Section */}
+              <div>
+                <div className="text-center group mb-8">
                   <div className="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-purple-200 transition-colors">
                     <Award className="h-8 w-8 text-purple-600" />
                   </div>
-                  <h4 className="text-xl font-semibold text-gray-900 mb-3">Beautification & Greening</h4>
-                  <p className="text-gray-600">
-                    Ornamental plants and flowers for greening homes, institutions, and community beautification projects.
-                  </p>
+                  <h3 className="text-2xl font-semibold text-gray-900 mb-4">Beautification and Greening Communities</h3>
+                  <div className="max-w-4xl mx-auto">
+                    <p className="text-gray-600 mb-6">
+                      We believe in the power of nature to make spaces healthier, more beautiful, and more livable. Our future work will include planting ornamental trees, greening schools and markets, and promoting community gardens.
+                    </p>
+                  </div>
+                </div>
+                
+                {/* Empty accordion container for future projects */}
+                <div className="max-w-4xl mx-auto">
+                  <Accordion type="single" collapsible className="space-y-4">
+                    {/* Future project stories will be added here */}
+                  </Accordion>
                 </div>
               </div>
             </TabsContent>

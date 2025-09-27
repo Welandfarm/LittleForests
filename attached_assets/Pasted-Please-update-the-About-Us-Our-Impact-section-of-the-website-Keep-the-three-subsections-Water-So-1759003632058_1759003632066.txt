@@ -1,0 +1,59 @@
+Please update the About Us → Our Impact section of the website. Keep the three subsections (Water Source Restoration, Food Security & Livelihoods, Beautification & Greening), but adjust them as follows:
+
+1. Water Source Restoration
+
+At the top, insert this introduction text:
+
+Restoring Springs and Streams
+Springs act as a major source of water for many communities, yet these vital ecosystems face challenges arising from massive deforestation, farming, and contamination from direct contact with humans and animals.
+Our focus is to bring back these water sources to life and secure high water quality for both the present and the next generation. We do this by:
+
+Growing indigenous trees to replenish lost vegetation
+
+Constructing water points to avoid contamination
+
+Below this introduction, create accordion-style story cards for springs.
+
+The first accordion card should be Mumetet Spring, already filled in with this content:
+
+Story (left):
+Mumetet Spring had lost much of its surrounding vegetation due to deforestation and nearby farming. As a result, water flow reduced, and contamination from both animals and people was common. Together with the community, we planted indigenous trees to restore the catchment and constructed a protected water point to reduce direct contact with the spring. Today, the spring flows more reliably, provides cleaner and safer water for over 70 households, and has new life around it through restored biodiversity.
+"Now we have clean water close to our homes. Our children no longer suffer from waterborne diseases as before," shared one resident with joy.
+
+Media (right):
+Placeholder for 2–3 photos or a short video clip.
+
+Add 10 more accordion cards for these springs: Masese, Choronok, Chebululu, Korabi, Tabet, Milimani, Bondet, Anabomoi, Chemeres, Kibochi.
+Each card should expand into the same side-by-side layout, with the left side saying:
+“Coming soon: We are preparing the story of [Spring Name], highlighting the challenges faced, the actions taken, and the impact created with the community.”
+The right side should be a placeholder for photos or videos.
+
+⚡ Make it possible to add more springs in the future without breaking the layout (so new accordion cards can simply be added at the bottom).
+
+2. Food Security & Livelihoods
+
+For now, show this introduction text:
+
+Promoting Food Security and Livelihoods
+We are working with communities to improve nutrition and income through sustainable practices. This includes introducing fruit trees, supporting small-scale farming, and exploring beekeeping and honey production.
+
+Below this, create an accordion container, but leave it empty for now (no cards). Later, we will add specific project stories inside.
+
+3. Beautification & Greening
+
+For now, show this introduction text:
+
+Beautification and Greening Communities
+We believe in the power of nature to make spaces healthier, more beautiful, and more livable. Our future work will include planting ornamental trees, greening schools and markets, and promoting community gardens.
+
+Below this, create an accordion container, but leave it empty for now (no cards). Later, we will add project stories inside.
+
+4. General Design
+
+Use a clean, professional design.
+
+Accordion cards should expand smoothly.
+
+Layout should be side-by-side (story text on left, media on right) on desktop, and stack on mobile.
+
+Headings and bullet points should be styled consistently with the rest of the website.

@@ -69,7 +69,7 @@ const About = () => {
               About <span className="text-orange-500">Little</span><span className="text-green-600">Forest</span> Nursery
             </h2>
             <p className="text-xl text-gray-700 leading-relaxed max-w-4xl mx-auto">
-              Little Forest Nursery is a nature-inspired social-enterprise rooted in Bomet County, Kenya. We are passionate about restoring landscapes, conserving water sources, and greening spaces—one seedling at a time.
+              Little Forest Nursery is a nature-inspired social-enterprise rooted in Bomet County, Kenya. We are passionate about restoring landscapes, conserving water sources, and greening spaces, one seedling at a time.
             </p>
           </div>
 

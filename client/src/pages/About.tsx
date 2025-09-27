@@ -16,14 +16,22 @@ const About = () => {
       const data = await apiClient.getContent();
       
       // Convert to object for easy access
-      const contentObj: { [key: string]: { title: string; content: string } } = {};
+      const contentObj: { [key: string]: { title: string; content: string; type: string } } = {};
       data?.forEach((item: any) => {
         const key = item.title?.toLowerCase().replace(/\s+/g, '_') || '';
-        contentObj[key] = { title: item.title || '', content: item.content || '' };
+        contentObj[key] = { title: item.title || '', content: item.content || '', type: item.type || 'page' };
       });
       return contentObj;
     },
   });
+
+  // Get spring stories
+  const springStories = Object.entries(content).filter(([key, value]) => 
+    value.type === 'story' && key.includes('spring')
+  );
+
+  // Static spring names for fallback
+  const allSprings = ['Mumetet', 'Masese', 'Choronok', 'Chebululu', 'Korabi', 'Tabet', 'Milimani', 'Bondet', 'Anabomoi', 'Chemeres', 'Kibochi'];
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-50 to-white">
@@ -151,57 +159,38 @@ const About = () => {
                 {/* Springs Accordion */}
                 <div className="max-w-4xl mx-auto">
                   <Accordion type="single" collapsible className="space-y-4">
-                    {/* Mumetet Spring - Complete Story */}
-                    <AccordionItem value="mumetet" className="border border-green-200 rounded-lg">
-                      <AccordionTrigger className="px-6 py-4 hover:bg-green-50">
-                        <span className="text-lg font-semibold text-green-800">Mumetet Spring</span>
-                      </AccordionTrigger>
-                      <AccordionContent className="px-6 pb-6">
-                        <div className="grid md:grid-cols-2 gap-6">
-                          <div className="space-y-4">
-                            <p className="text-gray-600">
-                              Mumetet Spring had lost much of its surrounding vegetation due to deforestation and nearby farming. As a result, water flow reduced and contamination from both animals and people was common. Together with the community, we planted indigenous trees to restore the catchment and constructed a protected water point to reduce direct contact with the spring.
-                            </p>
-                            <p className="text-gray-600">
-                              Today, community members can collect water more easily and safely. The protected structure ensures that water remains clean, reliable, and available for households throughout the year, while the restored vegetation helps secure the source for future generations.
-                            </p>
-                            <blockquote className="border-l-4 border-green-500 pl-4 italic text-gray-700">
-                              "Fetching water has become much easier. The water point is clean and safe, and we no longer worry about contamination when collecting it for our families," shared Ann, a resident.
-                            </blockquote>
-                          </div>
-                          <div className="bg-gray-100 rounded-lg p-6 flex items-center justify-center">
-                            <div className="text-center text-gray-500">
-                              <div className="text-4xl mb-2">📷</div>
-                              <p>Placeholder for 2–3 photos or a short video clip</p>
-                            </div>
-                          </div>
-                        </div>
-                      </AccordionContent>
-                    </AccordionItem>
-
-                    {/* Other Springs - Coming Soon */}
-                    {['Masese', 'Choronok', 'Chebululu', 'Korabi', 'Tabet', 'Milimani', 'Bondet', 'Anabomoi', 'Chemeres', 'Kibochi'].map((springName) => (
-                      <AccordionItem key={springName} value={springName.toLowerCase()} className="border border-green-200 rounded-lg">
-                        <AccordionTrigger className="px-6 py-4 hover:bg-green-50">
-                          <span className="text-lg font-semibold text-green-800">{springName} Spring</span>
-                        </AccordionTrigger>
-                        <AccordionContent className="px-6 pb-6">
-                          <div className="grid md:grid-cols-2 gap-6">
-                            <div className="space-y-4">
-                              <p className="text-gray-600">
-                                Coming soon: We are preparing the story of {springName} Spring, highlighting the challenges faced, the actions taken, and the impact created with the community.
-                              </p>
-                            </div>
-                            <div className="bg-gray-100 rounded-lg p-6 flex items-center justify-center">
-                              <div className="text-center text-gray-500">
-                                <div className="text-4xl mb-2">📷</div>
-                                <p>Placeholder for photos or videos</p>
+                    {allSprings.map((springName) => {
+                      const storyKey = `${springName.toLowerCase()}_spring_story`;
+                      const story = content[storyKey];
+                      const hasStory = story && story.content && story.content.trim().length > 0;
+                      
+                      return (
+                        <AccordionItem key={springName} value={springName.toLowerCase()} className="border border-green-200 rounded-lg">
+                          <AccordionTrigger className="px-6 py-4 hover:bg-green-50">
+                            <span className="text-lg font-semibold text-green-800">{springName} Spring</span>
+                          </AccordionTrigger>
+                          <AccordionContent className="px-6 pb-6">
+                            <div className="grid md:grid-cols-2 gap-6">
+                              <div className="space-y-4">
+                                {hasStory ? (
+                                  <div dangerouslySetInnerHTML={{ __html: story.content.replace(/\n/g, '<br />') }} className="text-gray-600" />
+                                ) : (
+                                  <p className="text-gray-600">
+                                    Coming soon: We are preparing the story of {springName} Spring, highlighting the challenges faced, the actions taken, and the impact created with the community.
+                                  </p>
+                                )}
+                              </div>
+                              <div className="bg-gray-100 rounded-lg p-6 flex items-center justify-center">
+                                <div className="text-center text-gray-500">
+                                  <div className="text-4xl mb-2">📷</div>
+                                  <p>Placeholder for {hasStory ? '2–3 photos or a short video clip' : 'photos or videos'}</p>
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        </AccordionContent>
-                      </AccordionItem>
-                    ))}
+                          </AccordionContent>
+                        </AccordionItem>
+                      );
+                    })}
                   </Accordion>
                 </div>
               </div>

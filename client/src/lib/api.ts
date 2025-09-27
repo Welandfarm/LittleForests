@@ -13,7 +13,7 @@ class ApiClient {
     };
 
     const response = await fetch(url, config);
-    
+
     if (!response.ok) {
       const error = await response.json().catch(() => ({ error: 'Network error' }));
       throw new Error(error.error || 'Request failed');

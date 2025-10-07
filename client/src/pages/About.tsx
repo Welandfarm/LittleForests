@@ -1,38 +1,10 @@
 
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Leaf, Users, Award, Heart } from "lucide-react";
 import AuthButton from '@/components/AuthButton';
 import NavigationDropdown from '@/components/NavigationDropdown';
-import { useQuery } from '@tanstack/react-query';
-import { apiClient } from '@/lib/api';
 
 const About = () => {
-  // Fetch content from database
-  const { data: content = {} } = useQuery({
-    queryKey: ['about-content'],
-    queryFn: async () => {
-      const data = await apiClient.getContent();
-      
-      // Convert to object for easy access
-      const contentObj: { [key: string]: { title: string; content: string; type: string } } = {};
-      data?.forEach((item: any) => {
-        const key = item.title?.toLowerCase().replace(/\s+/g, '_') || '';
-        contentObj[key] = { title: item.title || '', content: item.content || '', type: item.type || 'page' };
-      });
-      return contentObj;
-    },
-  });
-
-  // Get spring stories
-  const springStories = Object.entries(content).filter(([key, value]) => 
-    value.type === 'story' && key.includes('spring')
-  );
-
-  // Static spring names for fallback
-  const allSprings = ['Mumetet', 'Masese', 'Choronok', 'Chebululu', 'Korabi', 'Tabet', 'Milimani', 'Bondet', 'Anabomoi', 'Chemeres', 'Kibochi'];
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-50 to-white">
       {/* Header */}
@@ -82,10 +54,9 @@ const About = () => {
           </div>
 
           <Tabs defaultValue="about" className="w-full">
-            <TabsList className="grid w-full grid-cols-3">
+            <TabsList className="grid w-full grid-cols-2">
               <TabsTrigger value="about">About Us</TabsTrigger>
               <TabsTrigger value="products">What We Offer</TabsTrigger>
-              <TabsTrigger value="impact">Our Impact</TabsTrigger>
             </TabsList>
             
             <TabsContent value="about" className="mt-8">
@@ -130,112 +101,6 @@ const About = () => {
                   <div className="text-5xl mb-4">🍯</div>
                   <h4 className="text-xl font-semibold text-yellow-600 mb-3">Organic Honey</h4>
                   <p className="text-gray-600">Harvested from indigenous little forests</p>
-                </div>
-              </div>
-            </TabsContent>
-            
-            <TabsContent value="impact" className="mt-8 space-y-12">
-              {/* Water Source Restoration Section */}
-              <div>
-                <div className="text-center group mb-8">
-                  <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-green-200 transition-colors">
-                    <Leaf className="h-8 w-8 text-green-600" />
-                  </div>
-                  <h3 className="text-2xl font-semibold text-gray-900 mb-4">Restoring Springs and Streams</h3>
-                  <div className="max-w-4xl mx-auto text-left">
-                    <p className="text-gray-600 mb-4">
-                      Springs act as a major source of water for many communities, yet these vital ecosystems face challenges arising from massive deforestation, farming, and contamination from direct contact with humans and animals.
-                    </p>
-                    <p className="text-gray-600 mb-4">
-                      Our focus is to bring back these water sources to life and secure high water quality for both the present and the next generation. We do this by:
-                    </p>
-                    <ul className="list-disc list-inside text-gray-600 mb-6 space-y-2">
-                      <li>Growing indigenous trees to replenish lost vegetation</li>
-                      <li>Constructing water points to avoid contamination</li>
-                    </ul>
-                  </div>
-                </div>
-
-                {/* Springs Accordion */}
-                <div className="max-w-4xl mx-auto">
-                  <Accordion type="single" collapsible className="space-y-4">
-                    {allSprings.map((springName) => {
-                      const storyKey = `${springName.toLowerCase()}_spring_story`;
-                      const story = content[storyKey];
-                      const hasStory = story && story.content && story.content.trim().length > 0;
-                      
-                      return (
-                        <AccordionItem key={springName} value={springName.toLowerCase()} className="border border-green-200 rounded-lg">
-                          <AccordionTrigger className="px-6 py-4 hover:bg-green-50">
-                            <span className="text-lg font-semibold text-green-800">{springName} Spring</span>
-                          </AccordionTrigger>
-                          <AccordionContent className="px-6 pb-6">
-                            <div className="grid md:grid-cols-2 gap-6">
-                              <div className="space-y-4">
-                                {hasStory ? (
-                                  <div dangerouslySetInnerHTML={{ __html: story.content.replace(/\n/g, '<br />') }} className="text-gray-600" />
-                                ) : (
-                                  <p className="text-gray-600">
-                                    Coming soon: We are preparing the story of {springName} Spring, highlighting the challenges faced, the actions taken, and the impact created with the community.
-                                  </p>
-                                )}
-                              </div>
-                              <div className="bg-gray-100 rounded-lg p-6 flex items-center justify-center">
-                                <div className="text-center text-gray-500">
-                                  <div className="text-4xl mb-2">📷</div>
-                                  <p>Placeholder for {hasStory ? '2–3 photos or a short video clip' : 'photos or videos'}</p>
-                                </div>
-                              </div>
-                            </div>
-                          </AccordionContent>
-                        </AccordionItem>
-                      );
-                    })}
-                  </Accordion>
-                </div>
-              </div>
-
-              {/* Food Security & Livelihoods Section */}
-              <div>
-                <div className="text-center group mb-8">
-                  <div className="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-orange-200 transition-colors">
-                    <Users className="h-8 w-8 text-orange-600" />
-                  </div>
-                  <h3 className="text-2xl font-semibold text-gray-900 mb-4">Promoting Food Security and Livelihoods</h3>
-                  <div className="max-w-4xl mx-auto">
-                    <p className="text-gray-600 mb-6">
-                      We are working with communities to improve nutrition and income through sustainable practices. This includes introducing fruit trees, supporting small-scale farming, and exploring beekeeping and honey production.
-                    </p>
-                  </div>
-                </div>
-                
-                {/* Empty accordion container for future projects */}
-                <div className="max-w-4xl mx-auto">
-                  <Accordion type="single" collapsible className="space-y-4">
-                    {/* Future project stories will be added here */}
-                  </Accordion>
-                </div>
-              </div>
-
-              {/* Beautification & Greening Section */}
-              <div>
-                <div className="text-center group mb-8">
-                  <div className="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-purple-200 transition-colors">
-                    <Award className="h-8 w-8 text-purple-600" />
-                  </div>
-                  <h3 className="text-2xl font-semibold text-gray-900 mb-4">Beautification and Greening Communities</h3>
-                  <div className="max-w-4xl mx-auto">
-                    <p className="text-gray-600 mb-6">
-                      We believe in the power of nature to make spaces healthier, more beautiful, and more livable. Our future work will include planting ornamental trees, greening schools and markets, and promoting community gardens.
-                    </p>
-                  </div>
-                </div>
-                
-                {/* Empty accordion container for future projects */}
-                <div className="max-w-4xl mx-auto">
-                  <Accordion type="single" collapsible className="space-y-4">
-                    {/* Future project stories will be added here */}
-                  </Accordion>
                 </div>
               </div>
             </TabsContent>
@@ -293,6 +158,7 @@ Thank you!`;
               <ul className="space-y-2 text-sm text-green-200">
                 <li><a href="/" className="hover:text-white">Shop with us</a></li>
                 <li><a href="/about" className="hover:text-white">About Us</a></li>
+                <li><a href="/green-towns" className="hover:text-white">Green Towns Initiative</a></li>
               </ul>
             </div>
 

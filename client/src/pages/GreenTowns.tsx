@@ -13,10 +13,12 @@ const GreenTowns = () => {
       const data = await apiClient.getContent();
       
       const contentObj: { [key: string]: { title: string; content: string; type: string } } = {};
-      data?.forEach((item: any) => {
-        const key = item.title?.toLowerCase().replace(/\s+/g, '_') || '';
-        contentObj[key] = { title: item.title || '', content: item.content || '', type: item.type || 'page' };
-      });
+      if (Array.isArray(data)) {
+        data.forEach((item: any) => {
+          const key = item.title?.toLowerCase().replace(/\s+/g, '_') || '';
+          contentObj[key] = { title: item.title || '', content: item.content || '', type: item.type || 'page' };
+        });
+      }
       return contentObj;
     },
   });

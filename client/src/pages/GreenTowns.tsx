@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { Droplets, GraduationCap } from "lucide-react";
 import AuthButton from '@/components/AuthButton';
 import NavigationDropdown from '@/components/NavigationDropdown';
@@ -163,8 +164,106 @@ const GreenTowns = () => {
       <section className="py-16 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           
+          {/* Impact Showcase Carousel */}
+          <div className="mb-16">
+            <Carousel 
+              className="w-full max-w-4xl mx-auto"
+              opts={{
+                align: "center",
+                loop: true,
+              }}
+              plugins={[
+                {
+                  name: "autoplay",
+                  init: (embla: any) => {
+                    let timer: NodeJS.Timeout;
+                    const play = () => {
+                      timer = setTimeout(() => {
+                        embla.scrollNext();
+                        play();
+                      }, 4000); // Change image every 4 seconds
+                    };
+                    
+                    embla.on('init', play);
+                    embla.on('pointerDown', () => clearTimeout(timer));
+                    
+                    return () => clearTimeout(timer);
+                  }
+                } as any
+              ]}
+            >
+              <CarouselContent>
+                <CarouselItem>
+                  <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl shadow-lg">
+                    <img 
+                      src="/lovable-uploads/82ebeeb5-b8dd-4161-9668-d9077f5da34d.png" 
+                      alt="Green Champions - Students and community members" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </CarouselItem>
+                <CarouselItem>
+                  <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl shadow-lg">
+                    <img 
+                      src="/lovable-uploads/bd17ddd8-8af4-40c1-8b3b-4234a074ae9b.png" 
+                      alt="Tree planting at school compound" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </CarouselItem>
+                <CarouselItem>
+                  <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl shadow-lg">
+                    <img 
+                      src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=500&fit=crop" 
+                      alt="Student planting seedling" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </CarouselItem>
+                <CarouselItem>
+                  <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl shadow-lg">
+                    <img 
+                      src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=800&h=500&fit=crop" 
+                      alt="Unprotected water source" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </CarouselItem>
+                <CarouselItem>
+                  <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl shadow-lg">
+                    <img 
+                      src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=500&fit=crop" 
+                      alt="Protected water point with tap" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </CarouselItem>
+                <CarouselItem>
+                  <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl shadow-lg">
+                    <img 
+                      src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&h=500&fit=crop" 
+                      alt="Community member planting tree" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </CarouselItem>
+                <CarouselItem>
+                  <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl shadow-lg">
+                    <img 
+                      src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=800&h=500&fit=crop" 
+                      alt="Community members with seedlings" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </CarouselItem>
+              </CarouselContent>
+              <CarouselPrevious className="left-2" />
+              <CarouselNext className="right-2" />
+            </Carousel>
+          </div>
+          
           {/* Tabs Navigation */}
-          <div className="flex justify-center mb-12">
+          <div className="flex justify-center mb-12"></div>
             <div className="inline-flex bg-gray-100 rounded-lg p-1">
               <button
                 onClick={() => setActiveTab('water')}

@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Leaf, TreePine, Sprout, Users, Award, Heart, ShoppingCart, UserCog, Settings } from "lucide-react";
 import ContactForm from '@/components/ContactForm';
 import CartSidebar from '@/components/CartSidebar';
-import ProductCarousel from '@/components/ProductCarousel';
+import ProductGrid from '@/components/ProductGrid';
 import CategoryFilter from '@/components/CategoryFilter';
 import NavigationDropdown from '@/components/NavigationDropdown';
 import AuthButton from '@/components/AuthButton';
@@ -83,64 +83,20 @@ Thank you!`;
     },
   });
 
-  // Categorize products - Updated to match actual database categories
-  const categorizedProducts = useMemo(() => {
-    const productList = products as any[];
-    const indigenous = productList.filter((p: any) => 
-      p.category === 'Indigenous' || 
-      p.category === 'Indigenous Trees' ||
-      p.category.toLowerCase().includes('indigenous') ||
-      !p.category || p.category === '' // Include products without category
-    );
-
-    const ornamental = productList.filter((p: any) => 
-      p.category === 'Ornamental' || 
-      p.category === 'Ornamental Trees' ||
-      p.category === 'Ornamental Plants' ||
-      p.category.toLowerCase().includes('ornamental')
-    );
-    const fruit = productList.filter((p: any) => 
-      p.category === 'Fruit' || 
-      p.category === 'Fruit Trees' ||
-      p.category.toLowerCase().includes('fruit')
-    );
-    const honey = productList.filter((p: any) => 
-      p.category === 'Honey' ||
-      p.category.toLowerCase().includes('honey')
-    );
-
-    return { indigenous, ornamental, fruit, honey };
-  }, [products]);
-
-  // Filter products based on selected category - now fully dynamic
+  // Filter products based on selected category
   const filteredProducts = useMemo(() => {
     const productList = products as any[];
 
     if (selectedCategory === 'all') {
-      return categorizedProducts;
+      return productList;
     }
 
     // Dynamic filtering for any category
-    const matchingProducts = productList.filter((p: any) => 
+    return productList.filter((p: any) => 
       p.category === selectedCategory ||
       p.category?.toLowerCase() === selectedCategory.toLowerCase()
     );
-
-    // Return products organized by the selected category for display
-    const filtered = {
-      indigenous: selectedCategory.toLowerCase().includes('indigenous') ? matchingProducts : [],
-      ornamental: selectedCategory.toLowerCase().includes('ornamental') ? matchingProducts : [],
-      fruit: selectedCategory.toLowerCase().includes('fruit') ? matchingProducts : [],
-      honey: selectedCategory.toLowerCase().includes('honey') ? matchingProducts : [],
-      // For new categories, put them in a general "other" group
-      other: !selectedCategory.toLowerCase().includes('indigenous') && 
-             !selectedCategory.toLowerCase().includes('ornamental') && 
-             !selectedCategory.toLowerCase().includes('fruit') && 
-             !selectedCategory.toLowerCase().includes('honey') ? matchingProducts : [],
-    };
-
-    return filtered;
-  }, [selectedCategory, categorizedProducts, products]);
+  }, [selectedCategory, products]);
 
   const updateQuantity = (productId: string, change: number) => {
     setQuantities(prev => ({
@@ -270,7 +226,7 @@ Thank you!`;
             </p>
 
             {/* Admin Quick Add Products Notice */}
-            {products.length === 0 && (
+            {Array.isArray(products) && products.length === 0 && (
               <div className="bg-orange-50 border border-orange-200 rounded-lg p-6 max-w-2xl mx-auto mb-8">
                 <div className="flex items-center justify-center space-x-2 mb-3">
                   <Settings className="h-5 w-5 text-orange-600" />
@@ -304,73 +260,13 @@ Thank you!`;
               Error loading products: {error.message}
             </div>
           ) : (
-            <div className="space-y-8">
-              {/* Show all categories when 'all' is selected or show only the filtered categories */}
-              {filteredProducts.indigenous.length > 0 && (
-                <ProductCarousel
-                  products={filteredProducts.indigenous}
-                  categoryName="Indigenous Trees"
-                  quantities={quantities}
-                  onUpdateQuantity={updateQuantity}
-                  onSetQuantity={setQuantity}
-                  onAddToCart={handleAddToCart}
-                />
-              )}
-              {filteredProducts.ornamental.length > 0 && (
-                <ProductCarousel
-                  products={filteredProducts.ornamental}
-                  categoryName="Ornamental Trees"
-                  quantities={quantities}
-                  onUpdateQuantity={updateQuantity}
-                  onSetQuantity={setQuantity}
-                  onAddToCart={handleAddToCart}
-                />
-              )}
-              {filteredProducts.fruit.length > 0 && (
-                <ProductCarousel
-                  products={filteredProducts.fruit}
-                  categoryName="Fruit Trees"
-                  quantities={quantities}
-                  onUpdateQuantity={updateQuantity}
-                  onSetQuantity={setQuantity}
-                  onAddToCart={handleAddToCart}
-                />
-              )}
-              {filteredProducts.honey.length > 0 && (
-                <ProductCarousel
-                  products={filteredProducts.honey}
-                  categoryName="Organic Forest Honey"
-                  quantities={quantities}
-                  onUpdateQuantity={updateQuantity}
-                  onSetQuantity={setQuantity}
-                  onAddToCart={handleAddToCart}
-                />
-              )}
-
-              {filteredProducts.other && filteredProducts.other.length > 0 && (
-                <ProductCarousel
-                  products={filteredProducts.other}
-                  categoryName={selectedCategory !== 'all' ? selectedCategory : 'Other Products'}
-                  quantities={quantities}
-                  onUpdateQuantity={updateQuantity}
-                  onSetQuantity={setQuantity}
-                  onAddToCart={handleAddToCart}
-                />
-              )}
-
-              {!productsLoading && 
-               filteredProducts.indigenous.length === 0 && 
-               filteredProducts.ornamental.length === 0 && 
-               filteredProducts.fruit.length === 0 && 
-               filteredProducts.honey.length === 0 && 
-               (!filteredProducts.other || filteredProducts.other.length === 0) && 
-               products.length > 0 && (
-                <div className="text-center py-8">
-                  <p className="text-gray-600">No products available in this category.</p>
-                  <p className="text-sm text-gray-500 mt-2">Total products in database: {products.length}</p>
-                </div>
-              )}
-            </div>
+            <ProductGrid
+              products={filteredProducts}
+              quantities={quantities}
+              onUpdateQuantity={updateQuantity}
+              onSetQuantity={setQuantity}
+              onAddToCart={handleAddToCart}
+            />
           )}
         </div>
       </section>

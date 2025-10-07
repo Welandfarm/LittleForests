@@ -1,6 +1,5 @@
 
 import React from 'react';
-import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { TreePine, Leaf, Apple, Flower, Palmtree } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
@@ -77,9 +76,9 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({ selectedCategory, onCat
   return (
     <div className="mb-8">
       {/* Mobile Select Dropdown */}
-      <div className="md:hidden mb-4">
+      <div className="sm:hidden mb-4">
         <Select value={selectedCategory} onValueChange={onCategoryChange}>
-          <SelectTrigger className="w-full">
+          <SelectTrigger className="w-full" data-testid="select-category-mobile">
             <SelectValue placeholder="Select a category" />
           </SelectTrigger>
           <SelectContent>
@@ -95,23 +94,27 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({ selectedCategory, onCat
         </Select>
       </div>
 
-      {/* Desktop Filter Buttons */}
-      <div className="hidden md:flex flex-wrap gap-3 justify-center">
-        {categories.map((category) => (
-          <Button
-            key={category.value}
-            variant={selectedCategory === category.value ? "default" : "outline"}
-            onClick={() => onCategoryChange(category.value)}
-            className={`flex items-center space-x-2 ${
-              selectedCategory === category.value 
-                ? "bg-green-600 hover:bg-green-700 text-white" 
-                : "border-green-600 text-green-600 hover:bg-green-50"
-            }`}
-          >
-            {category.icon}
-            <span>{category.label}</span>
-          </Button>
-        ))}
+      {/* Horizontal Category Tabs - Desktop & Tablet */}
+      <div className="hidden sm:block">
+        <div className="border-b border-gray-200">
+          <div className="flex overflow-x-auto scrollbar-hide">
+            {categories.map((category) => (
+              <button
+                key={category.value}
+                onClick={() => onCategoryChange(category.value)}
+                data-testid={`tab-category-${category.value}`}
+                className={`flex items-center space-x-2 px-6 py-3 whitespace-nowrap border-b-2 transition-all duration-200 ${
+                  selectedCategory === category.value 
+                    ? "border-green-600 text-green-600 font-semibold" 
+                    : "border-transparent text-gray-600 hover:text-green-600 hover:border-gray-300"
+                }`}
+              >
+                {category.icon}
+                <span>{category.label}</span>
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Droplets, GraduationCap } from "lucide-react";
@@ -7,6 +8,8 @@ import { useQuery } from '@tanstack/react-query';
 import { apiClient } from '@/lib/api';
 
 const GreenTowns = () => {
+  const [activeTab, setActiveTab] = useState<'water' | 'schools'>('water');
+  
   const { data: content = {} } = useQuery({
     queryKey: ['greentowns-content'],
     queryFn: async () => {
@@ -156,117 +159,148 @@ const GreenTowns = () => {
         </div>
       </section>
 
-      {/* Main Content */}
+      {/* Main Content - Tabbed Interface */}
       <section className="py-16 bg-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          {/* Water Source Protection and Restoration Section */}
-          <div>
-            <div className="text-center group mb-8">
-              <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-blue-200 transition-colors">
-                <Droplets className="h-8 w-8 text-blue-600" />
-              </div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-4" data-testid="text-watersection">
-                Water Source Protection and Restoration
-              </h2>
-              <div className="max-w-4xl mx-auto text-left">
-                <p className="text-gray-600 mb-4">
-                  Springs act as a major source of water for many communities, yet these vital ecosystems face challenges arising from massive deforestation, farming, and contamination from direct contact with humans and animals.
-                </p>
-                <p className="text-gray-600 mb-4">
-                  Our focus is to bring back these water sources to life and secure high water quality for both the present and the next generation. We do this by:
-                </p>
-                <ul className="list-disc list-inside text-gray-600 mb-6 space-y-2">
-                  <li>Growing indigenous trees to replenish lost vegetation</li>
-                  <li>Constructing water points to avoid contamination</li>
-                </ul>
-              </div>
+          {/* Tabs Navigation */}
+          <div className="flex justify-center mb-12">
+            <div className="inline-flex bg-gray-100 rounded-lg p-1">
+              <button
+                onClick={() => setActiveTab('water')}
+                className={`px-8 py-3 rounded-lg font-semibold transition-all ${
+                  activeTab === 'water'
+                    ? 'bg-white text-blue-600 shadow-md'
+                    : 'text-gray-600 hover:text-gray-900'
+                }`}
+              >
+                <div className="flex items-center gap-2">
+                  <Droplets className="h-5 w-5" />
+                  <span>Water Source Protection</span>
+                </div>
+              </button>
+              <button
+                onClick={() => setActiveTab('schools')}
+                className={`px-8 py-3 rounded-lg font-semibold transition-all ${
+                  activeTab === 'schools'
+                    ? 'bg-white text-green-600 shadow-md'
+                    : 'text-gray-600 hover:text-gray-900'
+                }`}
+              >
+                <div className="flex items-center gap-2">
+                  <GraduationCap className="h-5 w-5" />
+                  <span>Green Champions</span>
+                </div>
+              </button>
             </div>
+          </div>
 
-            {/* Springs Accordion */}
-            <div className="max-w-4xl mx-auto">
-              <Accordion type="single" collapsible className="space-y-4">
+          {/* Water Source Protection Tab */}
+          {activeTab === 'water' && (
+            <div>
+              <div className="text-center group mb-8">
+                <h2 className="text-3xl font-bold text-gray-900 mb-4" data-testid="text-watersection">
+                  Water Source Protection and Restoration
+                </h2>
+                <div className="max-w-4xl mx-auto text-left">
+                  <p className="text-gray-600 mb-4">
+                    Springs act as a major source of water for many communities, yet these vital ecosystems face challenges arising from massive deforestation, farming, and contamination from direct contact with humans and animals.
+                  </p>
+                  <p className="text-gray-600 mb-4">
+                    Our focus is to bring back these water sources to life and secure high water quality for both the present and the next generation. We do this by:
+                  </p>
+                  <ul className="list-disc list-inside text-gray-600 mb-6 space-y-2">
+                    <li>Growing indigenous trees to replenish lost vegetation</li>
+                    <li>Constructing water points to avoid contamination</li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Springs Grid */}
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-6xl mx-auto">
                 {allSprings.map((springName) => {
                   const storyKey = `${springName.toLowerCase()}_spring_story`;
                   const story = content[storyKey];
                   const hasStory = story && story.content && story.content.trim().length > 0;
                   
                   return (
-                    <AccordionItem key={springName} value={springName.toLowerCase()} className="border border-blue-200 rounded-lg">
-                      <AccordionTrigger className="px-6 py-4 hover:bg-blue-50" data-testid={`button-spring-${springName.toLowerCase()}`}>
-                        <span className="text-lg font-semibold text-blue-800">{springName} Spring</span>
-                      </AccordionTrigger>
-                      <AccordionContent className="px-6 pb-6">
-                        <div className="grid md:grid-cols-2 gap-6">
+                    <Accordion key={springName} type="single" collapsible>
+                      <AccordionItem value={springName.toLowerCase()} className="border-none">
+                        <AccordionTrigger 
+                          className="border border-blue-200 rounded-lg px-4 py-3 hover:bg-blue-50 hover:border-blue-300 transition-all data-[state=open]:bg-blue-50 data-[state=open]:border-blue-300" 
+                          data-testid={`button-spring-${springName.toLowerCase()}`}
+                        >
+                          <span className="text-base font-semibold text-blue-800">{springName} Spring</span>
+                        </AccordionTrigger>
+                        <AccordionContent className="px-4 pt-4">
                           <div className="space-y-4">
                             {hasStory ? (
-                              <div dangerouslySetInnerHTML={{ __html: story.content.replace(/\n/g, '<br />') }} className="text-gray-600" />
+                              <div dangerouslySetInnerHTML={{ __html: story.content.replace(/\n/g, '<br />') }} className="text-sm text-gray-600" />
                             ) : (
-                              <p className="text-gray-600">
+                              <p className="text-sm text-gray-600">
                                 Coming soon: We are preparing the story of {springName} Spring, highlighting the challenges faced, the actions taken, and the impact created with the community.
                               </p>
                             )}
+                            <MediaGallery items={waterSourceGallery} type="water" />
                           </div>
-                          <MediaGallery items={waterSourceGallery} type="water" />
-                        </div>
-                      </AccordionContent>
-                    </AccordionItem>
+                        </AccordionContent>
+                      </AccordionItem>
+                    </Accordion>
                   );
                 })}
-              </Accordion>
-            </div>
-          </div>
-
-          {/* Green Champions Section */}
-          <div>
-            <div className="text-center group mb-8">
-              <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-green-200 transition-colors">
-                <GraduationCap className="h-8 w-8 text-green-600" />
-              </div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-4" data-testid="text-greenchampions">
-                Green Champions
-              </h2>
-              <div className="max-w-4xl mx-auto text-left">
-                <p className="text-gray-600 mb-6">
-                  This is a school greening initiative where kids are nurtured to become champions of the environment. We do this by growing trees and fruits in schools to promote green spaces in schools and improve learning among students.
-                </p>
               </div>
             </div>
+          )}
 
-            {/* Schools Accordion */}
-            <div className="max-w-4xl mx-auto">
-              <h3 className="text-xl font-semibold text-gray-800 mb-4">Schools We Have Worked With</h3>
-              <Accordion type="single" collapsible className="space-y-4">
+          {/* Green Champions Tab */}
+          {activeTab === 'schools' && (
+            <div>
+              <div className="text-center group mb-8">
+                <h2 className="text-3xl font-bold text-gray-900 mb-4" data-testid="text-greenchampions">
+                  Green Champions
+                </h2>
+                <div className="max-w-4xl mx-auto text-left">
+                  <p className="text-gray-600 mb-6">
+                    This is a school greening initiative where kids are nurtured to become champions of the environment. We do this by growing trees and fruits in schools to promote green spaces in schools and improve learning among students.
+                  </p>
+                </div>
+              </div>
+
+              {/* Schools Grid */}
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-6xl mx-auto">
                 {schools.map((schoolName, index) => {
                   const schoolKey = `${schoolName.toLowerCase().replace(/\s+/g, '_')}_story`;
                   const schoolStory = content[schoolKey];
                   const hasStory = schoolStory && schoolStory.content && schoolStory.content.trim().length > 0;
                   
                   return (
-                    <AccordionItem key={index} value={schoolName.toLowerCase()} className="border border-green-200 rounded-lg">
-                      <AccordionTrigger className="px-6 py-4 hover:bg-green-50" data-testid={`button-school-${index}`}>
-                        <span className="text-lg font-semibold text-green-800">{schoolName}</span>
-                      </AccordionTrigger>
-                      <AccordionContent className="px-6 pb-6">
-                        <div className="grid md:grid-cols-2 gap-6">
+                    <Accordion key={index} type="single" collapsible>
+                      <AccordionItem value={schoolName.toLowerCase()} className="border-none">
+                        <AccordionTrigger 
+                          className="border border-green-200 rounded-lg px-4 py-3 hover:bg-green-50 hover:border-green-300 transition-all data-[state=open]:bg-green-50 data-[state=open]:border-green-300" 
+                          data-testid={`button-school-${index}`}
+                        >
+                          <span className="text-base font-semibold text-green-800">{schoolName}</span>
+                        </AccordionTrigger>
+                        <AccordionContent className="px-4 pt-4">
                           <div className="space-y-4">
                             {hasStory ? (
-                              <div dangerouslySetInnerHTML={{ __html: schoolStory.content.replace(/\n/g, '<br />') }} className="text-gray-600" />
+                              <div dangerouslySetInnerHTML={{ __html: schoolStory.content.replace(/\n/g, '<br />') }} className="text-sm text-gray-600" />
                             ) : (
-                              <p className="text-gray-600">
+                              <p className="text-sm text-gray-600">
                                 {schoolName} has a unique story of environmental transformation. We are preparing detailed information about the impact created with students and the community.
                               </p>
                             )}
+                            <MediaGallery items={greenChampionsGallery} type="school" />
                           </div>
-                          <MediaGallery items={greenChampionsGallery} type="school" />
-                        </div>
-                      </AccordionContent>
-                    </AccordionItem>
+                        </AccordionContent>
+                      </AccordionItem>
+                    </Accordion>
                   );
                 })}
-              </Accordion>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </section>
 

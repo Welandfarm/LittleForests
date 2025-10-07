@@ -187,7 +187,7 @@ const GreenTowns = () => {
           <div className="mb-16">
             <Carousel 
               setApi={setApi}
-              className="w-full max-w-4xl mx-auto"
+              className="w-full max-w-5xl mx-auto"
               opts={{
                 align: "center",
                 loop: false,
@@ -195,56 +195,56 @@ const GreenTowns = () => {
             >
               <CarouselContent>
                 <CarouselItem>
-                  <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl shadow-lg">
+                  <div className="relative aspect-video w-full bg-gray-100 rounded-xl shadow-lg flex items-center justify-center">
                     <img 
                       src={img1} 
                       alt="Green Towns Initiative" 
-                      className="w-full h-full object-cover"
+                      className="max-w-full max-h-full object-contain rounded-xl"
                     />
                   </div>
                 </CarouselItem>
                 <CarouselItem>
-                  <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl shadow-lg">
+                  <div className="relative aspect-video w-full bg-gray-100 rounded-xl shadow-lg flex items-center justify-center">
                     <img 
                       src={img2} 
                       alt="Green Towns Initiative" 
-                      className="w-full h-full object-cover"
+                      className="max-w-full max-h-full object-contain rounded-xl"
                     />
                   </div>
                 </CarouselItem>
                 <CarouselItem>
-                  <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl shadow-lg">
+                  <div className="relative aspect-video w-full bg-gray-100 rounded-xl shadow-lg flex items-center justify-center">
                     <img 
                       src={img3} 
                       alt="Green Towns Initiative" 
-                      className="w-full h-full object-cover"
+                      className="max-w-full max-h-full object-contain rounded-xl"
                     />
                   </div>
                 </CarouselItem>
                 <CarouselItem>
-                  <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl shadow-lg">
+                  <div className="relative aspect-video w-full bg-gray-100 rounded-xl shadow-lg flex items-center justify-center">
                     <img 
                       src={img4} 
                       alt="Green Towns Initiative" 
-                      className="w-full h-full object-cover"
+                      className="max-w-full max-h-full object-contain rounded-xl"
                     />
                   </div>
                 </CarouselItem>
                 <CarouselItem>
-                  <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl shadow-lg">
+                  <div className="relative aspect-video w-full bg-gray-100 rounded-xl shadow-lg flex items-center justify-center">
                     <img 
                       src={img5} 
                       alt="Green Towns Initiative" 
-                      className="w-full h-full object-cover"
+                      className="max-w-full max-h-full object-contain rounded-xl"
                     />
                   </div>
                 </CarouselItem>
                 <CarouselItem>
-                  <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl shadow-lg">
+                  <div className="relative aspect-video w-full bg-gray-100 rounded-xl shadow-lg flex items-center justify-center">
                     <img 
                       src={img6} 
                       alt="Green Towns Initiative" 
-                      className="w-full h-full object-cover"
+                      className="max-w-full max-h-full object-contain rounded-xl"
                     />
                   </div>
                 </CarouselItem>

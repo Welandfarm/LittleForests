@@ -34,6 +34,12 @@ const NavigationDropdown = () => {
         >
           About us
         </DropdownMenuItem>
+        <DropdownMenuItem 
+          onClick={() => navigate('/green-towns')}
+          className="cursor-pointer hover:bg-green-50 py-3 px-4 text-base"
+        >
+          Green Towns Initiative
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

@@ -87,64 +87,66 @@ const ProductGrid: React.FC<ProductGridProps> = ({
             </div>
           </div>
           <div className="p-4">
-            <div className="flex justify-between items-center mb-3">
-              <span className="text-xl font-bold text-green-600" data-testid={`text-price-${product.id}`}>
+            <div className="mb-3">
+              <span className="text-xl font-bold text-green-600 block" data-testid={`text-price-${product.id}`}>
                 {typeof product.price === 'number' ? `KSH ${product.price}` : product.price}
               </span>
             </div>
+            
+            {/* Quantity Controls */}
+            <div className="flex items-center justify-center space-x-2 mb-3">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => onUpdateQuantity(product.id, -1)}
+                data-testid={`button-decrease-${product.id}`}
+              >
+                <Minus className="h-4 w-4" />
+              </Button>
+              <Input
+                type="number"
+                min="1"
+                max="999"
+                value={quantities[product.id] || 1}
+                onChange={(e) => {
+                  const value = parseInt(e.target.value) || 1;
+                  onSetQuantity(product.id, Math.max(1, Math.min(999, value)));
+                }}
+                className="w-16 text-center"
+                data-testid={`input-quantity-${product.id}`}
+              />
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => onUpdateQuantity(product.id, 1)}
+                data-testid={`button-increase-${product.id}`}
+              >
+                <Plus className="h-4 w-4" />
+              </Button>
+            </div>
+
+            {/* Action Buttons */}
             <div className="flex flex-col space-y-2">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => onUpdateQuantity(product.id, -1)}
-                    data-testid={`button-decrease-${product.id}`}
-                  >
-                    <Minus className="h-3 w-3" />
-                  </Button>
-                  <Input
-                    type="number"
-                    min="1"
-                    max="999"
-                    value={quantities[product.id] || 1}
-                    onChange={(e) => {
-                      const value = parseInt(e.target.value) || 1;
-                      onSetQuantity(product.id, Math.max(1, Math.min(999, value)));
-                    }}
-                    className="w-16 text-center text-sm"
-                    data-testid={`input-quantity-${product.id}`}
-                  />
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => onUpdateQuantity(product.id, 1)}
-                    data-testid={`button-increase-${product.id}`}
-                  >
-                    <Plus className="h-3 w-3" />
-                  </Button>
-                </div>
-                <Button 
-                  size="sm" 
-                  disabled={product.status === 'Out of Stock' || product.stock_quantity === 0}
-                  onClick={() => onAddToCart(product)}
-                  className={product.status === 'Out of Stock' ? 
-                    "bg-gray-400 cursor-not-allowed" : 
-                    "bg-green-600 hover:bg-green-700 hover:scale-105 transition-all duration-200 active:scale-95"
-                  }
-                  data-testid={`button-add-to-cart-${product.id}`}
-                >
-                  {product.status === 'Out of Stock' ? 'Out of Stock' : 'Add to Cart'}
-                </Button>
-              </div>
+              <Button 
+                disabled={product.status === 'Out of Stock' || product.stock_quantity === 0}
+                onClick={() => onAddToCart(product)}
+                className={product.status === 'Out of Stock' ? 
+                  "bg-gray-400 cursor-not-allowed w-full" : 
+                  "bg-green-600 hover:bg-green-700 hover:scale-105 transition-all duration-200 active:scale-95 w-full"
+                }
+                data-testid={`button-add-to-cart-${product.id}`}
+              >
+                {product.status === 'Out of Stock' ? 'Out of Stock' : 'Add to Cart'}
+              </Button>
+              
               <Button 
                 variant="outline" 
                 size="sm"
                 onClick={() => setSelectedProduct(product)}
-                className="w-full text-xs"
+                className="w-full"
                 data-testid={`button-details-${product.id}`}
               >
-                <Info className="h-3 w-3 mr-1" />
+                <Info className="h-4 w-4 mr-1" />
                 See Details
               </Button>
             </div>

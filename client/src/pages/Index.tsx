@@ -77,10 +77,7 @@ Thank you!`;
   const { data: products = [], isLoading: productsLoading, error } = useQuery({
     queryKey: ['products'],
     queryFn: async () => {
-      console.log('Fetching products from database...');
       const data = await apiClient.getProducts();
-
-      console.log('Fetched products:', data);
       // Include all products (available and out of stock) for better customer experience
       return data;
     },
@@ -117,8 +114,6 @@ Thank you!`;
 
   // Filter products based on selected category - now fully dynamic
   const filteredProducts = useMemo(() => {
-    console.log('Filtering products for category:', selectedCategory);
-
     const productList = products as any[];
 
     if (selectedCategory === 'all') {
@@ -144,7 +139,6 @@ Thank you!`;
              !selectedCategory.toLowerCase().includes('honey') ? matchingProducts : [],
     };
 
-    console.log('Filtered products:', filtered);
     return filtered;
   }, [selectedCategory, categorizedProducts, products]);
 

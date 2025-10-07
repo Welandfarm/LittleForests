@@ -1,47 +1,102 @@
-
-import React from 'react';
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
-import { Menu } from "lucide-react";
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
 import { useNavigate } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
+import { apiClient } from '@/lib/api';
 
 const NavigationDropdown = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  // Prefetch data on hover to improve perceived performance
+  const handlePrefetch = (page: string) => {
+    if (page === '/') {
+      queryClient.prefetchQuery({
+        queryKey: ['products'],
+        queryFn: () => apiClient.getProducts(),
+        staleTime: 5 * 60 * 1000, // Cache for 5 minutes
+      });
+      queryClient.prefetchQuery({
+        queryKey: ['content'],
+        queryFn: () => apiClient.getContent(),
+        staleTime: 5 * 60 * 1000,
+      });
+    } else if (page === '/green-towns') {
+      queryClient.prefetchQuery({
+        queryKey: ['greentowns-content'],
+        queryFn: async () => {
+          const data = await apiClient.getContent();
+          const contentObj: { [key: string]: { title: string; content: string; type: string } } = {};
+          if (Array.isArray(data)) {
+            data.forEach((item: any) => {
+              const key = item.title?.toLowerCase().replace(/\s+/g, '_') || '';
+              contentObj[key] = { title: item.title || '', content: item.content || '', type: item.type || 'page' };
+            });
+          }
+          return contentObj;
+        },
+        staleTime: 5 * 60 * 1000,
+      });
+    }
+  };
+
+  const handleNavigation = (path: string) => {
+    // Use replace instead of push to avoid adding to history stack
+    navigate(path, { replace: false });
+  };
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="lg" className="flex items-center gap-3 px-6 py-3 text-lg">
-          <Menu className="h-6 w-6" />
-          <span>Menu</span>
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="start" className="w-56 bg-white border shadow-lg">
-        <DropdownMenuItem 
-          onClick={() => navigate('/')}
-          className="cursor-pointer hover:bg-green-50 py-3 px-4 text-base"
-        >
-          Shop with us
-        </DropdownMenuItem>
-        <DropdownMenuItem 
-          onClick={() => navigate('/about')}
-          className="cursor-pointer hover:bg-green-50 py-3 px-4 text-base"
-        >
-          About us
-        </DropdownMenuItem>
-        <DropdownMenuItem 
-          onClick={() => navigate('/green-towns')}
-          className="cursor-pointer hover:bg-green-50 py-3 px-4 text-base"
-        >
-          Green Towns Initiative
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <NavigationMenu>
+      <NavigationMenuList>
+        <NavigationMenuItem>
+          <NavigationMenuTrigger className="bg-green-600 text-white hover:bg-green-700">
+            Menu
+          </NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <ul className="grid gap-3 p-4 w-[200px]">
+              <li>
+                <NavigationMenuLink asChild>
+                  <button
+                    onMouseEnter={() => handlePrefetch('/')}
+                    onClick={() => handleNavigation('/')}
+                    className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground w-full text-left"
+                  >
+                    <div className="text-sm font-medium leading-none">Shop with us</div>
+                  </button>
+                </NavigationMenuLink>
+              </li>
+              <li>
+                <NavigationMenuLink asChild>
+                  <button
+                    onClick={() => handleNavigation('/about')}
+                    className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground w-full text-left"
+                  >
+                    <div className="text-sm font-medium leading-none">About Us</div>
+                  </button>
+                </NavigationMenuLink>
+              </li>
+              <li>
+                <NavigationMenuLink asChild>
+                  <button
+                    onMouseEnter={() => handlePrefetch('/green-towns')}
+                    onClick={() => handleNavigation('/green-towns')}
+                    className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground w-full text-left"
+                  >
+                    <div className="text-sm font-medium leading-none">Green Towns Initiative</div>
+                  </button>
+                </NavigationMenuLink>
+              </li>
+            </ul>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+      </NavigationMenuList>
+    </NavigationMenu>
   );
 };
 

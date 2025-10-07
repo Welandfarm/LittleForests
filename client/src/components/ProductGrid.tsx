@@ -175,22 +175,11 @@ const ProductGrid: React.FC<ProductGridProps> = ({
                     className="w-full h-full object-cover rounded-lg"
                   />
                 </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <p className="text-sm font-medium text-gray-700">Price</p>
-                    <p className="text-2xl font-bold text-green-600">
-                      {typeof selectedProduct.price === 'number' ? `KSH ${selectedProduct.price}` : selectedProduct.price}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-gray-700">Status</p>
-                    <Badge variant={selectedProduct.status === 'Available' ? 'default' : 'secondary'}>
-                      {selectedProduct.status}
-                      {selectedProduct.stock_quantity !== undefined && (
-                        <span className="ml-1">({selectedProduct.stock_quantity} in stock)</span>
-                      )}
-                    </Badge>
-                  </div>
+                <div className="mb-4">
+                  <p className="text-sm font-medium text-gray-700">Price</p>
+                  <p className="text-2xl font-bold text-green-600">
+                    {typeof selectedProduct.price === 'number' ? `KSH ${selectedProduct.price}` : selectedProduct.price}
+                  </p>
                 </div>
                 {selectedProduct.description && (
                   <div>

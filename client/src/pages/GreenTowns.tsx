@@ -199,6 +199,9 @@ const GreenTowns = () => {
                       alt="Student planting a tree seedling at school" 
                       className="w-full h-full object-cover"
                     />
+                    <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white p-4">
+                      <p className="text-sm md:text-base font-medium">Student planting a tree seedling at school</p>
+                    </div>
                   </div>
                 </CarouselItem>
                 <CarouselItem>
@@ -208,6 +211,9 @@ const GreenTowns = () => {
                       alt="Community members with tree seedlings" 
                       className="w-full h-full object-cover"
                     />
+                    <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white p-4">
+                      <p className="text-sm md:text-base font-medium">Community members with tree seedlings</p>
+                    </div>
                   </div>
                 </CarouselItem>
                 <CarouselItem>
@@ -217,6 +223,9 @@ const GreenTowns = () => {
                       alt="Protected water source with tap" 
                       className="w-full h-full object-cover"
                     />
+                    <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white p-4">
+                      <p className="text-sm md:text-base font-medium">Protected water source with tap</p>
+                    </div>
                   </div>
                 </CarouselItem>
                 <CarouselItem>
@@ -226,6 +235,9 @@ const GreenTowns = () => {
                       alt="Students and teachers at school greening project" 
                       className="w-full h-full object-cover"
                     />
+                    <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white p-4">
+                      <p className="text-sm md:text-base font-medium">Students and teachers at school greening project</p>
+                    </div>
                   </div>
                 </CarouselItem>
                 <CarouselItem>
@@ -235,6 +247,9 @@ const GreenTowns = () => {
                       alt="Tree planting at school compound" 
                       className="w-full h-full object-cover"
                     />
+                    <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white p-4">
+                      <p className="text-sm md:text-base font-medium">Tree planting at school compound</p>
+                    </div>
                   </div>
                 </CarouselItem>
                 <CarouselItem>
@@ -244,6 +259,9 @@ const GreenTowns = () => {
                       alt="Student planting seedling at school" 
                       className="w-full h-full object-cover"
                     />
+                    <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white p-4">
+                      <p className="text-sm md:text-base font-medium">Student planting seedling at school</p>
+                    </div>
                   </div>
                 </CarouselItem>
               </CarouselContent>

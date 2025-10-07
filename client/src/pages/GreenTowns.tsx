@@ -7,7 +7,11 @@ import AuthButton from '@/components/AuthButton';
 import NavigationDropdown from '@/components/NavigationDropdown';
 import { useQuery } from '@tanstack/react-query';
 import { apiClient } from '@/lib/api';
-// Image imports will be added here after new photos are uploaded
+import img1 from '@assets/IMG-20251007-WA0001_1759838217345.jpg';
+import img2 from '@assets/IMG-20251007-WA0006_1759838217350.jpg';
+import img3 from '@assets/WhatsApp Image 2025-09-19 at 15.27.03_c4519e73_1759838217351.jpg';
+import img4 from '@assets/WhatsApp Image 2025-09-19 at 15.27.50_6eec7683_1759838217352.jpg';
+import img5 from '@assets/WhatsApp Image 2025-09-22 at 22.31.52_2616492e_1759838217353.jpg';
 
 const GreenTowns = () => {
   const [activeTab, setActiveTab] = useState<'water' | 'schools'>('water');
@@ -189,15 +193,53 @@ const GreenTowns = () => {
               }}
             >
               <CarouselContent>
-                {/* New carousel items will be added here after uploading new photos */}
                 <CarouselItem>
-                  <div className="relative aspect-video w-full overflow-hidden rounded-xl shadow-lg bg-green-100 flex items-center justify-center">
-                    <p className="text-gray-500 text-lg">Upload new photos to display here</p>
+                  <div className="relative aspect-video w-full overflow-hidden rounded-xl shadow-lg">
+                    <img 
+                      src={img1} 
+                      alt="Students and community at Green Towns Initiative event" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </CarouselItem>
+                <CarouselItem>
+                  <div className="relative aspect-video w-full overflow-hidden rounded-xl shadow-lg">
+                    <img 
+                      src={img2} 
+                      alt="Tree planting activities with students" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </CarouselItem>
+                <CarouselItem>
+                  <div className="relative aspect-video w-full overflow-hidden rounded-xl shadow-lg">
+                    <img 
+                      src={img3} 
+                      alt="Community member planting a tree" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </CarouselItem>
+                <CarouselItem>
+                  <div className="relative aspect-video w-full overflow-hidden rounded-xl shadow-lg">
+                    <img 
+                      src={img4} 
+                      alt="Community members with tree seedlings" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </CarouselItem>
+                <CarouselItem>
+                  <div className="relative aspect-video w-full overflow-hidden rounded-xl shadow-lg">
+                    <img 
+                      src={img5} 
+                      alt="Protected water source spring" 
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                 </CarouselItem>
               </CarouselContent>
               <CarouselPrevious className="left-2" />
-              <CarouselNext className="right-2" />
               <CarouselNext className="right-2" />
             </Carousel>
           </div>

@@ -172,6 +172,25 @@ const GreenTowns = () => {
                 align: "center",
                 loop: true,
               }}
+              plugins={[
+                {
+                  name: 'autoplay',
+                  options: { delay: 4000 },
+                  init: (embla: any) => {
+                    let timer: NodeJS.Timeout;
+                    
+                    const play = () => {
+                      timer = setTimeout(() => {
+                        embla.scrollNext();
+                        play();
+                      }, 4000);
+                    };
+                    
+                    embla.on('init', play);
+                    embla.on('destroy', () => clearTimeout(timer));
+                  }
+                }
+              ]}
             >
               <CarouselContent>
                 <CarouselItem>

@@ -217,7 +217,7 @@ const GreenTowns = () => {
               </div>
 
               {/* Springs Grid */}
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-6xl mx-auto">
+              <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-6xl mx-auto">
                 {allSprings.map((springName) => {
                   const storyKey = `${springName.toLowerCase()}_spring_story`;
                   const story = content[storyKey];
@@ -267,7 +267,7 @@ const GreenTowns = () => {
               </div>
 
               {/* Schools Grid */}
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-6xl mx-auto">
+              <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-6xl mx-auto">
                 {schools.map((schoolName, index) => {
                   const schoolKey = `${schoolName.toLowerCase().replace(/\s+/g, '_')}_story`;
                   const schoolStory = content[schoolKey];

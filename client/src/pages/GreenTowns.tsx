@@ -295,6 +295,11 @@ const GreenTowns = () => {
                   const storyKey = `${springName.toLowerCase()}_spring_story`;
                   const story = content[storyKey];
                   const hasStory = story && story.content && story.content.trim().length > 0;
+                  
+                  // Filter gallery items for this specific spring
+                  const springMedia = waterSourceGallery.filter(
+                    (item: any) => item.spring_name?.toLowerCase() === springName.toLowerCase()
+                  );
 
                   return (
                     <Accordion key={springName} type="single" collapsible>
@@ -314,7 +319,7 @@ const GreenTowns = () => {
                                 Coming soon: We are preparing the story of {springName} Spring, highlighting the challenges faced, the actions taken, and the impact created with the community.
                               </p>
                             )}
-                            <MediaGallery items={waterSourceGallery} type="water" />
+                            <MediaGallery items={springMedia} type="water" />
                           </div>
                         </AccordionContent>
                       </AccordionItem>
@@ -345,6 +350,11 @@ const GreenTowns = () => {
                   const schoolKey = `${schoolName.toLowerCase().replace(/\s+/g, '_')}_story`;
                   const schoolStory = content[schoolKey];
                   const hasStory = schoolStory && schoolStory.content && schoolStory.content.trim().length > 0;
+                  
+                  // Filter gallery items for this specific school
+                  const schoolMedia = greenChampionsGallery.filter(
+                    (item: any) => item.school_name?.toLowerCase() === schoolName.toLowerCase()
+                  );
 
                   return (
                     <Accordion key={index} type="single" collapsible>
@@ -364,7 +374,7 @@ const GreenTowns = () => {
                                 {schoolName} has a unique story of environmental transformation. We are preparing detailed information about the impact created with students and the community.
                               </p>
                             )}
-                            <MediaGallery items={greenChampionsGallery} type="school" />
+                            <MediaGallery items={schoolMedia} type="school" />
                           </div>
                         </AccordionContent>
                       </AccordionItem>

@@ -103,15 +103,9 @@ const ProductGrid: React.FC<ProductGridProps> = ({
               </Badge>
             </div>
           </div>
-          <div className="p-6">
-            <h4 className="text-xl font-semibold mb-2" data-testid={`text-name-${product.id}`}>
-              {product.name || product.plant_name}
-            </h4>
-            <p className="text-gray-600 mb-4 text-sm" data-testid={`text-description-${product.id}`}>
-              {product.description}
-            </p>
-            <div className="flex justify-between items-center mb-4">
-              <span className="text-2xl font-bold text-green-600" data-testid={`text-price-${product.id}`}>
+          <div className="p-4">
+            <div className="flex justify-between items-center mb-3">
+              <span className="text-xl font-bold text-green-600" data-testid={`text-price-${product.id}`}>
                 {typeof product.price === 'number' ? `KSH ${product.price}` : product.price}
               </span>
             </div>

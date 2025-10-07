@@ -165,6 +165,10 @@ LittleForest is a full-stack web application for an online seedling nursery busi
 - October 7, 2025. Implemented API routes for gallery data (/api/gallery/water-source, /api/gallery/green-champions)
 - October 7, 2025. Added MediaGallery component to display photos and videos with captions for Water Source Protection and Green Champions sections
 - October 7, 2025. Gallery content (photos/videos/stories) managed by external inventory app with automatic display on website
+- October 7, 2025. Redesigned product category navigation - replaced dropdown/button filters with horizontal tab layout for improved UX
+- October 7, 2025. Replaced horizontal product carousel with vertical grid layout (1-4 columns responsive) for better browsing and vertical scrolling
+- October 7, 2025. Created ProductGrid component for responsive vertical product display replacing ProductCarousel
+- October 7, 2025. Updated CategoryFilter component to display categories as clean horizontal tabs with active state indicators
 
 ## User Preferences
 

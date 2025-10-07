@@ -46,7 +46,7 @@ const Index = () => {
   };
 
   const handleOrder = () => {
-    // If there are items in cart, create order message, otherwise general inquiry
+    // If there are items in cart, create order message and send to WhatsApp
     if (cartItems.length > 0) {
       const orderItems = cartItems.map(item => 
         `- ${item.quantity} x ${item.name} (${item.price} each)`
@@ -63,13 +63,11 @@ Please confirm availability and let me know`;
       const whatsappUrl = `https://wa.me/254108029407?text=${encodeURIComponent(message)}`;
       window.open(whatsappUrl, '_blank');
     } else {
-      // General order inquiry
-      const message = `Hi
-I'd like to make inquiries about the seedlings and honey.
-Thank you!`;
-
-      const whatsappUrl = `https://wa.me/254108029407?text=${encodeURIComponent(message)}`;
-      window.open(whatsappUrl, '_blank');
+      // If cart is empty, scroll to products section to let them select items first
+      const productsSection = document.getElementById('products');
+      if (productsSection) {
+        productsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     }
   };
 

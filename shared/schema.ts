@@ -71,6 +71,31 @@ export const adminUsers = pgTable("admin_users", {
   updatedAt: timestamp("updated_at").defaultNow(),
 });
 
+// Water Source Protection Gallery table
+export const waterSourceGallery = pgTable("water_source_gallery", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  springName: text("spring_name"), // Optional: link to specific spring
+  mediaUrl: text("media_url").notNull(), // URL to photo or video
+  mediaType: text("media_type").notNull(), // 'photo' or 'video'
+  caption: text("caption"), // Optional caption/description
+  displayOrder: integer("display_order").default(0), // For ordering media
+  isActive: boolean("is_active").default(true), // Show/hide toggle
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Green Champions Gallery table
+export const greenChampionsGallery = pgTable("green_champions_gallery", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  schoolName: text("school_name"), // Optional: link to specific school
+  mediaUrl: text("media_url").notNull(), // URL to photo
+  caption: text("caption"), // Optional caption/description
+  displayOrder: integer("display_order").default(0), // For ordering media
+  isActive: boolean("is_active").default(true), // Show/hide toggle
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
 // Schema exports
 export const insertProfileSchema = createInsertSchema(profiles);
 export const selectProfileSchema = createSelectSchema(profiles);
@@ -84,6 +109,10 @@ export const insertTestimonialSchema = createInsertSchema(testimonials);
 export const selectTestimonialSchema = createSelectSchema(testimonials);
 export const insertAdminUserSchema = createInsertSchema(adminUsers);
 export const selectAdminUserSchema = createSelectSchema(adminUsers);
+export const insertWaterSourceGallerySchema = createInsertSchema(waterSourceGallery);
+export const selectWaterSourceGallerySchema = createSelectSchema(waterSourceGallery);
+export const insertGreenChampionsGallerySchema = createInsertSchema(greenChampionsGallery);
+export const selectGreenChampionsGallerySchema = createSelectSchema(greenChampionsGallery);
 
 // Type exports
 export type Profile = typeof profiles.$inferSelect;
@@ -98,3 +127,7 @@ export type Testimonial = typeof testimonials.$inferSelect;
 export type InsertTestimonial = typeof testimonials.$inferInsert;
 export type AdminUser = typeof adminUsers.$inferSelect;
 export type InsertAdminUser = typeof adminUsers.$inferInsert;
+export type WaterSourceGallery = typeof waterSourceGallery.$inferSelect;
+export type InsertWaterSourceGallery = typeof waterSourceGallery.$inferInsert;
+export type GreenChampionsGallery = typeof greenChampionsGallery.$inferSelect;
+export type InsertGreenChampionsGallery = typeof greenChampionsGallery.$inferInsert;

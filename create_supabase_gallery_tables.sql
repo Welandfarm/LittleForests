@@ -1,4 +1,11 @@
 
+
+-- Drop existing policies if they exist
+DROP POLICY IF EXISTS "Public read access for water_source_gallery" ON water_source_gallery;
+DROP POLICY IF EXISTS "Public read access for green_champions_gallery" ON green_champions_gallery;
+DROP POLICY IF EXISTS "Service role full access to water_source_gallery" ON water_source_gallery;
+DROP POLICY IF EXISTS "Service role full access to green_champions_gallery" ON green_champions_gallery;
+
 -- Create water_source_gallery table
 CREATE TABLE IF NOT EXISTS water_source_gallery (
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -35,3 +42,4 @@ CREATE POLICY "Public read access for green_champions_gallery" ON green_champion
 -- Admin policies (service role has full access)
 CREATE POLICY "Service role full access to water_source_gallery" ON water_source_gallery FOR ALL USING (auth.role() = 'service_role');
 CREATE POLICY "Service role full access to green_champions_gallery" ON green_champions_gallery FOR ALL USING (auth.role() = 'service_role');
+

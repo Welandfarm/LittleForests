@@ -196,8 +196,8 @@ const GreenTowns = () => {
                 <CarouselItem>
                   <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl shadow-lg">
                     <img 
-                      src="/lovable-uploads/82ebeeb5-b8dd-4161-9668-d9077f5da34d.png" 
-                      alt="Green Champions - Students and community members" 
+                      src="rag://attached_assets:0" 
+                      alt="Student planting a tree seedling at school" 
                       className="w-full h-full object-cover"
                     />
                   </div>
@@ -205,7 +205,34 @@ const GreenTowns = () => {
                 <CarouselItem>
                   <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl shadow-lg">
                     <img 
-                      src="/lovable-uploads/bd17ddd8-8af4-40c1-8b3b-4234a074ae9b.png" 
+                      src="rag://attached_assets:1" 
+                      alt="Community members with tree seedlings" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </CarouselItem>
+                <CarouselItem>
+                  <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl shadow-lg">
+                    <img 
+                      src="rag://attached_assets:2" 
+                      alt="Protected water source with tap" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </CarouselItem>
+                <CarouselItem>
+                  <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl shadow-lg">
+                    <img 
+                      src="rag://attached_assets:3" 
+                      alt="Students and teachers at school greening project" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </CarouselItem>
+                <CarouselItem>
+                  <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl shadow-lg">
+                    <img 
+                      src="rag://attached_assets:4" 
                       alt="Tree planting at school compound" 
                       className="w-full h-full object-cover"
                     />
@@ -214,44 +241,8 @@ const GreenTowns = () => {
                 <CarouselItem>
                   <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl shadow-lg">
                     <img 
-                      src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=500&fit=crop" 
-                      alt="Student planting seedling" 
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                </CarouselItem>
-                <CarouselItem>
-                  <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl shadow-lg">
-                    <img 
-                      src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=800&h=500&fit=crop" 
-                      alt="Unprotected water source" 
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                </CarouselItem>
-                <CarouselItem>
-                  <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl shadow-lg">
-                    <img 
-                      src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=500&fit=crop" 
-                      alt="Protected water point with tap" 
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                </CarouselItem>
-                <CarouselItem>
-                  <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl shadow-lg">
-                    <img 
-                      src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&h=500&fit=crop" 
-                      alt="Community member planting tree" 
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                </CarouselItem>
-                <CarouselItem>
-                  <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl shadow-lg">
-                    <img 
-                      src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=800&h=500&fit=crop" 
-                      alt="Community members with seedlings" 
+                      src="rag://attached_assets:5" 
+                      alt="Student planting seedling at school" 
                       className="w-full h-full object-cover"
                     />
                   </div>

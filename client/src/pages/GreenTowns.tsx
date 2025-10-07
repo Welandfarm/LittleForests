@@ -25,10 +25,20 @@ const GreenTowns = () => {
 
   const { data: waterSourceGallery = [] } = useQuery<any[]>({
     queryKey: ['/api/gallery/water-source'],
+    queryFn: async () => {
+      const response = await fetch('/api/gallery/water-source');
+      if (!response.ok) throw new Error('Failed to fetch water source gallery');
+      return response.json();
+    },
   });
 
   const { data: greenChampionsGallery = [] } = useQuery<any[]>({
     queryKey: ['/api/gallery/green-champions'],
+    queryFn: async () => {
+      const response = await fetch('/api/gallery/green-champions');
+      if (!response.ok) throw new Error('Failed to fetch green champions gallery');
+      return response.json();
+    },
   });
 
   const allSprings = ['Mumetet', 'Masese', 'Choronok', 'Chebululu', 'Korabi', 'Tabet', 'Milimani', 'Bondet', 'Anabomoi', 'Chemeres', 'Kibochi'];

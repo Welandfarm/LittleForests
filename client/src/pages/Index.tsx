@@ -21,7 +21,7 @@ import FloatingLeaves from '@/components/FloatingLeaves';
 import nurseryImage from '@assets/For Front page_1751302445978.jpg';
 
 const Index = () => {
-  const { addToCart, getCartTotal, cartItems } = useCart();
+  const { addToCart, getCartTotal, cartItems, clearCart } = useCart();
   const [cartOpen, setCartOpen] = useState(false);
   const [quantities, setQuantities] = useState<{[key: string]: number}>({});
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -59,9 +59,9 @@ I would like to place an order for the following seedlings:
 ${orderItems}
 
 Please confirm availability and let me know`;
-
       const whatsappUrl = `https://wa.me/254108029407?text=${encodeURIComponent(message)}`;
       window.open(whatsappUrl, '_blank');
+      clearCart();
     } else {
       // If cart is empty, scroll to products section to let them select items first
       const productsSection = document.getElementById('products');

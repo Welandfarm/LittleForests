@@ -263,7 +263,7 @@ const GreenTowns = () => {
           </div>
           
           {/* Tabs Navigation */}
-          <div className="flex justify-center mb-12"></div>
+          <div className="flex justify-center mb-12">
             <div className="inline-flex bg-gray-100 rounded-lg p-1">
               <button
                 onClick={() => setActiveTab('water')}

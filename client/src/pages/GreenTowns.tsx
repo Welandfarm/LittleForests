@@ -23,6 +23,14 @@ const GreenTowns = () => {
     },
   });
 
+  const { data: waterSourceGallery = [] } = useQuery<any[]>({
+    queryKey: ['/api/gallery/water-source'],
+  });
+
+  const { data: greenChampionsGallery = [] } = useQuery<any[]>({
+    queryKey: ['/api/gallery/green-champions'],
+  });
+
   const allSprings = ['Mumetet', 'Masese', 'Choronok', 'Chebululu', 'Korabi', 'Tabet', 'Milimani', 'Bondet', 'Anabomoi', 'Chemeres', 'Kibochi'];
 
   const schools = [
@@ -41,6 +49,56 @@ const GreenTowns = () => {
     'Kapsimbiri',
     'Chemomul'
   ];
+
+  // Gallery component for displaying media
+  const MediaGallery = ({ items, type }: { items: any[], type: 'water' | 'school' }) => {
+    if (!items || items.length === 0) {
+      return (
+        <div className="bg-gray-100 rounded-lg p-6 flex items-center justify-center">
+          <div className="text-center text-gray-500">
+            <div className="text-4xl mb-2">📷</div>
+            <p>Placeholder for {type === 'water' ? '2–3 photos or a short video clip' : 'photos showing the greening activities and student participation'}</p>
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <div className="grid gap-4">
+        {items.map((item: any, idx: number) => (
+          <div key={idx} className="rounded-lg overflow-hidden">
+            {item.media_type === 'video' ? (
+              <div>
+                <video 
+                  controls 
+                  className="w-full h-auto rounded-lg"
+                  data-testid={`video-${type}-${idx}`}
+                >
+                  <source src={item.media_url} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+                {item.caption && (
+                  <p className="text-sm text-gray-600 mt-2 italic">{item.caption}</p>
+                )}
+              </div>
+            ) : (
+              <div>
+                <img 
+                  src={item.media_url} 
+                  alt={item.caption || `${type} media ${idx + 1}`}
+                  className="w-full h-auto rounded-lg object-cover"
+                  data-testid={`img-${type}-${idx}`}
+                />
+                {item.caption && (
+                  <p className="text-sm text-gray-600 mt-2 italic">{item.caption}</p>
+                )}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    );
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-50 to-white">
@@ -139,12 +197,7 @@ const GreenTowns = () => {
                               </p>
                             )}
                           </div>
-                          <div className="bg-gray-100 rounded-lg p-6 flex items-center justify-center">
-                            <div className="text-center text-gray-500">
-                              <div className="text-4xl mb-2">📷</div>
-                              <p>Placeholder for {hasStory ? '2–3 photos or a short video clip' : 'photos or videos'}</p>
-                            </div>
-                          </div>
+                          <MediaGallery items={waterSourceGallery} type="water" />
                         </div>
                       </AccordionContent>
                     </AccordionItem>
@@ -195,12 +248,7 @@ const GreenTowns = () => {
                               </p>
                             )}
                           </div>
-                          <div className="bg-gray-100 rounded-lg p-6 flex items-center justify-center">
-                            <div className="text-center text-gray-500">
-                              <div className="text-4xl mb-2">📷</div>
-                              <p>Placeholder for photos showing the greening activities and student participation</p>
-                            </div>
-                          </div>
+                          <MediaGallery items={greenChampionsGallery} type="school" />
                         </div>
                       </AccordionContent>
                     </AccordionItem>

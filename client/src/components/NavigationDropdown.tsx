@@ -9,10 +9,12 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '@/lib/api';
+import { useState } from 'react';
 
 const NavigationDropdown = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const [menuOpen, setMenuOpen] = useState<string | undefined>(undefined);
 
   // Prefetch data on hover to improve perceived performance
   const handlePrefetch = (page: string) => {
@@ -47,14 +49,17 @@ const NavigationDropdown = () => {
   };
 
   const handleNavigation = (path: string) => {
-    // Navigate to the path - this will work even if already on the page
-    navigate(path);
+    // Close menu and navigate
+    setMenuOpen(undefined);
+    setTimeout(() => {
+      navigate(path);
+    }, 100);
   };
 
   return (
-    <NavigationMenu>
+    <NavigationMenu value={menuOpen} onValueChange={setMenuOpen}>
       <NavigationMenuList>
-        <NavigationMenuItem>
+        <NavigationMenuItem value="menu">
           <NavigationMenuTrigger className="bg-green-600 text-white hover:bg-green-700">
             Menu
           </NavigationMenuTrigger>

@@ -48,7 +48,7 @@ const GreenTowns = () => {
   const allSprings = ['Mumetet', 'Masese', 'Choronok', 'Chebululu', 'Korabi', 'Tabet', 'Milimani', 'Bondet', 'Anabomoi', 'Chemeres', 'Kibochi'];
 
   const schools = [
-    'Komolwet Primary School',
+    'Komolwet',
     'Kaplong Girls',
     'Kapchemibei',
     'Kaptumaitaa',
@@ -360,7 +360,7 @@ const GreenTowns = () => {
                 </h2>
                 <div className="max-w-4xl mx-auto text-left">
                   <p className="text-gray-600 mb-6">
-                    This is a school greening initiative where kids are nurtured to become champions of the environment. We do this by growing trees and fruits in schools to promote green spaces in schools and improve learning among students.
+                    This is a school greening initiative where kids in primary schools are nurtured to become champions of the environment. We do this by growing trees and fruits in schools to promote green spaces in schools and improve learning among students.
                   </p>
                 </div>
               </div>

@@ -172,25 +172,6 @@ const GreenTowns = () => {
                 align: "center",
                 loop: true,
               }}
-              plugins={[
-                {
-                  name: "autoplay",
-                  init: (embla: any) => {
-                    let timer: NodeJS.Timeout;
-                    const play = () => {
-                      timer = setTimeout(() => {
-                        embla.scrollNext();
-                        play();
-                      }, 4000); // Change image every 4 seconds
-                    };
-                    
-                    embla.on('init', play);
-                    embla.on('pointerDown', () => clearTimeout(timer));
-                    
-                    return () => clearTimeout(timer);
-                  }
-                } as any
-              ]}
             >
               <CarouselContent>
                 <CarouselItem>

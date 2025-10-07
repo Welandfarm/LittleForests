@@ -82,26 +82,6 @@ const ProductGrid: React.FC<ProductGridProps> = ({
                 <div className="absolute bottom-1/4 right-1/2 w-1 h-1 bg-yellow-300 rounded-full animate-pulse opacity-70"></div>
               </div>
             </div>
-            <div className="absolute top-2 right-2 z-10">
-              <Badge 
-                variant={product.status === 'Available' ? "outline" : "secondary"}
-                className={product.status === 'Available' ? 
-                  "bg-white text-black border-gray-300 text-xs" : 
-                  "bg-red-100 text-red-800 border-red-300 text-xs"
-                }
-                data-testid={`badge-status-${product.id}`}
-              >
-                {product.status}
-                {product.stock_quantity !== undefined && (
-                  <span className="ml-1 text-xs">({product.stock_quantity})</span>
-                )}
-              </Badge>
-            </div>
-            <div className="absolute bottom-2 left-2 z-10">
-              <Badge variant="outline" className="bg-white text-xs" data-testid={`badge-category-${product.id}`}>
-                {product.category}
-              </Badge>
-            </div>
           </div>
           <div className="p-4">
             <div className="flex justify-between items-center mb-3">

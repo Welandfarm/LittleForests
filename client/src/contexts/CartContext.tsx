@@ -46,8 +46,8 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
       }
       return [...prev, {
         id: product.id,
-        name: product.name,
-        price: product.price,
+        name: product.name || product.plant_name,
+        price: typeof product.price === 'number' ? `KSH ${product.price}` : product.price,
         quantity
       }];
     });

@@ -57,7 +57,7 @@ const NavigationDropdown = () => {
   };
 
   return (
-    <NavigationMenu value={menuOpen} onValueChange={setMenuOpen}>
+    <NavigationMenu value={menuOpen} onValueChange={setMenuOpen} className="relative z-50">
       <NavigationMenuList>
         <NavigationMenuItem value="menu">
           <NavigationMenuTrigger className="bg-green-600 text-white hover:bg-green-700">

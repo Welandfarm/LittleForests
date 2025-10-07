@@ -22,7 +22,11 @@ const GreenTowns = () => {
     if (!api) return;
 
     const interval = setInterval(() => {
-      api.scrollNext();
+      if (api.canScrollNext()) {
+        api.scrollNext();
+      } else {
+        api.scrollTo(0);
+      }
     }, 4000);
 
     return () => clearInterval(interval);
@@ -188,7 +192,7 @@ const GreenTowns = () => {
               className="w-full max-w-4xl mx-auto"
               opts={{
                 align: "center",
-                loop: true,
+                loop: false,
               }}
             >
               <CarouselContent>

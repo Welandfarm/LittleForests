@@ -7,6 +7,12 @@ import AuthButton from '@/components/AuthButton';
 import NavigationDropdown from '@/components/NavigationDropdown';
 import { useQuery } from '@tanstack/react-query';
 import { apiClient } from '@/lib/api';
+import img1 from '@assets/IMG-20251007-WA0001_1759822397456.jpg';
+import img2 from '@assets/IMG-20251007-WA0006_1759822421452.jpg';
+import img3 from '@assets/IMG-20251007-WA0007_1759822421454.jpg';
+import img4 from '@assets/WhatsApp Image 2025-09-19 at 15.27.03_c4519e73_1759822510843.jpg';
+import img5 from '@assets/WhatsApp Image 2025-09-19 at 15.27.50_6eec7683_1759822510846.jpg';
+import img6 from '@assets/WhatsApp Image 2025-09-22 at 22.30.42_4578d615_1759822421455.jpg';
 
 const GreenTowns = () => {
   const [activeTab, setActiveTab] = useState<'water' | 'schools'>('water');
@@ -172,31 +178,12 @@ const GreenTowns = () => {
                 align: "center",
                 loop: true,
               }}
-              plugins={[
-                {
-                  name: 'autoplay',
-                  options: { delay: 4000 },
-                  init: (embla: any) => {
-                    let timer: NodeJS.Timeout;
-                    
-                    const play = () => {
-                      timer = setTimeout(() => {
-                        embla.scrollNext();
-                        play();
-                      }, 4000);
-                    };
-                    
-                    embla.on('init', play);
-                    embla.on('destroy', () => clearTimeout(timer));
-                  }
-                }
-              ]}
             >
               <CarouselContent>
                 <CarouselItem>
                   <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl shadow-lg">
                     <img 
-                      src="/attached_assets/IMG-20251007-WA0001_1759822397456.jpg" 
+                      src={img1} 
                       alt="Student planting a tree seedling at school" 
                       className="w-full h-full object-cover"
                     />
@@ -205,7 +192,7 @@ const GreenTowns = () => {
                 <CarouselItem>
                   <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl shadow-lg">
                     <img 
-                      src="/attached_assets/IMG-20251007-WA0006_1759822421452.jpg" 
+                      src={img2} 
                       alt="Community members with tree seedlings" 
                       className="w-full h-full object-cover"
                     />
@@ -214,7 +201,7 @@ const GreenTowns = () => {
                 <CarouselItem>
                   <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl shadow-lg">
                     <img 
-                      src="/attached_assets/IMG-20251007-WA0007_1759822421454.jpg" 
+                      src={img3} 
                       alt="Protected water source with tap" 
                       className="w-full h-full object-cover"
                     />
@@ -223,7 +210,7 @@ const GreenTowns = () => {
                 <CarouselItem>
                   <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl shadow-lg">
                     <img 
-                      src="/attached_assets/WhatsApp Image 2025-09-19 at 15.27.03_c4519e73_1759822510843.jpg" 
+                      src={img4} 
                       alt="Students and teachers at school greening project" 
                       className="w-full h-full object-cover"
                     />
@@ -232,7 +219,7 @@ const GreenTowns = () => {
                 <CarouselItem>
                   <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl shadow-lg">
                     <img 
-                      src="/attached_assets/WhatsApp Image 2025-09-19 at 15.27.50_6eec7683_1759822510846.jpg" 
+                      src={img5} 
                       alt="Tree planting at school compound" 
                       className="w-full h-full object-cover"
                     />
@@ -241,7 +228,7 @@ const GreenTowns = () => {
                 <CarouselItem>
                   <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl shadow-lg">
                     <img 
-                      src="/attached_assets/WhatsApp Image 2025-09-22 at 22.30.42_4578d615_1759822421455.jpg" 
+                      src={img6} 
                       alt="Student planting seedling at school" 
                       className="w-full h-full object-cover"
                     />

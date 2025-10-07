@@ -156,6 +156,11 @@ LittleForest is a full-stack web application for an online seedling nursery busi
 - August 7, 2025. Created intelligent category filtering with smart icon mapping for different product types
 - August 7, 2025. Added /api/categories endpoint for real-time category discovery from inventory database
 - August 7, 2025. Website now future-ready - any new product categories will automatically appear with proper filtering and display
+- October 7, 2025. Created new "Green Towns Initiative" page to showcase impact work in communities
+- October 7, 2025. Moved water source restoration content from About page to Green Towns page, renamed to "Water Source Protection and Restoration"
+- October 7, 2025. Added "Green Champions" school greening initiative section featuring 14 schools with unique stories
+- October 7, 2025. Restructured navigation to include Green Towns Initiative as third menu item after Shop with Us and About Us
+- October 7, 2025. Updated About page to focus on company information and offerings, removed impact content
 
 ## User Preferences
 

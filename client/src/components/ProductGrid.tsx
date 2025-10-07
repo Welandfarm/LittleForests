@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Plus, Minus } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { Plus, Minus, Info } from "lucide-react";
 
 interface Product {
   id: string;
@@ -36,6 +37,8 @@ const ProductGrid: React.FC<ProductGridProps> = ({
   onSetQuantity, 
   onAddToCart 
 }) => {
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+
   if (products.length === 0) {
     return (
       <div className="text-center py-12" data-testid="grid-no-products">
@@ -89,53 +92,121 @@ const ProductGrid: React.FC<ProductGridProps> = ({
                 {typeof product.price === 'number' ? `KSH ${product.price}` : product.price}
               </span>
             </div>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => onUpdateQuantity(product.id, -1)}
-                  data-testid={`button-decrease-${product.id}`}
+            <div className="flex flex-col space-y-2">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => onUpdateQuantity(product.id, -1)}
+                    data-testid={`button-decrease-${product.id}`}
+                  >
+                    <Minus className="h-3 w-3" />
+                  </Button>
+                  <Input
+                    type="number"
+                    min="1"
+                    max="999"
+                    value={quantities[product.id] || 1}
+                    onChange={(e) => {
+                      const value = parseInt(e.target.value) || 1;
+                      onSetQuantity(product.id, Math.max(1, Math.min(999, value)));
+                    }}
+                    className="w-16 text-center text-sm"
+                    data-testid={`input-quantity-${product.id}`}
+                  />
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => onUpdateQuantity(product.id, 1)}
+                    data-testid={`button-increase-${product.id}`}
+                  >
+                    <Plus className="h-3 w-3" />
+                  </Button>
+                </div>
+                <Button 
+                  size="sm" 
+                  disabled={product.status === 'Out of Stock' || product.stock_quantity === 0}
+                  onClick={() => onAddToCart(product)}
+                  className={product.status === 'Out of Stock' ? 
+                    "bg-gray-400 cursor-not-allowed" : 
+                    "bg-green-600 hover:bg-green-700 hover:scale-105 transition-all duration-200 active:scale-95"
+                  }
+                  data-testid={`button-add-to-cart-${product.id}`}
                 >
-                  <Minus className="h-3 w-3" />
-                </Button>
-                <Input
-                  type="number"
-                  min="1"
-                  max="999"
-                  value={quantities[product.id] || 1}
-                  onChange={(e) => {
-                    const value = parseInt(e.target.value) || 1;
-                    onSetQuantity(product.id, Math.max(1, Math.min(999, value)));
-                  }}
-                  className="w-16 text-center text-sm"
-                  data-testid={`input-quantity-${product.id}`}
-                />
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => onUpdateQuantity(product.id, 1)}
-                  data-testid={`button-increase-${product.id}`}
-                >
-                  <Plus className="h-3 w-3" />
+                  {product.status === 'Out of Stock' ? 'Out of Stock' : 'Add to Cart'}
                 </Button>
               </div>
               <Button 
-                size="sm" 
-                disabled={product.status === 'Out of Stock' || product.stock_quantity === 0}
-                onClick={() => onAddToCart(product)}
-                className={product.status === 'Out of Stock' ? 
-                  "bg-gray-400 cursor-not-allowed" : 
-                  "bg-green-600 hover:bg-green-700 hover:scale-105 transition-all duration-200 active:scale-95"
-                }
-                data-testid={`button-add-to-cart-${product.id}`}
+                variant="outline" 
+                size="sm"
+                onClick={() => setSelectedProduct(product)}
+                className="w-full text-xs"
+                data-testid={`button-details-${product.id}`}
               >
-                {product.status === 'Out of Stock' ? 'Out of Stock' : 'Add to Cart'}
+                <Info className="h-3 w-3 mr-1" />
+                See Details
               </Button>
             </div>
           </div>
         </Card>
       ))}
+
+      {/* Product Details Dialog */}
+      <Dialog open={!!selectedProduct} onOpenChange={() => setSelectedProduct(null)}>
+        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+          {selectedProduct && (
+            <>
+              <DialogHeader>
+                <DialogTitle className="text-2xl">
+                  {selectedProduct.name || selectedProduct.plant_name}
+                </DialogTitle>
+                <DialogDescription>
+                  {selectedProduct.category}
+                </DialogDescription>
+              </DialogHeader>
+              <div className="space-y-4">
+                <div className="aspect-square w-full max-w-md mx-auto">
+                  <img 
+                    src={selectedProduct.image_url || selectedProduct.imageUrl || "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=300&fit=crop"} 
+                    alt={selectedProduct.name || selectedProduct.plant_name}
+                    className="w-full h-full object-cover rounded-lg"
+                  />
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <p className="text-sm font-medium text-gray-700">Price</p>
+                    <p className="text-2xl font-bold text-green-600">
+                      {typeof selectedProduct.price === 'number' ? `KSH ${selectedProduct.price}` : selectedProduct.price}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-gray-700">Status</p>
+                    <Badge variant={selectedProduct.status === 'Available' ? 'default' : 'secondary'}>
+                      {selectedProduct.status}
+                      {selectedProduct.stock_quantity !== undefined && (
+                        <span className="ml-1">({selectedProduct.stock_quantity} in stock)</span>
+                      )}
+                    </Badge>
+                  </div>
+                </div>
+                {selectedProduct.description && (
+                  <div>
+                    <p className="text-sm font-medium text-gray-700 mb-2">Description</p>
+                    <p className="text-gray-600">{selectedProduct.description}</p>
+                  </div>
+                )}
+                {selectedProduct.scientific_name && (
+                  <div>
+                    <p className="text-sm font-medium text-gray-700">Scientific Name</p>
+                    <p className="text-gray-600 italic">{selectedProduct.scientific_name}</p>
+                  </div>
+                )}
+              </div>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

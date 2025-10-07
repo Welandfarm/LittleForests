@@ -1,0 +1,298 @@
+import { Button } from "@/components/ui/button";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Droplets, GraduationCap } from "lucide-react";
+import AuthButton from '@/components/AuthButton';
+import NavigationDropdown from '@/components/NavigationDropdown';
+import { useQuery } from '@tanstack/react-query';
+import { apiClient } from '@/lib/api';
+
+const GreenTowns = () => {
+  const { data: content = {} } = useQuery({
+    queryKey: ['greentowns-content'],
+    queryFn: async () => {
+      const data = await apiClient.getContent();
+      
+      const contentObj: { [key: string]: { title: string; content: string; type: string } } = {};
+      data?.forEach((item: any) => {
+        const key = item.title?.toLowerCase().replace(/\s+/g, '_') || '';
+        contentObj[key] = { title: item.title || '', content: item.content || '', type: item.type || 'page' };
+      });
+      return contentObj;
+    },
+  });
+
+  const allSprings = ['Mumetet', 'Masese', 'Choronok', 'Chebululu', 'Korabi', 'Tabet', 'Milimani', 'Bondet', 'Anabomoi', 'Chemeres', 'Kibochi'];
+
+  const schools = [
+    'Komolwet Primary School',
+    'Kaplong Girls',
+    'Kapchemibei',
+    'Kaptumaitaa',
+    'Sasita',
+    'Kimase',
+    'Kapchepkoro',
+    'Kamungei',
+    'Kesenge',
+    'Chebirbelek',
+    'Bomet Primary',
+    'Kyogong',
+    'Kapsimbiri',
+    'Chemomul'
+  ];
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-green-50 to-white">
+      {/* Header */}
+      <header className="bg-white shadow-sm sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center py-4">
+            <div className="flex items-center space-x-3">
+              <div>
+                <h1 className="text-2xl font-bold">
+                  <span className="text-orange-500">Little</span>
+                  <span className="text-green-600">Forest</span>
+                </h1>
+                <p className="text-sm text-gray-600">Nurturing Nature</p>
+              </div>
+            </div>
+            <div className="flex items-center space-x-3">
+              <AuthButton />
+              <Button onClick={() => window.location.href = '/'} className="bg-orange-500 hover:bg-orange-600 text-white" data-testid="button-shopnow">
+                Shop Now
+              </Button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Navigation Menu */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <div className="flex justify-start">
+          <div className="scale-125">
+            <NavigationDropdown />
+          </div>
+        </div>
+      </div>
+
+      {/* Hero Section */}
+      <section className="py-16 bg-gradient-to-r from-green-600 to-green-700 text-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h1 className="text-4xl md:text-5xl font-bold mb-6" data-testid="text-pagetitle">
+            Green Towns Initiative
+          </h1>
+          <p className="text-xl md:text-2xl text-green-100 max-w-4xl mx-auto" data-testid="text-pagesubtitle">
+            Showcasing the Impact of Our Work in Communities
+          </p>
+        </div>
+      </section>
+
+      {/* Main Content */}
+      <section className="py-16 bg-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+          
+          {/* Water Source Protection and Restoration Section */}
+          <div>
+            <div className="text-center group mb-8">
+              <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-blue-200 transition-colors">
+                <Droplets className="h-8 w-8 text-blue-600" />
+              </div>
+              <h2 className="text-3xl font-bold text-gray-900 mb-4" data-testid="text-watersection">
+                Water Source Protection and Restoration
+              </h2>
+              <div className="max-w-4xl mx-auto text-left">
+                <p className="text-gray-600 mb-4">
+                  Springs act as a major source of water for many communities, yet these vital ecosystems face challenges arising from massive deforestation, farming, and contamination from direct contact with humans and animals.
+                </p>
+                <p className="text-gray-600 mb-4">
+                  Our focus is to bring back these water sources to life and secure high water quality for both the present and the next generation. We do this by:
+                </p>
+                <ul className="list-disc list-inside text-gray-600 mb-6 space-y-2">
+                  <li>Growing indigenous trees to replenish lost vegetation</li>
+                  <li>Constructing water points to avoid contamination</li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Springs Accordion */}
+            <div className="max-w-4xl mx-auto">
+              <Accordion type="single" collapsible className="space-y-4">
+                {allSprings.map((springName) => {
+                  const storyKey = `${springName.toLowerCase()}_spring_story`;
+                  const story = content[storyKey];
+                  const hasStory = story && story.content && story.content.trim().length > 0;
+                  
+                  return (
+                    <AccordionItem key={springName} value={springName.toLowerCase()} className="border border-blue-200 rounded-lg">
+                      <AccordionTrigger className="px-6 py-4 hover:bg-blue-50" data-testid={`button-spring-${springName.toLowerCase()}`}>
+                        <span className="text-lg font-semibold text-blue-800">{springName} Spring</span>
+                      </AccordionTrigger>
+                      <AccordionContent className="px-6 pb-6">
+                        <div className="grid md:grid-cols-2 gap-6">
+                          <div className="space-y-4">
+                            {hasStory ? (
+                              <div dangerouslySetInnerHTML={{ __html: story.content.replace(/\n/g, '<br />') }} className="text-gray-600" />
+                            ) : (
+                              <p className="text-gray-600">
+                                Coming soon: We are preparing the story of {springName} Spring, highlighting the challenges faced, the actions taken, and the impact created with the community.
+                              </p>
+                            )}
+                          </div>
+                          <div className="bg-gray-100 rounded-lg p-6 flex items-center justify-center">
+                            <div className="text-center text-gray-500">
+                              <div className="text-4xl mb-2">📷</div>
+                              <p>Placeholder for {hasStory ? '2–3 photos or a short video clip' : 'photos or videos'}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+                  );
+                })}
+              </Accordion>
+            </div>
+          </div>
+
+          {/* Green Champions Section */}
+          <div>
+            <div className="text-center group mb-8">
+              <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-green-200 transition-colors">
+                <GraduationCap className="h-8 w-8 text-green-600" />
+              </div>
+              <h2 className="text-3xl font-bold text-gray-900 mb-4" data-testid="text-greenchampions">
+                Green Champions
+              </h2>
+              <div className="max-w-4xl mx-auto text-left">
+                <p className="text-gray-600 mb-6">
+                  This is a school greening initiative where kids are nurtured to become champions of the environment. We do this by growing trees and fruits in schools to promote green spaces in schools and improve learning among students.
+                </p>
+              </div>
+            </div>
+
+            {/* Schools Accordion */}
+            <div className="max-w-4xl mx-auto">
+              <h3 className="text-xl font-semibold text-gray-800 mb-4">Schools We Have Worked With</h3>
+              <Accordion type="single" collapsible className="space-y-4">
+                {schools.map((schoolName, index) => {
+                  const schoolKey = `${schoolName.toLowerCase().replace(/\s+/g, '_')}_story`;
+                  const schoolStory = content[schoolKey];
+                  const hasStory = schoolStory && schoolStory.content && schoolStory.content.trim().length > 0;
+                  
+                  return (
+                    <AccordionItem key={index} value={schoolName.toLowerCase()} className="border border-green-200 rounded-lg">
+                      <AccordionTrigger className="px-6 py-4 hover:bg-green-50" data-testid={`button-school-${index}`}>
+                        <span className="text-lg font-semibold text-green-800">{schoolName}</span>
+                      </AccordionTrigger>
+                      <AccordionContent className="px-6 pb-6">
+                        <div className="grid md:grid-cols-2 gap-6">
+                          <div className="space-y-4">
+                            {hasStory ? (
+                              <div dangerouslySetInnerHTML={{ __html: schoolStory.content.replace(/\n/g, '<br />') }} className="text-gray-600" />
+                            ) : (
+                              <p className="text-gray-600">
+                                {schoolName} has a unique story of environmental transformation. We are preparing detailed information about the impact created with students and the community.
+                              </p>
+                            )}
+                          </div>
+                          <div className="bg-gray-100 rounded-lg p-6 flex items-center justify-center">
+                            <div className="text-center text-gray-500">
+                              <div className="text-4xl mb-2">📷</div>
+                              <p>Placeholder for photos showing the greening activities and student participation</p>
+                            </div>
+                          </div>
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+                  );
+                })}
+              </Accordion>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Call to Action */}
+      <section className="py-16 bg-green-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl font-bold text-green-800 mb-4">Join Our Green Movement</h2>
+          <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
+            Partner with us to create green spaces in your community, school, or institution. Together, we can nurture environmental champions and restore our ecosystems.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button onClick={() => window.location.href = '/'} className="bg-green-600 hover:bg-green-700 text-white px-8 py-3" data-testid="button-shopnow-cta">
+              Shop Now
+            </Button>
+            <Button 
+              onClick={() => {
+                const message = `Hi
+
+I'd like to learn more about the Green Towns Initiative and how we can partner.
+
+Thank you!`;
+                
+                const whatsappUrl = `https://wa.me/254108029407?text=${encodeURIComponent(message)}`;
+                window.open(whatsappUrl, '_blank');
+              }}
+              variant="outline" 
+              className="border-green-600 text-green-600 hover:bg-green-50 px-8 py-3"
+              data-testid="button-contact"
+            >
+              Contact Us
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-green-800 text-white py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-3 gap-8">
+            <div>
+              <div className="flex items-center space-x-2 mb-4">
+                <span className="text-xl font-bold">
+                  <span className="text-orange-500">Little</span>
+                  <span className="text-green-400">Forest</span>
+                </span>
+              </div>
+              <p className="text-green-200 text-sm">
+                Restoring Water Resources, One Tree at a Time.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="font-semibold mb-4">Quick Links</h3>
+              <ul className="space-y-2 text-sm text-green-200">
+                <li><a href="/" className="hover:text-white">Shop with us</a></li>
+                <li><a href="/about" className="hover:text-white">About Us</a></li>
+                <li><a href="/green-towns" className="hover:text-white">Green Towns Initiative</a></li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="font-semibold mb-4">Contact Info</h3>
+              <div className="space-y-2 text-sm text-green-200 mb-4">
+                <p>📱 WhatsApp: 
+                  <a 
+                    href="https://wa.me/254108029407?text=Hello%20LittleForest!%20I'm%20interested%20in%20your%20seedlings%20and%20would%20like%20to%20learn%20more." 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-green-300 hover:text-white underline ml-1"
+                  >
+                    +254 108 029 407
+                  </a>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="border-t border-green-700 mt-8 pt-8 text-center">
+            <p className="text-green-200 text-sm">
+              © 2024 Little Forest. All rights reserved. | Restoring Water Resources, One Tree at a Time.
+            </p>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+};
+
+export default GreenTowns;

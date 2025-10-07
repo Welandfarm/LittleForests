@@ -161,6 +161,10 @@ LittleForest is a full-stack web application for an online seedling nursery busi
 - October 7, 2025. Added "Green Champions" school greening initiative section featuring 14 schools with unique stories
 - October 7, 2025. Restructured navigation to include Green Towns Initiative as third menu item after Shop with Us and About Us
 - October 7, 2025. Updated About page to focus on company information and offerings, removed impact content
+- October 7, 2025. Created media gallery system for Green Towns Initiative with database tables (water_source_gallery, green_champions_gallery)
+- October 7, 2025. Implemented API routes for gallery data (/api/gallery/water-source, /api/gallery/green-champions)
+- October 7, 2025. Added MediaGallery component to display photos and videos with captions for Water Source Protection and Green Champions sections
+- October 7, 2025. Gallery content (photos/videos/stories) managed by external inventory app with automatic display on website
 
 ## User Preferences
 

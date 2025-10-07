@@ -196,7 +196,7 @@ const GreenTowns = () => {
                 <CarouselItem>
                   <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl shadow-lg">
                     <img 
-                      src="rag://attached_assets:0" 
+                      src="/attached_assets/IMG-20251007-WA0001_1759822397456.jpg" 
                       alt="Student planting a tree seedling at school" 
                       className="w-full h-full object-cover"
                     />
@@ -205,7 +205,7 @@ const GreenTowns = () => {
                 <CarouselItem>
                   <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl shadow-lg">
                     <img 
-                      src="rag://attached_assets:1" 
+                      src="/attached_assets/IMG-20251007-WA0006_1759822421452.jpg" 
                       alt="Community members with tree seedlings" 
                       className="w-full h-full object-cover"
                     />
@@ -214,7 +214,7 @@ const GreenTowns = () => {
                 <CarouselItem>
                   <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl shadow-lg">
                     <img 
-                      src="rag://attached_assets:2" 
+                      src="/attached_assets/IMG-20251007-WA0007_1759822421454.jpg" 
                       alt="Protected water source with tap" 
                       className="w-full h-full object-cover"
                     />
@@ -223,7 +223,7 @@ const GreenTowns = () => {
                 <CarouselItem>
                   <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl shadow-lg">
                     <img 
-                      src="rag://attached_assets:3" 
+                      src="/attached_assets/WhatsApp Image 2025-09-19 at 15.27.03_c4519e73_1759822510843.jpg" 
                       alt="Students and teachers at school greening project" 
                       className="w-full h-full object-cover"
                     />
@@ -232,7 +232,7 @@ const GreenTowns = () => {
                 <CarouselItem>
                   <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl shadow-lg">
                     <img 
-                      src="rag://attached_assets:4" 
+                      src="/attached_assets/WhatsApp Image 2025-09-19 at 15.27.50_6eec7683_1759822510846.jpg" 
                       alt="Tree planting at school compound" 
                       className="w-full h-full object-cover"
                     />
@@ -241,7 +241,7 @@ const GreenTowns = () => {
                 <CarouselItem>
                   <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl shadow-lg">
                     <img 
-                      src="rag://attached_assets:5" 
+                      src="/attached_assets/WhatsApp Image 2025-09-22 at 22.30.42_4578d615_1759822421455.jpg" 
                       alt="Student planting seedling at school" 
                       className="w-full h-full object-cover"
                     />

@@ -195,12 +195,8 @@ Please confirm availability and let me know`;
         <div className="absolute inset-0 bg-black bg-opacity-40"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center animate-slide-up">
           <div className="mb-8">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white">
-              Grow your own <span className="text-orange-500">Little</span>
-              <span className="text-green-400">Forest</span>
-            </h1>
-            <p className="text-xl text-gray-100 max-w-3xl mx-auto mb-8">
-              Grow a Little Forest. Restore water. Restore land.
+            <p className="text-2xl md:text-3xl text-gray-700 mb-8 max-w-2xl mx-auto font-semibold">
+              Grow a Little Forest. Restore Land.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

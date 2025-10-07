@@ -195,9 +195,9 @@ Please confirm availability and let me know`;
         <div className="absolute inset-0 bg-black bg-opacity-40"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center animate-slide-up">
           <div className="mb-8">
-            <p className="text-2xl md:text-3xl text-gray-700 mb-8 max-w-2xl mx-auto font-semibold">
+            <h1 className="text-3xl md:text-4xl text-white mb-8 font-bold">
               Grow a Little Forest. Restore Land.
-            </p>
+            </h1>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button onClick={handleOrder} className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 animate-bounce-gentle hover:scale-105 transition-transform duration-200">

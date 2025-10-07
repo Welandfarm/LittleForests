@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from "@/components/ui/carousel";
 import { Droplets, GraduationCap } from "lucide-react";
 import AuthButton from '@/components/AuthButton';
 import NavigationDropdown from '@/components/NavigationDropdown';
@@ -16,6 +16,17 @@ import img6 from '@assets/WhatsApp Image 2025-09-22 at 22.30.42_4578d615_1759822
 
 const GreenTowns = () => {
   const [activeTab, setActiveTab] = useState<'water' | 'schools'>('water');
+  const [api, setApi] = useState<CarouselApi>();
+
+  useEffect(() => {
+    if (!api) return;
+
+    const interval = setInterval(() => {
+      api.scrollNext();
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [api]);
   
   const { data: content = {} } = useQuery({
     queryKey: ['greentowns-content'],
@@ -173,6 +184,7 @@ const GreenTowns = () => {
           {/* Impact Showcase Carousel */}
           <div className="mb-16">
             <Carousel 
+              setApi={setApi}
               className="w-full max-w-4xl mx-auto"
               opts={{
                 align: "center",

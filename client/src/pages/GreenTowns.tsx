@@ -159,12 +159,10 @@ const GreenTowns = () => {
         </div>
       </header>
 
-      {/* Navigation Menu */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-        <div className="flex justify-start">
-          <div className="scale-125">
-            <NavigationDropdown />
-          </div>
+      {/* Navigation Menu - Fixed/Floating */}
+      <div className="fixed top-20 left-4 z-40">
+        <div className="scale-110">
+          <NavigationDropdown />
         </div>
       </div>
 

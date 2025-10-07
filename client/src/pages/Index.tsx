@@ -173,12 +173,10 @@ Please confirm availability and let me know`;
 
 
 
-      {/* Navigation Menu - Larger and positioned on left */}
-      <div className="sticky top-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 z-40 bg-gradient-to-b from-green-50 to-transparent">
-        <div className="flex justify-start">
-          <div className="scale-125">
-            <NavigationDropdown />
-          </div>
+      {/* Navigation Menu - Fixed/Floating */}
+      <div className="fixed top-20 left-4 z-40">
+        <div className="scale-110">
+          <NavigationDropdown />
         </div>
       </div>
 

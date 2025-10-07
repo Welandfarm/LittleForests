@@ -47,8 +47,8 @@ const NavigationDropdown = () => {
   };
 
   const handleNavigation = (path: string) => {
-    // Use replace instead of push to avoid adding to history stack
-    navigate(path, { replace: false });
+    // Navigate to the path - this will work even if already on the page
+    navigate(path);
   };
 
   return (
@@ -64,7 +64,10 @@ const NavigationDropdown = () => {
                 <NavigationMenuLink asChild>
                   <button
                     onMouseEnter={() => handlePrefetch('/')}
-                    onClick={() => handleNavigation('/')}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleNavigation('/');
+                    }}
                     className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground w-full text-left"
                   >
                     <div className="text-sm font-medium leading-none">Shop with us</div>
@@ -74,7 +77,10 @@ const NavigationDropdown = () => {
               <li>
                 <NavigationMenuLink asChild>
                   <button
-                    onClick={() => handleNavigation('/about')}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleNavigation('/about');
+                    }}
                     className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground w-full text-left"
                   >
                     <div className="text-sm font-medium leading-none">About Us</div>
@@ -85,7 +91,10 @@ const NavigationDropdown = () => {
                 <NavigationMenuLink asChild>
                   <button
                     onMouseEnter={() => handlePrefetch('/green-towns')}
-                    onClick={() => handleNavigation('/green-towns')}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleNavigation('/green-towns');
+                    }}
                     className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground w-full text-left"
                   >
                     <div className="text-sm font-medium leading-none">Green Towns Initiative</div>

@@ -195,56 +195,56 @@ const GreenTowns = () => {
             >
               <CarouselContent>
                 <CarouselItem>
-                  <div className="relative aspect-video w-full bg-gray-100 rounded-xl shadow-lg flex items-center justify-center">
+                  <div className="relative aspect-video w-full overflow-hidden rounded-xl shadow-lg">
                     <img 
                       src={img1} 
                       alt="Green Towns Initiative" 
-                      className="max-w-full max-h-full object-contain rounded-xl"
+                      className="w-full h-full object-cover"
                     />
                   </div>
                 </CarouselItem>
                 <CarouselItem>
-                  <div className="relative aspect-video w-full bg-gray-100 rounded-xl shadow-lg flex items-center justify-center">
+                  <div className="relative aspect-video w-full overflow-hidden rounded-xl shadow-lg">
                     <img 
                       src={img2} 
                       alt="Green Towns Initiative" 
-                      className="max-w-full max-h-full object-contain rounded-xl"
+                      className="w-full h-full object-cover"
                     />
                   </div>
                 </CarouselItem>
                 <CarouselItem>
-                  <div className="relative aspect-video w-full bg-gray-100 rounded-xl shadow-lg flex items-center justify-center">
+                  <div className="relative aspect-video w-full overflow-hidden rounded-xl shadow-lg">
                     <img 
                       src={img3} 
                       alt="Green Towns Initiative" 
-                      className="max-w-full max-h-full object-contain rounded-xl"
+                      className="w-full h-full object-cover"
                     />
                   </div>
                 </CarouselItem>
                 <CarouselItem>
-                  <div className="relative aspect-video w-full bg-gray-100 rounded-xl shadow-lg flex items-center justify-center">
+                  <div className="relative aspect-video w-full overflow-hidden rounded-xl shadow-lg">
                     <img 
                       src={img4} 
                       alt="Green Towns Initiative" 
-                      className="max-w-full max-h-full object-contain rounded-xl"
+                      className="w-full h-full object-cover"
                     />
                   </div>
                 </CarouselItem>
                 <CarouselItem>
-                  <div className="relative aspect-video w-full bg-gray-100 rounded-xl shadow-lg flex items-center justify-center">
+                  <div className="relative aspect-video w-full overflow-hidden rounded-xl shadow-lg">
                     <img 
                       src={img5} 
                       alt="Green Towns Initiative" 
-                      className="max-w-full max-h-full object-contain rounded-xl"
+                      className="w-full h-full object-cover"
                     />
                   </div>
                 </CarouselItem>
                 <CarouselItem>
-                  <div className="relative aspect-video w-full bg-gray-100 rounded-xl shadow-lg flex items-center justify-center">
+                  <div className="relative aspect-video w-full overflow-hidden rounded-xl shadow-lg">
                     <img 
                       src={img6} 
                       alt="Green Towns Initiative" 
-                      className="max-w-full max-h-full object-contain rounded-xl"
+                      className="w-full h-full object-cover"
                     />
                   </div>
                 </CarouselItem>

@@ -262,6 +262,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Gallery routes
+  app.get("/api/gallery/water-source", async (req, res) => {
+    try {
+      const gallery = await storage.getWaterSourceGallery();
+      res.json(gallery);
+    } catch (error) {
+      console.error("Water source gallery API error:", error);
+      res.status(500).json({ error: "Failed to get water source gallery" });
+    }
+  });
+
+  app.get("/api/gallery/green-champions", async (req, res) => {
+    try {
+      const gallery = await storage.getGreenChampionsGallery();
+      res.json(gallery);
+    } catch (error) {
+      console.error("Green champions gallery API error:", error);
+      res.status(500).json({ error: "Failed to get green champions gallery" });
+    }
+  });
+
   // Admin authentication routes
   app.post("/api/admin/login", async (req, res) => {
     try {

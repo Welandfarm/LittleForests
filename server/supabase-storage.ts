@@ -5,7 +5,9 @@ import {
   type Content, type InsertContent,
   type ContactMessage, type InsertContactMessage,
   type Testimonial, type InsertTestimonial,
-  type AdminUser, type InsertAdminUser
+  type AdminUser, type InsertAdminUser,
+  type WaterSourceGallery, type InsertWaterSourceGallery,
+  type GreenChampionsGallery, type InsertGreenChampionsGallery
 } from "@shared/schema";
 
 export interface IStorage {
@@ -44,6 +46,10 @@ export interface IStorage {
   // Admin user methods
   getAdminUserByEmail(email: string): Promise<AdminUser | undefined>;
   createAdminUser(user: InsertAdminUser): Promise<AdminUser>;
+  
+  // Gallery methods
+  getWaterSourceGallery(): Promise<WaterSourceGallery[]>;
+  getGreenChampionsGallery(): Promise<GreenChampionsGallery[]>;
 }
 
 export class SupabaseStorage implements IStorage {
@@ -355,6 +361,29 @@ export class SupabaseStorage implements IStorage {
     
     if (error) throw error;
     return data;
+  }
+  
+  // Gallery methods
+  async getWaterSourceGallery(): Promise<WaterSourceGallery[]> {
+    const { data, error } = await supabaseAdmin
+      .from('water_source_gallery')
+      .select('*')
+      .eq('is_active', true)
+      .order('display_order', { ascending: true });
+    
+    if (error) throw error;
+    return data || [];
+  }
+  
+  async getGreenChampionsGallery(): Promise<GreenChampionsGallery[]> {
+    const { data, error } = await supabaseAdmin
+      .from('green_champions_gallery')
+      .select('*')
+      .eq('is_active', true)
+      .order('display_order', { ascending: true });
+    
+    if (error) throw error;
+    return data || [];
   }
 }
 

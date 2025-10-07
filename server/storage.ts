@@ -2,14 +2,17 @@ import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 import { 
   profiles, products, content, contactMessages, testimonials, adminUsers,
+  waterSourceGallery, greenChampionsGallery,
   type Profile, type InsertProfile,
   type Product, type InsertProduct,
   type Content, type InsertContent,
   type ContactMessage, type InsertContactMessage,
   type Testimonial, type InsertTestimonial,
-  type AdminUser, type InsertAdminUser
+  type AdminUser, type InsertAdminUser,
+  type WaterSourceGallery, type InsertWaterSourceGallery,
+  type GreenChampionsGallery, type InsertGreenChampionsGallery
 } from "@shared/schema";
-import { eq } from "drizzle-orm";
+import { eq, asc } from "drizzle-orm";
 
 const client = postgres(process.env.DATABASE_URL!);
 export const db = drizzle(client);
@@ -50,6 +53,10 @@ export interface IStorage {
   // Admin user methods
   getAdminUserByEmail(email: string): Promise<AdminUser | undefined>;
   createAdminUser(user: InsertAdminUser): Promise<AdminUser>;
+  
+  // Gallery methods
+  getWaterSourceGallery(): Promise<WaterSourceGallery[]>;
+  getGreenChampionsGallery(): Promise<GreenChampionsGallery[]>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -171,6 +178,19 @@ export class DatabaseStorage implements IStorage {
   async createAdminUser(user: InsertAdminUser): Promise<AdminUser> {
     const result = await db.insert(adminUsers).values(user).returning();
     return result[0];
+  }
+  
+  // Gallery methods
+  async getWaterSourceGallery(): Promise<WaterSourceGallery[]> {
+    return await db.select().from(waterSourceGallery)
+      .where(eq(waterSourceGallery.isActive, true))
+      .orderBy(asc(waterSourceGallery.displayOrder));
+  }
+  
+  async getGreenChampionsGallery(): Promise<GreenChampionsGallery[]> {
+    return await db.select().from(greenChampionsGallery)
+      .where(eq(greenChampionsGallery.isActive, true))
+      .orderBy(asc(greenChampionsGallery.displayOrder));
   }
 }
 

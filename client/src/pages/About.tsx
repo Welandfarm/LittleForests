@@ -156,9 +156,9 @@ Thank you!`;
             <div>
               <h3 className="font-semibold mb-4">Quick Links</h3>
               <ul className="space-y-2 text-sm text-green-200">
-                <li><a href="/" className="hover:text-white">Shop with us</a></li>
-                <li><a href="/about" className="hover:text-white">About Us</a></li>
-                <li><a href="/green-towns" className="hover:text-white">Green Towns Initiative</a></li>
+                <li><button onClick={() => window.location.href = '/'} className="hover:text-white">Shop with us</button></li>
+                <li><button onClick={() => window.location.href = '/about'} className="hover:text-white">About Us</button></li>
+                <li><button onClick={() => window.location.href = '/green-towns'} className="hover:text-white">Green Towns Initiative</button></li>
               </ul>
             </div>
 

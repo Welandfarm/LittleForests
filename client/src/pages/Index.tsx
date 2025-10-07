@@ -27,7 +27,7 @@ const Index = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const navigate = useNavigate();
   const { user, adminUser } = useAuth();
-  
+
   // Initialize scroll animations
   useScrollAnimation();
 
@@ -59,7 +59,7 @@ I would like to place an order for the following seedlings:
 ${orderItems}
 
 Please confirm availability and let me know`;
-      
+
       const whatsappUrl = `https://wa.me/254108029407?text=${encodeURIComponent(message)}`;
       window.open(whatsappUrl, '_blank');
     } else {
@@ -67,7 +67,7 @@ Please confirm availability and let me know`;
       const message = `Hi
 I'd like to make inquiries about the seedlings and honey.
 Thank you!`;
-      
+
       const whatsappUrl = `https://wa.me/254108029407?text=${encodeURIComponent(message)}`;
       window.open(whatsappUrl, '_blank');
     }
@@ -79,7 +79,7 @@ Thank you!`;
     queryFn: async () => {
       console.log('Fetching products from database...');
       const data = await apiClient.getProducts();
-      
+
       console.log('Fetched products:', data);
       // Include all products (available and out of stock) for better customer experience
       return data;
@@ -95,7 +95,7 @@ Thank you!`;
       p.category.toLowerCase().includes('indigenous') ||
       !p.category || p.category === '' // Include products without category
     );
-    
+
     const ornamental = productList.filter((p: any) => 
       p.category === 'Ornamental' || 
       p.category === 'Ornamental Trees' ||
@@ -111,26 +111,26 @@ Thank you!`;
       p.category === 'Honey' ||
       p.category.toLowerCase().includes('honey')
     );
-    
+
     return { indigenous, ornamental, fruit, honey };
   }, [products]);
 
   // Filter products based on selected category - now fully dynamic
   const filteredProducts = useMemo(() => {
     console.log('Filtering products for category:', selectedCategory);
-    
+
     const productList = products as any[];
-    
+
     if (selectedCategory === 'all') {
       return categorizedProducts;
     }
-    
+
     // Dynamic filtering for any category
     const matchingProducts = productList.filter((p: any) => 
       p.category === selectedCategory ||
       p.category?.toLowerCase() === selectedCategory.toLowerCase()
     );
-    
+
     // Return products organized by the selected category for display
     const filtered = {
       indigenous: selectedCategory.toLowerCase().includes('indigenous') ? matchingProducts : [],
@@ -143,7 +143,7 @@ Thank you!`;
              !selectedCategory.toLowerCase().includes('fruit') && 
              !selectedCategory.toLowerCase().includes('honey') ? matchingProducts : [],
     };
-    
+
     console.log('Filtered products:', filtered);
     return filtered;
   }, [selectedCategory, categorizedProducts, products]);
@@ -172,7 +172,7 @@ Thank you!`;
     <div className="min-h-screen bg-gradient-to-b from-green-50 to-white relative overflow-x-hidden">
       {/* Floating leaves background */}
       <FloatingLeaves />
-      
+
       {/* Header */}
       <header className="bg-white shadow-sm sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -188,7 +188,7 @@ Thank you!`;
             </div>
             <div className="flex items-center space-x-3">
               <AuthButton />
-              
+
               {/* Admin Dashboard Button - Only visible for authorized admin users */}
               {adminUser && (
                 <Button 
@@ -201,7 +201,7 @@ Thank you!`;
                   <span className="sm:hidden">Admin</span>
                 </Button>
               )}
-              
+
               <Button 
                 variant="outline" 
                 onClick={() => setCartOpen(true)}
@@ -254,7 +254,7 @@ Thank you!`;
             <p className="text-xl text-gray-100 max-w-3xl mx-auto mb-4">
               Grow a Little Forest. Restore water. Restore land.
             </p>
-            
+
             {/* Impact Highlight Box */}
             <div className="bg-white bg-opacity-90 rounded-lg p-6 max-w-2xl mx-auto mb-8">
               <p className="text-green-800 font-semibold text-lg">
@@ -264,7 +264,7 @@ Thank you!`;
                 Thanks to our amazing customers. We have helped communities own green little spaces in their homesteads!
               </p>
             </div>
-            
+
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button onClick={handleOrder} className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 animate-bounce-gentle hover:scale-105 transition-transform duration-200">
                 Order Now
@@ -284,7 +284,7 @@ Thank you!`;
             <p className="text-gray-600 max-w-2xl mx-auto mb-8">
               {getContent('Shop With Us').content || 'Explore our unique collection of indigenous trees, fruit trees, and ornamental plants and flowers, alongside pure, organic honey sourced from our thriving Little Forests.'}
             </p>
-            
+
             {/* Admin Quick Add Products Notice */}
             {products.length === 0 && (
               <div className="bg-orange-50 border border-orange-200 rounded-lg p-6 max-w-2xl mx-auto mb-8">
@@ -362,7 +362,7 @@ Thank you!`;
                   onAddToCart={handleAddToCart}
                 />
               )}
-              
+
               {filteredProducts.other && filteredProducts.other.length > 0 && (
                 <ProductCarousel
                   products={filteredProducts.other}
@@ -373,7 +373,7 @@ Thank you!`;
                   onAddToCart={handleAddToCart}
                 />
               )}
-              
+
               {!productsLoading && 
                filteredProducts.indigenous.length === 0 && 
                filteredProducts.ornamental.length === 0 && 
@@ -410,8 +410,9 @@ Thank you!`;
             <div>
               <h3 className="font-semibold mb-4">Quick Links</h3>
               <ul className="space-y-2 text-sm text-green-200">
-                <li><a href="/" className="hover:text-white">Shop with us</a></li>
-                <li><a href="/about" className="hover:text-white">About Us</a></li>
+                <li><button onClick={() => window.location.href = '/'} className="hover:text-white">Shop with us</button></li>
+                <li><button onClick={() => window.location.href = '/about'} className="hover:text-white">About Us</button></li>
+                <li><button onClick={() => window.location.href = '/green-towns'} className="hover:text-white">Green Towns Initiative</button></li>
               </ul>
             </div>
 

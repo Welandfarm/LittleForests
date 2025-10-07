@@ -230,7 +230,7 @@ Thank you!`;
 
       {/* Hero Section */}
       <section 
-        className="py-20 relative"
+        className="py-12 relative"
         style={{
           backgroundImage: `url(${nurseryImage})`,
           backgroundSize: 'cover',
@@ -245,19 +245,9 @@ Thank you!`;
               Grow your own <span className="text-orange-500">Little</span>
               <span className="text-green-400">Forest</span>
             </h1>
-            <p className="text-xl text-gray-100 max-w-3xl mx-auto mb-4">
+            <p className="text-xl text-gray-100 max-w-3xl mx-auto mb-8">
               Grow a Little Forest. Restore water. Restore land.
             </p>
-
-            {/* Impact Highlight Box */}
-            <div className="bg-white bg-opacity-90 rounded-lg p-6 max-w-2xl mx-auto mb-8">
-              <p className="text-green-800 font-semibold text-lg">
-                🌱 Green Little Spaces in Homesteads!
-              </p>
-              <p className="text-gray-700 mt-2">
-                Thanks to our amazing customers. We have helped communities own green little spaces in their homesteads!
-              </p>
-            </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button onClick={handleOrder} className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 animate-bounce-gentle hover:scale-105 transition-transform duration-200">

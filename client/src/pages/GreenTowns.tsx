@@ -84,21 +84,15 @@ const GreenTowns = () => {
     'Chemomul'
   ];
 
-  // Gallery component for displaying media
+  // Gallery component for displaying media - only shows when items exist
   const MediaGallery = ({ items, type }: { items: any[], type: 'water' | 'school' }) => {
+    // Don't render anything if no items
     if (!items || items.length === 0) {
-      return (
-        <div className="bg-gray-100 rounded-lg p-6 flex items-center justify-center">
-          <div className="text-center text-gray-500">
-            <div className="text-4xl mb-2">📷</div>
-            <p>Placeholder for {type === 'water' ? '2–3 photos or a short video clip' : 'photos showing the greening activities and student participation'}</p>
-          </div>
-        </div>
-      );
+      return null;
     }
 
     return (
-      <div className="grid gap-4">
+      <div className="grid gap-4 mt-4">
         {items.map((item: any, idx: number) => (
           <div key={idx} className="rounded-lg overflow-hidden">
             {item.media_type === 'video' ? (

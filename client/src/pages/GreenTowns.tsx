@@ -31,12 +31,12 @@ const GreenTowns = () => {
 
     return () => clearInterval(interval);
   }, [api]);
-  
+
   const { data: content = {} } = useQuery({
     queryKey: ['greentowns-content'],
     queryFn: async () => {
       const data = await apiClient.getContent();
-      
+
       const contentObj: { [key: string]: { title: string; content: string; type: string } } = {};
       if (Array.isArray(data)) {
         data.forEach((item: any) => {
@@ -170,13 +170,11 @@ const GreenTowns = () => {
       </div>
 
       {/* Hero Section */}
-      <section className="py-8 bg-gradient-to-r from-green-600 to-green-700 text-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4" data-testid="text-pagetitle">
-            Green Towns Initiative
-          </h1>
-          <p className="text-xl md:text-2xl text-green-100 max-w-4xl mx-auto" data-testid="text-pagesubtitle">
-            Showcasing the Impact of Our Work in Communities
+      <section className="bg-gradient-to-r from-green-600 to-green-800 text-white py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">{content?.['green_towns_initiative']?.title || 'Green Towns Initiative'}</h1>
+          <p className="text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
+            {content?.['green_towns_initiative']?.content || 'Growing Little Forests in schools, communities, and urban spaces to restore our environment.'}
           </p>
         </div>
       </section>
@@ -184,7 +182,7 @@ const GreenTowns = () => {
       {/* Main Content - Tabbed Interface */}
       <section className="py-16 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          
+
           {/* Impact Showcase Carousel */}
           <div className="mb-16">
             <Carousel 
@@ -255,7 +253,7 @@ const GreenTowns = () => {
               <CarouselNext className="right-2" />
             </Carousel>
           </div>
-          
+
           {/* Tabs Navigation */}
           <div className="flex justify-center mb-12">
             <div className="inline-flex bg-gray-100 rounded-lg p-1">
@@ -315,7 +313,7 @@ const GreenTowns = () => {
                   const storyKey = `${springName.toLowerCase()}_spring_story`;
                   const story = content[storyKey];
                   const hasStory = story && story.content && story.content.trim().length > 0;
-                  
+
                   return (
                     <Accordion key={springName} type="single" collapsible>
                       <AccordionItem value={springName.toLowerCase()} className="border-none">
@@ -365,7 +363,7 @@ const GreenTowns = () => {
                   const schoolKey = `${schoolName.toLowerCase().replace(/\s+/g, '_')}_story`;
                   const schoolStory = content[schoolKey];
                   const hasStory = schoolStory && schoolStory.content && schoolStory.content.trim().length > 0;
-                  
+
                   return (
                     <Accordion key={index} type="single" collapsible>
                       <AccordionItem value={schoolName.toLowerCase()} className="border-none">
@@ -415,7 +413,7 @@ const GreenTowns = () => {
 I'd like to learn more about the Green Towns Initiative and how we can partner.
 
 Thank you!`;
-                
+
                 const whatsappUrl = `https://wa.me/254108029407?text=${encodeURIComponent(message)}`;
                 window.open(whatsappUrl, '_blank');
               }}

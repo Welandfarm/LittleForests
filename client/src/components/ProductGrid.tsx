@@ -91,8 +91,8 @@ const ProductGrid: React.FC<ProductGridProps> = ({
               <div className="flex-1 mr-2">
                 <h3 className="font-semibold text-gray-800 text-sm line-clamp-2">
                   {product.name || product.plant_name}
-                  {product.quantity && (
-                    <span className="text-gray-600 font-normal"> ({product.quantity})</span>
+                  {(product.quantity || product.jar_volume) && (
+                    <span className="text-gray-600 font-normal"> ({product.quantity || product.jar_volume})</span>
                   )}
                 </h3>
               </div>

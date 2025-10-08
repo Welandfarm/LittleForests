@@ -87,8 +87,16 @@ const ProductGrid: React.FC<ProductGridProps> = ({
             </div>
           </div>
           <div className="p-4">
-            <div className="mb-3">
-              <span className="text-xl font-bold text-green-600 block" data-testid={`text-price-${product.id}`}>
+            <div className="mb-3 flex items-center justify-between">
+              <div className="flex-1 mr-2">
+                <h3 className="font-semibold text-gray-800 text-sm line-clamp-2">
+                  {product.name || product.plant_name}
+                  {product.quantity && (
+                    <span className="text-gray-600 font-normal"> ({product.quantity})</span>
+                  )}
+                </h3>
+              </div>
+              <span className="text-lg font-bold text-green-600 whitespace-nowrap" data-testid={`text-price-${product.id}`}>
                 {typeof product.price === 'number' ? `KSH ${product.price}` : product.price}
               </span>
             </div>

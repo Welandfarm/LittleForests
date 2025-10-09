@@ -127,7 +127,6 @@ Please confirm availability and let me know`;
     addToCart(product, quantity);
     setCartOpen(true);
     setQuantities(prev => ({ ...prev, [product.id]: 1 }));
-    return added;
   };
 
   return (
@@ -164,19 +163,6 @@ Please confirm availability and let me know`;
                 </Button>
               )}
 
-              <Button 
-                variant="outline" 
-                onClick={() => setCartOpen(true)}
-                className="relative hover:scale-105 transition-transform duration-200"
-              >
-                <ShoppingCart className="h-4 w-4 mr-1" />
-                Cart
-                {getCartTotal() > 0 && (
-                  <Badge className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs">
-                    {getCartTotal()}
-                  </Badge>
-                )}
-              </Button>
               <Button onClick={handleOrder} className="bg-orange-500 hover:bg-orange-600 text-white hover:scale-105 transition-transform duration-200">
                 Order Now
               </Button>
@@ -187,14 +173,31 @@ Please confirm availability and let me know`;
 
 
 
-      {/* Navigation Menu - Fixed/Floating */}
+      {/* Navigation Menu - Fixed/Floating on left */}
       <div className="fixed top-20 left-4 z-40">
         <div className="scale-110">
           <NavigationDropdown />
         </div>
       </div>
 
-      {/* Cart Sidebar - Floating on the right */}
+      {/* Floating Cart Button - Fixed on right */}
+      <div className="fixed top-20 right-4 z-40">
+        <Button 
+          onClick={() => setCartOpen(true)}
+          className="bg-green-600 hover:bg-green-700 text-white relative shadow-lg hover:scale-105 transition-transform duration-200 scale-110"
+          data-testid="button-floating-cart"
+        >
+          <ShoppingCart className="h-5 w-5 mr-2" />
+          Cart
+          {getCartTotal() > 0 && (
+            <Badge className="absolute -top-2 -right-2 h-6 w-6 rounded-full p-0 flex items-center justify-center text-xs bg-orange-500 hover:bg-orange-600 border-2 border-white animate-pulse">
+              {getCartTotal()}
+            </Badge>
+          )}
+        </Button>
+      </div>
+
+      {/* Cart Sidebar - Slides from right */}
       <div className={`fixed top-0 right-0 h-full w-96 bg-white shadow-lg transition-transform duration-300 ease-in-out z-50 ${cartOpen ? 'translate-x-0' : 'translate-x-full'}`}>
         <CartSidebar isOpen={cartOpen} onClose={() => setCartOpen(false)} />
       </div>

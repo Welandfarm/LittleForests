@@ -128,14 +128,16 @@ const ProductGrid: React.FC<ProductGridProps> = ({
               <div className="flex-1 mr-2">
                 <h3 className="font-semibold text-gray-800 text-sm line-clamp-2">
                   {product.name || product.plant_name}
-                  {(product.jar_volume || product.quantity || product.volume) && (
-                    <span className="text-gray-600 font-normal"> ({product.jar_volume || product.quantity || product.volume})</span>
-                  )}
                 </h3>
               </div>
-              <span className="text-lg font-bold text-green-600 whitespace-nowrap" data-testid={`text-price-${product.id}`}>
-                {typeof product.price === 'number' ? `KSH ${product.price}` : product.price}
-              </span>
+              <div className="flex flex-col items-end">
+                <span className="text-lg font-bold text-green-600 whitespace-nowrap" data-testid={`text-price-${product.id}`}>
+                  {typeof product.price === 'number' ? `KSH ${product.price}` : product.price}
+                </span>
+                {(product.jar_volume || product.quantity || product.volume) && (
+                  <span className="text-xs text-gray-500">({product.jar_volume || product.quantity || product.volume})</span>
+                )}
+              </div>
             </div>
 
             {/* Quantity Controls */}

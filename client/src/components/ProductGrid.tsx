@@ -141,35 +141,40 @@ const ProductGrid: React.FC<ProductGridProps> = ({
             </div>
 
             {/* Quantity Controls */}
-            <div className="flex items-center justify-center space-x-2 mb-3">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => onUpdateQuantity(product.id, -1)}
-                data-testid={`button-decrease-${product.id}`}
-              >
-                <Minus className="h-4 w-4" />
-              </Button>
-              <Input
-                type="number"
-                min="1"
-                max="999"
-                value={quantities[product.id] || 1}
-                onChange={(e) => {
-                  const value = parseInt(e.target.value) || 1;
-                  onSetQuantity(product.id, Math.max(1, Math.min(999, value)));
-                }}
-                className="w-16 text-center"
-                data-testid={`input-quantity-${product.id}`}
-              />
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => onUpdateQuantity(product.id, 1)}
-                data-testid={`button-increase-${product.id}`}
-              >
-                <Plus className="h-4 w-4" />
-              </Button>
+            <div className="mb-3">
+              <div className="text-center mb-2">
+                <span className="text-sm font-semibold text-gray-700">Quantity: {quantities[product.id] || 1}</span>
+              </div>
+              <div className="flex items-center justify-center space-x-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => onUpdateQuantity(product.id, -1)}
+                  data-testid={`button-decrease-${product.id}`}
+                >
+                  <Minus className="h-4 w-4" />
+                </Button>
+                <Input
+                  type="number"
+                  min="1"
+                  max="999"
+                  value={quantities[product.id] || 1}
+                  onChange={(e) => {
+                    const value = parseInt(e.target.value) || 1;
+                    onSetQuantity(product.id, Math.max(1, Math.min(999, value)));
+                  }}
+                  className="w-16 text-center"
+                  data-testid={`input-quantity-${product.id}`}
+                />
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => onUpdateQuantity(product.id, 1)}
+                  data-testid={`button-increase-${product.id}`}
+                >
+                  <Plus className="h-4 w-4" />
+                </Button>
+              </div>
             </div>
 
             {/* Action Buttons */}

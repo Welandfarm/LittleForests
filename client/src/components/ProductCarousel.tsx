@@ -112,8 +112,11 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
                       {typeof product.price === 'number' ? `KSH ${product.price}` : product.price}
                     </span>
                   </div>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-2">
+                  <div className="mb-3">
+                    <div className="text-center mb-2">
+                      <span className="text-sm font-semibold text-gray-700">Quantity: {quantities[product.id] || 1}</span>
+                    </div>
+                    <div className="flex items-center justify-center space-x-2">
                       <Button
                         variant="outline"
                         size="sm"

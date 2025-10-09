@@ -68,8 +68,14 @@ Please confirm availability and let me know`;
               <div className="space-y-4">
                 {cartItems.map((item) => (
                   <Card key={item.id} className="p-4">
-                    <div className="flex justify-between items-start mb-2">
-                      <h3 className="font-medium text-sm">{item.name}</h3>
+                    <div className="flex justify-between items-start mb-3">
+                      <div className="flex-1">
+                        <h3 className="font-medium text-sm mb-1">{item.name}</h3>
+                        <div className="flex items-center gap-2">
+                          <span className="text-lg font-bold text-green-600">Qty: {item.quantity}</span>
+                          <span className="text-sm text-gray-500">× {item.price}</span>
+                        </div>
+                      </div>
                       <Button
                         variant="ghost"
                         size="sm"
@@ -87,7 +93,7 @@ Please confirm availability and let me know`;
                         >
                           <Minus className="h-3 w-3" />
                         </Button>
-                        <span className="w-8 text-center">{item.quantity}</span>
+                        <span className="w-12 text-center font-semibold text-gray-700">{item.quantity}</span>
                         <Button
                           variant="outline"
                           size="sm"
@@ -96,7 +102,7 @@ Please confirm availability and let me know`;
                           <Plus className="h-3 w-3" />
                         </Button>
                       </div>
-                      <span className="text-sm text-gray-600">{item.price}</span>
+                      <span className="text-sm font-medium text-gray-700">@ {item.price}</span>
                     </div>
                   </Card>
                 ))}

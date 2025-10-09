@@ -20,20 +20,15 @@ const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose }) => {
       `- ${item.quantity} x ${item.name} (${item.price} each)`
     ).join('\n');
 
-    const message = `Hello LittleForest! 🌱
+    const message = `Hi
 
 I would like to place an order for the following seedlings:
 
 ${orderItems}
 
-Please confirm availability and let me know:
-- Total cost including any delivery charges
-- Delivery timeline to my location
-- Payment options available
-
-Looking forward to your response!`;
+Please confirm availability and let me know`;
     
-    const whatsappUrl = `https://wa.me/254722973557?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = `https://wa.me/254108029407?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
     clearCart();
     onClose();
@@ -42,9 +37,9 @@ Looking forward to your response!`;
   if (!isOpen) return null;
 
   return (
-    <div className={`fixed inset-0 z-50 flex transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+    <div className="fixed inset-0 z-50 flex">
       <div className="fixed inset-0 bg-black bg-opacity-50" onClick={onClose} />
-      <div className={`ml-auto h-full w-96 bg-white shadow-xl transform transition-transform duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+      <div className="ml-auto h-full w-96 bg-white shadow-xl">
         <div className="flex h-full flex-col">
           <div className="flex items-center justify-between border-b p-4">
             <h2 className="text-lg font-semibold flex items-center">
@@ -105,7 +100,7 @@ Looking forward to your response!`;
             <div className="border-t p-4 space-y-2">
               <Button
                 onClick={handleWhatsAppOrder}
-                className="w-full bg-green-600 hover:bg-green-700"
+                className="w-full bg-orange-500 hover:bg-orange-600 text-white"
               >
                 Order via WhatsApp
               </Button>

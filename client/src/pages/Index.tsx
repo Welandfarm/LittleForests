@@ -112,8 +112,12 @@ Please confirm availability and let me know`;
 
   const handleAddToCart = (product: any) => {
     const quantity = quantities[product.id] || 1;
-    addToCart(product, quantity);
+    const added = addToCart(product, quantity);
+    if (added) {
+      setCartOpen(true);
+    }
     setQuantities(prev => ({ ...prev, [product.id]: 1 }));
+    return added;
   };
 
   return (
@@ -179,6 +183,12 @@ Please confirm availability and let me know`;
           <NavigationDropdown />
         </div>
       </div>
+
+      {/* Cart Sidebar - Floating on the right */}
+      <div className={`fixed top-0 right-0 h-full w-96 bg-white shadow-lg transition-transform duration-300 ease-in-out z-50 ${cartOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+        <CartSidebar isOpen={cartOpen} onClose={() => setCartOpen(false)} />
+      </div>
+
 
       {/* Hero Section */}
       <section 
@@ -313,7 +323,7 @@ Please confirm availability and let me know`;
         </div>
       </footer>
 
-      <CartSidebar isOpen={cartOpen} onClose={() => setCartOpen(false)} />
+      {/* The CartSidebar component is now rendered within the floating div */}
     </div>
   );
 };

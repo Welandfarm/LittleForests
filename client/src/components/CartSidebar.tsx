@@ -42,9 +42,9 @@ Looking forward to your response!`;
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex">
+    <div className={`fixed inset-0 z-50 flex transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
       <div className="fixed inset-0 bg-black bg-opacity-50" onClick={onClose} />
-      <div className="ml-auto h-full w-96 bg-white shadow-xl">
+      <div className={`ml-auto h-full w-96 bg-white shadow-xl transform transition-transform duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
         <div className="flex h-full flex-col">
           <div className="flex items-center justify-between border-b p-4">
             <h2 className="text-lg font-semibold flex items-center">

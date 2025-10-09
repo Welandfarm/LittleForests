@@ -10,7 +10,7 @@ interface CartItem {
 
 interface CartContextType {
   cartItems: CartItem[];
-  addToCart: (product: any, quantity: number) => void;
+  addToCart: (product: any, quantity: number) => boolean;
   removeFromCart: (productId: string) => void;
   updateQuantity: (productId: string, quantity: number) => void;
   clearCart: () => void;
@@ -34,23 +34,24 @@ interface CartProviderProps {
 export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
-  const addToCart = (product: any, quantity: number) => {
-    setCartItems(prev => {
-      const existingItem = prev.find(item => item.id === product.id);
-      if (existingItem) {
-        return prev.map(item =>
-          item.id === product.id
-            ? { ...item, quantity: item.quantity + quantity }
-            : item
-        );
-      }
-      return [...prev, {
+  const addToCart = (product: any, quantity: number): boolean => {
+    const existingItem = cartItems.find(item => item.id === product.id);
+    
+    if (existingItem) {
+      return false; // Item already exists
+    }
+    
+    setCartItems(prev => [
+      ...prev,
+      {
         id: product.id,
         name: product.name || product.plant_name,
         price: typeof product.price === 'number' ? `KSH ${product.price}` : product.price,
         quantity
-      }];
-    });
+      }
+    ]);
+    
+    return true; // Successfully added
   };
 
   const removeFromCart = (productId: string) => {

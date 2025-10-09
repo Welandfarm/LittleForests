@@ -14,7 +14,13 @@ const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose }) => {
   const { cartItems, updateQuantity, removeFromCart, clearCart } = useCart();
 
   const handleWhatsAppOrder = () => {
-    if (cartItems.length === 0) return;
+    console.log('WhatsApp order button clicked!');
+    console.log('Cart items:', cartItems);
+    
+    if (cartItems.length === 0) {
+      console.log('Cart is empty, returning');
+      return;
+    }
 
     const orderItems = cartItems.map(item => 
       `- ${item.quantity} x ${item.name} (${item.price} each)`
@@ -29,6 +35,8 @@ ${orderItems}
 Please confirm availability and let me know`;
     
     const whatsappUrl = `https://wa.me/254108029407?text=${encodeURIComponent(message)}`;
+    console.log('Opening WhatsApp URL:', whatsappUrl);
+    
     window.open(whatsappUrl, '_blank');
     clearCart();
     onClose();
@@ -39,7 +47,7 @@ Please confirm availability and let me know`;
   return (
     <div className="fixed inset-0 z-50 flex">
       <div className="fixed inset-0 bg-black bg-opacity-50" onClick={onClose} />
-      <div className="ml-auto h-full w-96 bg-white shadow-xl">
+      <div className="ml-auto h-full w-96 bg-white shadow-xl relative z-10">
         <div className="flex h-full flex-col">
           <div className="flex items-center justify-between border-b p-4">
             <h2 className="text-lg font-semibold flex items-center">
@@ -101,6 +109,7 @@ Please confirm availability and let me know`;
               <Button
                 onClick={handleWhatsAppOrder}
                 className="w-full bg-orange-500 hover:bg-orange-600 text-white"
+                data-testid="button-whatsapp-order"
               >
                 Order via WhatsApp
               </Button>

@@ -112,21 +112,17 @@ Please confirm availability and let me know`;
 
   const handleAddToCart = (product: any) => {
     const quantity = quantities[product.id] || 1;
+    const success = addToCart(product, quantity);
 
-    // Check if product is already in cart
-    const existingItem = cartItems.find(item => item.id === product.id);
-    if (existingItem) {
-      const confirmAdd = window.confirm(
-        `You have already added "${product.name || product.plant_name}" to your cart. Do you want to add more?`
-      );
-      if (!confirmAdd) {
-        return;
-      }
+    if (success) {
+      setCartOpen(true);
+      // Reset quantity to 1 after adding
+      setQuantities(prev => ({ ...prev, [product.id]: 1 }));
+    } else {
+      // Item already in cart - inform user and open cart
+      alert(`"${product.name || product.plant_name}" is already in your cart. Please adjust the quantity in the cart view.`);
+      setCartOpen(true);
     }
-
-    addToCart(product, quantity);
-    setCartOpen(true);
-    setQuantities(prev => ({ ...prev, [product.id]: 1 }));
   };
 
   return (

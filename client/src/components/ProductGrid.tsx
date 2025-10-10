@@ -10,17 +10,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
-import { useCart } from '@/contexts/CartContext';
 import { Input } from "@/components/ui/input";
 import { Plus, Minus } from "lucide-react";
 
@@ -57,23 +46,9 @@ const ProductGrid: React.FC<ProductGridProps> = ({
   onAddToCart
 }) => {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const [duplicateProduct, setDuplicateProduct] = useState<Product | null>(null);
-  const { updateQuantity, cartItems } = useCart();
 
   const handleAddToCart = (product: Product) => {
-    const existingItem = cartItems.find(item => item.id === product.id);
-    if (existingItem) {
-      setDuplicateProduct(product);
-    } else {
-      onAddToCart(product);
-    }
-  };
-
-  const handleConfirmAdd = () => {
-    if (duplicateProduct) {
-      updateQuantity(duplicateProduct.id, (duplicateProduct.quantity || 1) + (quantities[duplicateProduct.id] || 1));
-      setDuplicateProduct(null);
-    }
+    onAddToCart(product);
   };
 
   if (products.length === 0) {
@@ -250,22 +225,6 @@ const ProductGrid: React.FC<ProductGridProps> = ({
           )}
         </DialogContent>
       </Dialog>
-
-      {/* Duplicate Item Confirmation Dialog */}
-      <AlertDialog open={!!duplicateProduct} onOpenChange={() => setDuplicateProduct(null)}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Item Already in Cart</AlertDialogTitle>
-            <AlertDialogDescription>
-              You have already added {duplicateProduct?.name || duplicateProduct?.plant_name} to your cart. Would you like to add another one?
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel onClick={() => setDuplicateProduct(null)}>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleConfirmAdd}>Add Again</AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
     </div>
   );
 };

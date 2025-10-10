@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 interface CartItem {
@@ -36,11 +35,12 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
 
   const addToCart = (product: any, quantity: number): boolean => {
     const existingItem = cartItems.find(item => item.id === product.id);
-    
+
     if (existingItem) {
-      return false; // Item already exists
+      // Don't allow adding from product page if already in cart
+      return false;
     }
-    
+
     setCartItems(prev => [
       ...prev,
       {
@@ -50,7 +50,7 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
         quantity
       }
     ]);
-    
+
     return true; // Successfully added
   };
 

@@ -115,11 +115,10 @@ Please confirm availability and let me know`;
     const success = addToCart(product, quantity);
 
     if (success) {
-      // Don't auto-open cart - let user continue shopping
-      // Reset quantity to 1 after adding
+      // Reset quantity to 1 after adding - don't auto-open cart
       setQuantities(prev => ({ ...prev, [product.id]: 1 }));
     } else {
-      // Item already in cart - inform user
+      // Item already in cart - inform user but don't open cart
       alert(`"${product.name || product.plant_name}" is already in your cart. Please adjust the quantity in the cart view.`);
     }
   };

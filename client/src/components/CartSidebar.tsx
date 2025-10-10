@@ -102,7 +102,8 @@ Please confirm availability and let me know`;
                             const value = parseInt(e.target.value) || 1;
                             updateQuantity(item.id, Math.max(1, Math.min(9999, value)));
                           }}
-                          className="w-16 text-center font-semibold text-gray-700 border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-green-500"
+                          onFocus={(e) => e.target.select()}
+                          className="w-20 text-center font-semibold text-gray-700 border-2 border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
                         />
                         <Button
                           variant="outline"

@@ -93,7 +93,17 @@ Please confirm availability and let me know`;
                         >
                           <Minus className="h-3 w-3" />
                         </Button>
-                        <span className="w-12 text-center font-semibold text-gray-700">{item.quantity}</span>
+                        <input
+                          type="number"
+                          min="1"
+                          max="9999"
+                          value={item.quantity}
+                          onChange={(e) => {
+                            const value = parseInt(e.target.value) || 1;
+                            updateQuantity(item.id, Math.max(1, Math.min(9999, value)));
+                          }}
+                          className="w-16 text-center font-semibold text-gray-700 border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-green-500"
+                        />
                         <Button
                           variant="outline"
                           size="sm"

@@ -59,7 +59,7 @@ I would like to place an order for the following seedlings:
 ${orderItems}
 
 Please confirm availability and let me know`;
-      const whatsappUrl = `https://wa.me/254108029407?text=${encodeURIComponent(message)}`;
+      const whatsappUrl = `https://wa.me/2540143538080?text=${encodeURIComponent(message)}`;
       window.open(whatsappUrl, '_blank');
       clearCart();
     } else {
@@ -310,7 +310,7 @@ Please confirm availability and let me know`;
               <div className="space-y-2 text-sm text-green-200 mb-4">
                 <p>📱 WhatsApp: 
                   <a 
-                    href="https://wa.me/254108029407?text=Hello%20LittleForest!%20I'm%20interested%20in%20your%20seedlings%20and%20would%20like%20to%20learn%20more." 
+                    href="https://wa.me/2540143538080?text=Hello%20LittleForest!%20I'm%20interested%20in%20your%20seedlings%20and%20would%20like%20to%20learn%20more." 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="text-green-300 hover:text-white underline ml-1"

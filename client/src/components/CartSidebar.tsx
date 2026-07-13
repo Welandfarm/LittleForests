@@ -34,7 +34,7 @@ ${orderItems}
 
 Please confirm availability and let me know`;
     
-    const whatsappUrl = `https://wa.me/254108029407?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = `https://wa.me/2540143538080?text=${encodeURIComponent(message)}`;
     console.log('Opening WhatsApp URL:', whatsappUrl);
     
     window.open(whatsappUrl, '_blank');

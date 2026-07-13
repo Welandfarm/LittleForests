@@ -126,7 +126,7 @@ const ContactForm = () => {
             <p className="text-sm">
               <span className="font-medium">WhatsApp:</span>{' '}
               <a 
-                href="https://wa.me/254108029407" 
+                href="https://wa.me/2540143538080" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-green-600 hover:text-green-700"

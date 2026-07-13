@@ -41,3 +41,9 @@ waitForPort = 5000
 
 [agent]
 expertMode = true
+
+[userenv]
+
+[userenv.shared]
+SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1qc3V3bHBpeGNyZWdpaWtpdXNkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk0Njc0NzcsImV4cCI6MjA2NTA0MzQ3N30.Anz7mqQLkGIMGcvPtfT1ELORA2DqEIHLsIge5DfQYxc"
+SUPABASE_URL = "https://mjsuwlpixcregiikiusd.supabase.co"

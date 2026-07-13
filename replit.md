@@ -1,5 +1,13 @@
 # LittleForest - Seedling E-commerce Platform
 
+## Running on Replit
+
+- **Start**: the "Start application" workflow runs `npm run dev` (port 5000)
+- **Database**: Replit's built-in PostgreSQL — tables are already created and match the Drizzle schema in `shared/schema.ts`
+- **Environment variables set**: `SUPABASE_URL`, `SUPABASE_ANON_KEY` (from the project's existing Supabase project). `DATABASE_URL` is managed by Replit automatically.
+- **Supabase service role key**: if you need admin-level Supabase storage/auth operations, add `SUPABASE_SERVICE_ROLE_KEY` as a secret.
+- **First-time setup**: products and content are empty — use the admin dashboard to add products.
+
 ## Overview
 
 LittleForest is a full-stack web application for an online seedling nursery business. The application provides a modern e-commerce experience for browsing and ordering tree seedlings, with admin functionality for content and product management. Built with React frontend, Express backend, and PostgreSQL database.

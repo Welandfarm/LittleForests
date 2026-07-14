@@ -5,6 +5,54 @@ import bcrypt from "bcrypt";
 import { insertProductSchema, insertContentSchema, insertContactMessageSchema, insertTestimonialSchema, insertProfileSchema, insertAdminUserSchema } from "@shared/schema";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+
+  // ── Sitemap ──────────────────────────────────────────────────────────────
+  app.get("/sitemap.xml", async (req, res) => {
+    try {
+      const base = "https://littleforest.co.ke";
+      const now = new Date().toISOString().split("T")[0];
+      const products = await storage.getProducts();
+
+      const staticPages = [
+        { url: "/", priority: "1.0", freq: "weekly" },
+        { url: "/about", priority: "0.8", freq: "monthly" },
+        { url: "/green-towns", priority: "0.8", freq: "monthly" },
+        { url: "/contact", priority: "0.7", freq: "monthly" },
+      ];
+
+      const productEntries = products.map((p: any) => ({
+        url: `/products/${p.id}`,
+        priority: "0.9",
+        freq: "weekly",
+      }));
+
+      const allPages = [...staticPages, ...productEntries];
+
+      const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${allPages.map(p => `  <url>
+    <loc>${base}${p.url}</loc>
+    <lastmod>${now}</lastmod>
+    <changefreq>${p.freq}</changefreq>
+    <priority>${p.priority}</priority>
+  </url>`).join("\n")}
+</urlset>`;
+
+      res.set("Content-Type", "application/xml");
+      res.set("Cache-Control", "public, max-age=3600");
+      res.send(xml);
+    } catch (err) {
+      res.status(500).send("Failed to generate sitemap");
+    }
+  });
+
+  // ── llms.txt (AI readability) ─────────────────────────────────────────────
+  // The static file is served from client/public/llms.txt by Vite.
+  // This route exists as a fallback for the production Express server.
+  app.get("/llms.txt", (_req, res) => {
+    res.sendFile("llms.txt", { root: "client/public" });
+  });
+
   // Categories route - get available categories dynamically
   app.get("/api/categories", async (req, res) => {
     try {

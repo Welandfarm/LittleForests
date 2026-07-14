@@ -92,8 +92,37 @@ const ProductDetail = () => {
   const productName = product?.name || product?.plant_name || '';
   const isOutOfStock = product?.status === 'Out of Stock' || product?.stock_quantity === 0;
 
+  // JSON-LD Product schema — injected into <head> so Google reads it without running JS
+  const productJsonLd = product ? JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": productName,
+    "description": product.description || `${productName} — available from LittleForest Nursery, Bomet County, Kenya.`,
+    "image": imageUrl,
+    "brand": { "@type": "Brand", "name": "LittleForest Nursery" },
+    "category": product.category,
+    "offers": {
+      "@type": "Offer",
+      "url": `https://littleforest.co.ke/products/${product.id}`,
+      "priceCurrency": "KES",
+      "price": typeof product.price === 'number' ? product.price : String(product.price).replace(/[^0-9.]/g, ''),
+      "availability": isOutOfStock
+        ? "https://schema.org/OutOfStock"
+        : "https://schema.org/InStock",
+      "seller": { "@type": "Organization", "name": "LittleForest Nursery" }
+    }
+  }) : null;
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-50 to-white">
+      {/* Product JSON-LD — readable by Google without JavaScript */}
+      {productJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: productJsonLd }}
+        />
+      )}
+
       {/* Header */}
       <header className="bg-white shadow-sm sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

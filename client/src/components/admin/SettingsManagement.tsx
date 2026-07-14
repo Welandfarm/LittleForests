@@ -30,6 +30,13 @@ const SETTINGS_FIELDS = [
     icon: <MapPin className="h-4 w-4" />,
     placeholder: 'Bomet County, Kenya',
   },
+  {
+    key: 'maps_url',
+    label: 'Google Maps Link',
+    description: 'The Google Maps share URL for your nursery pin',
+    icon: <MapPin className="h-4 w-4" />,
+    placeholder: 'https://maps.app.goo.gl/...',
+  },
 ];
 
 const SettingsManagement = () => {

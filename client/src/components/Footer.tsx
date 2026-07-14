@@ -6,6 +6,7 @@ const DEFAULTS = {
   whatsapp_number: '2540143538080',
   whatsapp_display: '+254 143 538 080',
   location: 'Bomet County, Kenya',
+  maps_url: 'https://maps.app.goo.gl/NQzgNAjcRYWzFNjy7',
 };
 
 const Footer = () => {
@@ -30,6 +31,7 @@ const Footer = () => {
   const waNumber = settings.whatsapp_number;
   const waDisplay = settings.whatsapp_display;
   const location = settings.location;
+  const mapsUrl = settings.maps_url;
 
   return (
     <footer className="bg-green-800 text-white py-12">
@@ -71,7 +73,14 @@ const Footer = () => {
                   {waDisplay}
                 </a>
               </p>
-              <p>📍 {location}</p>
+              <a
+                href={mapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-white transition-colors"
+              >
+                📍 {location}
+              </a>
             </div>
           </div>
         </div>

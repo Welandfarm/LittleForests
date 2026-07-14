@@ -152,6 +152,35 @@ class ApiClient {
       method: 'DELETE',
     });
   }
+
+  // Gallery methods
+  async getGallery(type: 'water-source' | 'green-champions') {
+    return this.request(`/gallery/${type}`);
+  }
+
+  async getGalleryAll(type: 'water-source' | 'green-champions') {
+    return this.request(`/gallery/${type}/all`);
+  }
+
+  async createGalleryItem(type: 'water-source' | 'green-champions', item: any) {
+    return this.request(`/gallery/${type}`, {
+      method: 'POST',
+      body: JSON.stringify(item),
+    });
+  }
+
+  async updateGalleryItem(type: 'water-source' | 'green-champions', id: string, item: any) {
+    return this.request(`/gallery/${type}/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(item),
+    });
+  }
+
+  async deleteGalleryItem(type: 'water-source' | 'green-champions', id: string) {
+    return this.request(`/gallery/${type}/${id}`, {
+      method: 'DELETE',
+    });
+  }
 }
 
 export const apiClient = new ApiClient();

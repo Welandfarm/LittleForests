@@ -10,8 +10,10 @@ import ContactMessages from '@/components/admin/ContactMessages';
 import UserManagement from '@/components/admin/UserManagement';
 import { useQuery } from '@tanstack/react-query';
 import { apiClient } from '@/lib/api';
-import { TreePine, Package, FileText, MessageSquare, Users, Home, Settings, SlidersHorizontal } from 'lucide-react';
+import { TreePine, Package, FileText, MessageSquare, Users, Home, Settings, SlidersHorizontal, Star, Image } from 'lucide-react';
 import SettingsManagement from '@/components/admin/SettingsManagement';
+import TestimonialsManagement from '@/components/admin/TestimonialsManagement';
+import GalleryManagement from '@/components/admin/GalleryManagement';
 import { useNavigate } from 'react-router-dom';
 
 const Admin = () => {
@@ -171,29 +173,41 @@ const Admin = () => {
         )}
 
         <Tabs defaultValue="products" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-5 mb-8">
-            <TabsTrigger value="products" className="flex items-center gap-2">
+          <TabsList className="flex flex-wrap h-auto gap-1 mb-8 bg-muted p-1 rounded-lg">
+            <TabsTrigger value="products" className="flex items-center gap-1.5">
               <Package className="h-4 w-4" />
               Products
             </TabsTrigger>
-            <TabsTrigger value="content" className="flex items-center gap-2">
+            <TabsTrigger value="content" className="flex items-center gap-1.5">
               <FileText className="h-4 w-4" />
               Content
             </TabsTrigger>
-            <TabsTrigger value="messages" className="flex items-center gap-2">
+            <TabsTrigger value="messages" className="flex items-center gap-1.5">
               <MessageSquare className="h-4 w-4" />
               Messages
               {stats && stats.newMessages > 0 && (
-                <span className="bg-red-500 text-white text-xs rounded-full px-2 py-1 ml-1">
+                <span className="bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5 ml-0.5 leading-none">
                   {stats.newMessages}
                 </span>
               )}
             </TabsTrigger>
-            <TabsTrigger value="users" className="flex items-center gap-2">
+            <TabsTrigger value="testimonials" className="flex items-center gap-1.5">
+              <Star className="h-4 w-4" />
+              Testimonials
+            </TabsTrigger>
+            <TabsTrigger value="gallery-water" className="flex items-center gap-1.5">
+              <Image className="h-4 w-4" />
+              Water Gallery
+            </TabsTrigger>
+            <TabsTrigger value="gallery-champions" className="flex items-center gap-1.5">
+              <Image className="h-4 w-4" />
+              Champions Gallery
+            </TabsTrigger>
+            <TabsTrigger value="users" className="flex items-center gap-1.5">
               <Users className="h-4 w-4" />
               Users
             </TabsTrigger>
-            <TabsTrigger value="settings" className="flex items-center gap-2">
+            <TabsTrigger value="settings" className="flex items-center gap-1.5">
               <SlidersHorizontal className="h-4 w-4" />
               Settings
             </TabsTrigger>
@@ -209,6 +223,18 @@ const Admin = () => {
 
           <TabsContent value="messages" className="mt-6">
             <ContactMessages />
+          </TabsContent>
+
+          <TabsContent value="testimonials" className="mt-6">
+            <TestimonialsManagement />
+          </TabsContent>
+
+          <TabsContent value="gallery-water" className="mt-6">
+            <GalleryManagement galleryType="water-source" />
+          </TabsContent>
+
+          <TabsContent value="gallery-champions" className="mt-6">
+            <GalleryManagement galleryType="green-champions" />
           </TabsContent>
 
           <TabsContent value="users" className="mt-6">

@@ -274,7 +274,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Gallery routes
+  // Gallery routes — Water Source
   app.get("/api/gallery/water-source", async (req, res) => {
     try {
       const gallery = await storage.getWaterSourceGallery();
@@ -285,6 +285,45 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.get("/api/gallery/water-source/all", async (req, res) => {
+    try {
+      const gallery = await storage.getWaterSourceGalleryAll();
+      res.json(gallery);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to get water source gallery" });
+    }
+  });
+
+  app.post("/api/gallery/water-source", async (req, res) => {
+    try {
+      const item = await storage.createWaterSourceGallery(req.body);
+      res.status(201).json(item);
+    } catch (error) {
+      res.status(400).json({ error: "Failed to create gallery item" });
+    }
+  });
+
+  app.put("/api/gallery/water-source/:id", async (req, res) => {
+    try {
+      const item = await storage.updateWaterSourceGallery(req.params.id, req.body);
+      if (!item) return res.status(404).json({ error: "Item not found" });
+      res.json(item);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to update gallery item" });
+    }
+  });
+
+  app.delete("/api/gallery/water-source/:id", async (req, res) => {
+    try {
+      const deleted = await storage.deleteWaterSourceGallery(req.params.id);
+      if (!deleted) return res.status(404).json({ error: "Item not found" });
+      res.status(204).send();
+    } catch (error) {
+      res.status(500).json({ error: "Failed to delete gallery item" });
+    }
+  });
+
+  // Gallery routes — Green Champions
   app.get("/api/gallery/green-champions", async (req, res) => {
     try {
       const gallery = await storage.getGreenChampionsGallery();
@@ -292,6 +331,44 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Green champions gallery API error:", error);
       res.status(500).json({ error: "Failed to get green champions gallery" });
+    }
+  });
+
+  app.get("/api/gallery/green-champions/all", async (req, res) => {
+    try {
+      const gallery = await storage.getGreenChampionsGalleryAll();
+      res.json(gallery);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to get green champions gallery" });
+    }
+  });
+
+  app.post("/api/gallery/green-champions", async (req, res) => {
+    try {
+      const item = await storage.createGreenChampionsGallery(req.body);
+      res.status(201).json(item);
+    } catch (error) {
+      res.status(400).json({ error: "Failed to create gallery item" });
+    }
+  });
+
+  app.put("/api/gallery/green-champions/:id", async (req, res) => {
+    try {
+      const item = await storage.updateGreenChampionsGallery(req.params.id, req.body);
+      if (!item) return res.status(404).json({ error: "Item not found" });
+      res.json(item);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to update gallery item" });
+    }
+  });
+
+  app.delete("/api/gallery/green-champions/:id", async (req, res) => {
+    try {
+      const deleted = await storage.deleteGreenChampionsGallery(req.params.id);
+      if (!deleted) return res.status(404).json({ error: "Item not found" });
+      res.status(204).send();
+    } catch (error) {
+      res.status(500).json({ error: "Failed to delete gallery item" });
     }
   });
 

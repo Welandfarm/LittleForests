@@ -49,7 +49,15 @@ export interface IStorage {
   
   // Gallery methods
   getWaterSourceGallery(): Promise<WaterSourceGallery[]>;
+  getWaterSourceGalleryAll(): Promise<WaterSourceGallery[]>;
+  createWaterSourceGallery(item: InsertWaterSourceGallery): Promise<WaterSourceGallery>;
+  updateWaterSourceGallery(id: string, item: Partial<InsertWaterSourceGallery>): Promise<WaterSourceGallery | undefined>;
+  deleteWaterSourceGallery(id: string): Promise<boolean>;
   getGreenChampionsGallery(): Promise<GreenChampionsGallery[]>;
+  getGreenChampionsGalleryAll(): Promise<GreenChampionsGallery[]>;
+  createGreenChampionsGallery(item: InsertGreenChampionsGallery): Promise<GreenChampionsGallery>;
+  updateGreenChampionsGallery(id: string, item: Partial<InsertGreenChampionsGallery>): Promise<GreenChampionsGallery | undefined>;
+  deleteGreenChampionsGallery(id: string): Promise<boolean>;
 }
 
 export class SupabaseStorage implements IStorage {
@@ -384,6 +392,84 @@ export class SupabaseStorage implements IStorage {
     
     if (error) throw error;
     return data || [];
+  }
+
+  async getWaterSourceGalleryAll(): Promise<WaterSourceGallery[]> {
+    const { data, error } = await supabaseAdmin
+      .from('water_source_gallery')
+      .select('*')
+      .order('display_order', { ascending: true });
+    if (error) throw error;
+    return data || [];
+  }
+
+  async createWaterSourceGallery(item: InsertWaterSourceGallery): Promise<WaterSourceGallery> {
+    const { data, error } = await supabaseAdmin
+      .from('water_source_gallery')
+      .insert(item)
+      .select()
+      .single();
+    if (error) throw error;
+    return data;
+  }
+
+  async updateWaterSourceGallery(id: string, item: Partial<InsertWaterSourceGallery>): Promise<WaterSourceGallery | undefined> {
+    const { data, error } = await supabaseAdmin
+      .from('water_source_gallery')
+      .update(item)
+      .eq('id', id)
+      .select()
+      .single();
+    if (error && error.code !== 'PGRST116') throw error;
+    return data || undefined;
+  }
+
+  async deleteWaterSourceGallery(id: string): Promise<boolean> {
+    const { error } = await supabaseAdmin
+      .from('water_source_gallery')
+      .delete()
+      .eq('id', id);
+    if (error) throw error;
+    return true;
+  }
+
+  async getGreenChampionsGalleryAll(): Promise<GreenChampionsGallery[]> {
+    const { data, error } = await supabaseAdmin
+      .from('green_champions_gallery')
+      .select('*')
+      .order('display_order', { ascending: true });
+    if (error) throw error;
+    return data || [];
+  }
+
+  async createGreenChampionsGallery(item: InsertGreenChampionsGallery): Promise<GreenChampionsGallery> {
+    const { data, error } = await supabaseAdmin
+      .from('green_champions_gallery')
+      .insert(item)
+      .select()
+      .single();
+    if (error) throw error;
+    return data;
+  }
+
+  async updateGreenChampionsGallery(id: string, item: Partial<InsertGreenChampionsGallery>): Promise<GreenChampionsGallery | undefined> {
+    const { data, error } = await supabaseAdmin
+      .from('green_champions_gallery')
+      .update(item)
+      .eq('id', id)
+      .select()
+      .single();
+    if (error && error.code !== 'PGRST116') throw error;
+    return data || undefined;
+  }
+
+  async deleteGreenChampionsGallery(id: string): Promise<boolean> {
+    const { error } = await supabaseAdmin
+      .from('green_champions_gallery')
+      .delete()
+      .eq('id', id);
+    if (error) throw error;
+    return true;
   }
 }
 

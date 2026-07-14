@@ -315,7 +315,7 @@ Please confirm availability and let me know`;
                     rel="noopener noreferrer"
                     className="text-green-300 hover:text-white underline ml-1"
                   >
-                    +254 108 029 407
+                    +254 143 538 080
                   </a>
                 </p>
               </div>

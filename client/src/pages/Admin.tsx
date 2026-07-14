@@ -10,10 +10,13 @@ import ContactMessages from '@/components/admin/ContactMessages';
 import UserManagement from '@/components/admin/UserManagement';
 import { useQuery } from '@tanstack/react-query';
 import { apiClient } from '@/lib/api';
-import { TreePine, Package, FileText, MessageSquare, Users, Home, Settings } from 'lucide-react';
+import { TreePine, Package, FileText, MessageSquare, Users, Home, Settings, SlidersHorizontal } from 'lucide-react';
+import SettingsManagement from '@/components/admin/SettingsManagement';
+import { useNavigate } from 'react-router-dom';
 
 const Admin = () => {
   const { adminUser, loading, adminSignOut } = useAuth();
+  const navigate = useNavigate();
 
   // Get stats for dashboard overview
   const { data: stats } = useQuery({
@@ -74,14 +77,14 @@ const Admin = () => {
               <span className="text-sm text-gray-600">
                 Welcome, {adminUser.email}
               </span>
-              <Button onClick={() => window.location.href = '/'} variant="outline" className="flex items-center gap-2">
+              <Button onClick={() => navigate('/')} variant="outline" className="flex items-center gap-2">
                 <Home className="h-4 w-4" />
                 View Website
               </Button>
               <Button 
                 onClick={async () => {
                   await adminSignOut();
-                  window.location.href = '/';
+                  navigate('/');
                 }}
                 variant="outline"
                 className="border-red-600 text-red-600 hover:bg-red-50"
@@ -168,7 +171,7 @@ const Admin = () => {
         )}
 
         <Tabs defaultValue="products" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4 mb-8">
+          <TabsList className="grid w-full grid-cols-5 mb-8">
             <TabsTrigger value="products" className="flex items-center gap-2">
               <Package className="h-4 w-4" />
               Products
@@ -190,6 +193,10 @@ const Admin = () => {
               <Users className="h-4 w-4" />
               Users
             </TabsTrigger>
+            <TabsTrigger value="settings" className="flex items-center gap-2">
+              <SlidersHorizontal className="h-4 w-4" />
+              Settings
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="products" className="mt-6">
@@ -206,6 +213,10 @@ const Admin = () => {
 
           <TabsContent value="users" className="mt-6">
             <UserManagement />
+          </TabsContent>
+
+          <TabsContent value="settings" className="mt-6">
+            <SettingsManagement />
           </TabsContent>
         </Tabs>
       </div>

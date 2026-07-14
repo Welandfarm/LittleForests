@@ -106,6 +106,19 @@ const NavigationDropdown = () => {
                   </button>
                 </NavigationMenuLink>
               </li>
+              <li>
+                <NavigationMenuLink asChild>
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleNavigation('/contact');
+                    }}
+                    className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground w-full text-left"
+                  >
+                    <div className="text-sm font-medium leading-none">Contact Us</div>
+                  </button>
+                </NavigationMenuLink>
+              </li>
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>

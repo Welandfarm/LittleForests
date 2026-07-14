@@ -5,6 +5,7 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { Droplets, GraduationCap } from "lucide-react";
 import AuthButton from '@/components/AuthButton';
 import NavigationDropdown from '@/components/NavigationDropdown';
+import Footer from '@/components/Footer';
 import { useQuery } from '@tanstack/react-query';
 import { apiClient } from '@/lib/api';
 import img1 from '@assets/IMG-20251007-WA0001_1759838217345.jpg';
@@ -419,55 +420,7 @@ Thank you!`;
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-green-800 text-white py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-3 gap-8">
-            <div>
-              <div className="flex items-center space-x-2 mb-4">
-                <span className="text-xl font-bold">
-                  <span className="text-orange-500">Little</span>
-                  <span className="text-green-400">Forest</span>
-                </span>
-              </div>
-              <p className="text-green-200 text-sm">
-                Restoring Water Resources, One Tree at a Time.
-              </p>
-            </div>
-
-            <div>
-              <h3 className="font-semibold mb-4">Quick Links</h3>
-              <ul className="space-y-2 text-sm text-green-200">
-                <li><button onClick={() => window.location.href = '/'} className="hover:text-white">Shop with us</button></li>
-                <li><button onClick={() => window.location.href = '/about'} className="hover:text-white">About Us</button></li>
-                <li><button onClick={() => window.location.href = '/green-towns'} className="hover:text-white">Green Towns Initiative</button></li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="font-semibold mb-4">Contact Info</h3>
-              <div className="space-y-2 text-sm text-green-200 mb-4">
-                <p>📱 WhatsApp: 
-                  <a 
-                    href="https://wa.me/2540143538080?text=Hello%20LittleForest!%20I'm%20interested%20in%20your%20seedlings%20and%20would%20like%20to%20learn%20more." 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-green-300 hover:text-white underline ml-1"
-                  >
-                    +254 143 538 080
-                  </a>
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="border-t border-green-700 mt-8 pt-8 text-center">
-            <p className="text-green-200 text-sm">
-              © 2024 Little Forest. All rights reserved. | Restoring Water Resources, One Tree at a Time.
-            </p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };

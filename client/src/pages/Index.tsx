@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Leaf, TreePine, Sprout, Users, Award, Heart, ShoppingCart, UserCog, Settings } from "lucide-react";
+import { Leaf, TreePine, Sprout, Users, Award, Heart, ShoppingCart, UserCog, Settings, Search } from "lucide-react";
 import ContactForm from '@/components/ContactForm';
 import CartSidebar from '@/components/CartSidebar';
 import ProductGrid from '@/components/ProductGrid';
@@ -26,6 +26,7 @@ const Index = () => {
   const [cartOpen, setCartOpen] = useState(false);
   const [quantities, setQuantities] = useState<{[key: string]: number}>({});
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
   const { user, adminUser } = useAuth();
 
@@ -82,20 +83,28 @@ Please confirm availability and let me know`;
     },
   });
 
-  // Filter products based on selected category
+  // Filter products based on selected category and search query
   const filteredProducts = useMemo(() => {
-    const productList = products as any[];
+    let result = products as any[];
 
-    if (selectedCategory === 'all') {
-      return productList;
+    if (selectedCategory !== 'all') {
+      result = result.filter((p: any) =>
+        p.category === selectedCategory ||
+        p.category?.toLowerCase() === selectedCategory.toLowerCase()
+      );
     }
 
-    // Dynamic filtering for any category
-    return productList.filter((p: any) => 
-      p.category === selectedCategory ||
-      p.category?.toLowerCase() === selectedCategory.toLowerCase()
-    );
-  }, [selectedCategory, products]);
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase().trim();
+      result = result.filter((p: any) =>
+        (p.name || p.plant_name || '').toLowerCase().includes(q) ||
+        (p.description || '').toLowerCase().includes(q) ||
+        (p.category || '').toLowerCase().includes(q)
+      );
+    }
+
+    return result;
+  }, [selectedCategory, searchQuery, products]);
 
   const updateQuantity = (productId: string, change: number) => {
     setQuantities(prev => ({
@@ -253,6 +262,18 @@ Please confirm availability and let me know`;
                 </Button>
               </div>
             )}
+          </div>
+
+          {/* Search */}
+          <div className="relative max-w-sm mx-auto mb-6">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+            <input
+              type="search"
+              placeholder="Search products…"
+              value={searchQuery}
+              onChange={e => setSearchQuery(e.target.value)}
+              className="w-full pl-9 pr-4 py-2 border border-gray-200 rounded-full text-sm bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-shadow"
+            />
           </div>
 
           {/* Category Filter */}

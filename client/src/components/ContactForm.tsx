@@ -87,7 +87,7 @@ const ContactForm = () => {
             value={formData.phone}
             onChange={handleChange}
             className="w-full"
-            placeholder="0108029407"
+            placeholder="0143538080"
           />
         </div>
         
@@ -119,8 +119,8 @@ const ContactForm = () => {
           <div className="space-y-1">
             <p className="text-sm">
               <span className="font-medium">Phone/WhatsApp:</span>{' '}
-              <a href="tel:0108029407" className="text-green-600 hover:text-green-700">
-                0108029407
+              <a href="tel:0143538080" className="text-green-600 hover:text-green-700">
+                0143538080
               </a>
             </p>
             <p className="text-sm">

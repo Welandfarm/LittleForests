@@ -1,7 +1,35 @@
 import { Link } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { apiClient } from '@/lib/api';
+
+const DEFAULTS = {
+  whatsapp_number: '2540143538080',
+  whatsapp_display: '+254 143 538 080',
+  location: 'Bomet County, Kenya',
+};
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+
+  const { data: settingsContent = [] } = useQuery({
+    queryKey: ['settings'],
+    queryFn: () => apiClient.getContent('settings'),
+    staleTime: 5 * 60 * 1000, // cache for 5 minutes
+  });
+
+  // Build a key→value map, falling back to hardcoded defaults
+  const settings: Record<string, string> = { ...DEFAULTS };
+  if (Array.isArray(settingsContent)) {
+    (settingsContent as any[]).forEach((item: any) => {
+      if (item.title && item.content) {
+        settings[item.title] = item.content;
+      }
+    });
+  }
+
+  const waNumber = settings.whatsapp_number;
+  const waDisplay = settings.whatsapp_display;
+  const location = settings.location;
 
   return (
     <footer className="bg-green-800 text-white py-12">
@@ -35,15 +63,15 @@ const Footer = () => {
               <p>
                 📱 WhatsApp:{' '}
                 <a
-                  href="https://wa.me/2540143538080?text=Hello%20LittleForest!%20I'm%20interested%20in%20your%20seedlings%20and%20would%20like%20to%20learn%20more."
+                  href={`https://wa.me/${waNumber}?text=Hello%20LittleForest!%20I'm%20interested%20in%20your%20seedlings%20and%20would%20like%20to%20learn%20more.`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-green-300 hover:text-white underline ml-1"
                 >
-                  +254 143 538 080
+                  {waDisplay}
                 </a>
               </p>
-              <p>📍 Bomet County, Kenya</p>
+              <p>📍 {location}</p>
             </div>
           </div>
         </div>

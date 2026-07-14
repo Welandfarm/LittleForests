@@ -9,7 +9,7 @@ import { Input } from '@/components/ui/input';
 import Footer from '@/components/Footer';
 import NavigationDropdown from '@/components/NavigationDropdown';
 import AuthButton from '@/components/AuthButton';
-import { ArrowLeft, Plus, Minus, ShoppingCart, MessageCircle, Leaf } from 'lucide-react';
+import { ArrowLeft, Plus, Minus, ShoppingCart, MessageCircle, Leaf, Share2, Copy, Check, Facebook } from 'lucide-react';
 
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -17,6 +17,8 @@ const ProductDetail = () => {
   const { addToCart } = useCart();
   const [quantity, setQuantity] = useState(1);
   const [added, setAdded] = useState(false);
+  const [showShareMenu, setShowShareMenu] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   const { data: product, isLoading, error } = useQuery({
     queryKey: ['product', id],
@@ -42,6 +44,44 @@ const ProductDetail = () => {
     const price = typeof product.price === 'number' ? `KSH ${product.price}` : product.price;
     const msg = `Hello LittleForest! I'd like to order:\n\n- ${quantity} x ${name} (${price} each)\n\nPlease confirm availability.`;
     window.open(`https://wa.me/2540143538080?text=${encodeURIComponent(msg)}`, '_blank');
+  };
+
+  const handleShare = async () => {
+    const name = product?.name || product?.plant_name || 'this plant';
+    const price = typeof product?.price === 'number' ? `KSH ${product.price}` : product?.price || '';
+    const url = window.location.href;
+    const text = `Check out ${name} (${price}) at LittleForest 🌿`;
+
+    if (navigator.share) {
+      // Native share sheet — opens WhatsApp, Facebook, Messages, etc. on mobile
+      try {
+        await navigator.share({ title: name, text, url });
+      } catch (_) {
+        // User cancelled — do nothing
+      }
+    } else {
+      // Desktop fallback: show share menu
+      setShowShareMenu(s => !s);
+    }
+  };
+
+  const copyLink = async () => {
+    await navigator.clipboard.writeText(window.location.href);
+    setCopied(true);
+    setTimeout(() => { setCopied(false); setShowShareMenu(false); }, 2000);
+  };
+
+  const shareToWhatsApp = () => {
+    const name = product?.name || product?.plant_name || 'this plant';
+    const price = typeof product?.price === 'number' ? `KSH ${product.price}` : product?.price || '';
+    const text = `Check out ${name} (${price}) at LittleForest 🌿\n${window.location.href}`;
+    window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+    setShowShareMenu(false);
+  };
+
+  const shareToFacebook = () => {
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank');
+    setShowShareMenu(false);
   };
 
   const imageUrl =
@@ -122,11 +162,53 @@ const ProductDetail = () => {
 
             {/* Details */}
             <div className="py-2">
-              {/* Category */}
-              <Badge variant="outline" className="text-green-700 border-green-300 mb-3">
-                <Leaf className="h-3 w-3 mr-1" />
-                {product.category}
-              </Badge>
+              {/* Category + Share */}
+              <div className="flex items-center justify-between mb-3">
+                <Badge variant="outline" className="text-green-700 border-green-300">
+                  <Leaf className="h-3 w-3 mr-1" />
+                  {product.category}
+                </Badge>
+
+                {/* Share button */}
+                <div className="relative">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={handleShare}
+                    className="gap-1.5 text-gray-500 hover:text-green-700"
+                  >
+                    <Share2 className="h-4 w-4" />
+                    Share
+                  </Button>
+
+                  {/* Desktop fallback share menu */}
+                  {showShareMenu && (
+                    <div className="absolute right-0 top-10 z-20 bg-white border border-gray-100 rounded-xl shadow-lg p-2 w-44 flex flex-col gap-1">
+                      <button
+                        onClick={shareToWhatsApp}
+                        className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors"
+                      >
+                        <MessageCircle className="h-4 w-4 text-green-600" />
+                        WhatsApp
+                      </button>
+                      <button
+                        onClick={shareToFacebook}
+                        className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition-colors"
+                      >
+                        <Facebook className="h-4 w-4 text-blue-600" />
+                        Facebook
+                      </button>
+                      <button
+                        onClick={copyLink}
+                        className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                      >
+                        {copied ? <Check className="h-4 w-4 text-green-600" /> : <Copy className="h-4 w-4 text-gray-500" />}
+                        {copied ? 'Copied!' : 'Copy link'}
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
 
               {/* Name */}
               <h1 className="text-3xl font-bold text-gray-900 mb-2 leading-tight">

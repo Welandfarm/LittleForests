@@ -153,7 +153,10 @@ const ProductGrid: React.FC<ProductGridProps> = ({
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => navigate(`/products/${product.id}`)}
+                onClick={() => {
+                  sessionStorage.setItem('shopScrollY', String(window.scrollY));
+                  navigate(`/products/${product.id}`);
+                }}
                 className="w-full"
                 data-testid={`button-details-${product.id}`}
               >

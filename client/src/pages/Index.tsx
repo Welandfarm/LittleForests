@@ -33,6 +33,24 @@ const Index = () => {
   // Initialize scroll animations
   useScrollAnimation();
 
+  // Restore scroll position when returning from a product page
+  useEffect(() => {
+    const saved = sessionStorage.getItem('shopScrollY');
+    if (saved) {
+      sessionStorage.removeItem('shopScrollY');
+      const y = parseInt(saved, 10);
+      // Wait for products to render before scrolling
+      const tryScroll = () => {
+        if (document.getElementById('products')) {
+          window.scrollTo({ top: y, behavior: 'instant' });
+        } else {
+          requestAnimationFrame(tryScroll);
+        }
+      };
+      requestAnimationFrame(tryScroll);
+    }
+  }, []);
+
   // Fetch testimonials
   const { data: testimonials = [] } = useQuery({
     queryKey: ['testimonials'],

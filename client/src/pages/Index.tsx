@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Leaf, TreePine, Sprout, Users, Award, Heart, ShoppingCart, UserCog, Settings, Search } from "lucide-react";
+import { Leaf, TreePine, Sprout, Users, Award, Heart, ShoppingCart, UserCog, Settings, Search, Star } from "lucide-react";
 import ContactForm from '@/components/ContactForm';
 import CartSidebar from '@/components/CartSidebar';
 import ProductGrid from '@/components/ProductGrid';
@@ -32,6 +32,12 @@ const Index = () => {
 
   // Initialize scroll animations
   useScrollAnimation();
+
+  // Fetch testimonials
+  const { data: testimonials = [] } = useQuery({
+    queryKey: ['testimonials'],
+    queryFn: () => apiClient.getTestimonials() as Promise<any[]>,
+  });
 
   // Fetch content from database
   const { data: content = [] } = useQuery({
@@ -301,6 +307,44 @@ Please confirm availability and let me know`;
           )}
         </div>
       </section>
+
+      {/* Testimonials */}
+      {(testimonials as any[]).length > 0 && (
+        <section className="py-16 bg-green-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-10 scroll-animate">
+              <h2 className="text-3xl font-bold text-green-800 mb-3">What Our Customers Say</h2>
+              <p className="text-gray-500 max-w-xl mx-auto">Real feedback from farmers, schools, and communities we've worked with.</p>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {(testimonials as any[]).slice(0, 6).map((t: any) => (
+                <div key={t.id} className="bg-white rounded-2xl p-6 shadow-sm flex flex-col gap-3 scroll-animate">
+                  {/* Stars */}
+                  <div className="flex gap-0.5">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Star
+                        key={i}
+                        className={`h-4 w-4 ${i < (t.rating || 5) ? 'text-yellow-400 fill-yellow-400' : 'text-gray-200 fill-gray-200'}`}
+                      />
+                    ))}
+                  </div>
+                  {/* Quote */}
+                  <p className="text-gray-600 text-sm leading-relaxed flex-1">"{t.text || t.content}"</p>
+                  {/* Attribution */}
+                  <div className="pt-2 border-t border-gray-100">
+                    <p className="font-semibold text-gray-800 text-sm">{t.name}</p>
+                    {(t.location || t.project_tag) && (
+                      <p className="text-xs text-gray-400 mt-0.5">
+                        {[t.location, t.project_tag].filter(Boolean).join(' · ')}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       <Footer />
 

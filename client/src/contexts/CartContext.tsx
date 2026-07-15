@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 interface CartItem {
   id: string;
@@ -16,30 +16,43 @@ interface CartContextType {
   getCartTotal: () => number;
 }
 
+const CART_KEY = 'littleforest_cart';
+
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const useCart = () => {
   const context = useContext(CartContext);
-  if (!context) {
-    throw new Error('useCart must be used within a CartProvider');
-  }
+  if (!context) throw new Error('useCart must be used within a CartProvider');
   return context;
 };
 
-interface CartProviderProps {
-  children: ReactNode;
-}
+const loadCart = (): CartItem[] => {
+  try {
+    const saved = localStorage.getItem(CART_KEY);
+    return saved ? JSON.parse(saved) : [];
+  } catch {
+    return [];
+  }
+};
 
-export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+const saveCart = (items: CartItem[]) => {
+  try {
+    localStorage.setItem(CART_KEY, JSON.stringify(items));
+  } catch {
+    // localStorage unavailable — silently continue
+  }
+};
+
+export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const [cartItems, setCartItems] = useState<CartItem[]>(loadCart);
+
+  // Persist to localStorage whenever cart changes
+  useEffect(() => {
+    saveCart(cartItems);
+  }, [cartItems]);
 
   const addToCart = (product: any, quantity: number): boolean => {
-    const existingItem = cartItems.find(item => item.id === product.id);
-
-    if (existingItem) {
-      // Don't allow adding from product page if already in cart
-      return false;
-    }
+    if (cartItems.find(item => item.id === product.id)) return false;
 
     setCartItems(prev => [
       ...prev,
@@ -47,46 +60,29 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
         id: product.id,
         name: product.name || product.plant_name,
         price: typeof product.price === 'number' ? `KSH ${product.price}` : product.price,
-        quantity
-      }
+        quantity,
+      },
     ]);
-
-    return true; // Successfully added
+    return true;
   };
 
-  const removeFromCart = (productId: string) => {
+  const removeFromCart = (productId: string) =>
     setCartItems(prev => prev.filter(item => item.id !== productId));
-  };
 
   const updateQuantity = (productId: string, quantity: number) => {
-    if (quantity <= 0) {
-      removeFromCart(productId);
-      return;
-    }
+    if (quantity <= 0) { removeFromCart(productId); return; }
     setCartItems(prev =>
-      prev.map(item =>
-        item.id === productId ? { ...item, quantity } : item
-      )
+      prev.map(item => item.id === productId ? { ...item, quantity } : item)
     );
   };
 
-  const clearCart = () => {
-    setCartItems([]);
-  };
+  const clearCart = () => setCartItems([]);
 
-  const getCartTotal = () => {
-    return cartItems.reduce((total, item) => total + item.quantity, 0);
-  };
+  const getCartTotal = () =>
+    cartItems.reduce((total, item) => total + item.quantity, 0);
 
   return (
-    <CartContext.Provider value={{
-      cartItems,
-      addToCart,
-      removeFromCart,
-      updateQuantity,
-      clearCart,
-      getCartTotal
-    }}>
+    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, updateQuantity, clearCart, getCartTotal }}>
       {children}
     </CartContext.Provider>
   );

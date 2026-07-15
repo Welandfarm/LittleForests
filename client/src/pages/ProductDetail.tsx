@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { apiClient } from '@/lib/api';
@@ -91,6 +91,16 @@ const ProductDetail = () => {
 
   const productName = product?.name || product?.plant_name || '';
   const isOutOfStock = product?.status === 'Out of Stock' || product?.stock_quantity === 0;
+
+  // Dynamic page title — helps SEO and shows correctly when shared
+  useEffect(() => {
+    if (productName) {
+      document.title = `${productName} — LittleForest Nursery`;
+    }
+    return () => {
+      document.title = 'LittleForest Nursery — Indigenous Trees, Fruit Trees & Seedlings in Kenya';
+    };
+  }, [productName]);
 
   // JSON-LD Product schema — injected into <head> so Google reads it without running JS
   const productJsonLd = product ? JSON.stringify({

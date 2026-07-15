@@ -60,6 +60,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({
               <img
                 src={product.image_url || product.imageUrl || "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=300&fit=crop"}
                 alt={product.name || product.plant_name}
+                loading="lazy"
                 className="w-full h-full object-cover rounded-lg shadow-sm transition-all duration-500 group-hover:scale-125 group-hover:brightness-125"
                 data-testid={`img-product-${product.id}`}
               />

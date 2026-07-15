@@ -26,6 +26,15 @@ const ProductDetail = () => {
     enabled: !!id,
   });
 
+  const { data: allProducts = [] } = useQuery({
+    queryKey: ['products'],
+    queryFn: () => apiClient.getProducts() as Promise<any[]>,
+  });
+
+  const related = (allProducts as any[])
+    .filter(p => p.id !== id && p.category === product?.category)
+    .slice(0, 4);
+
   const adjustQty = (delta: number) =>
     setQuantity(q => Math.max(1, Math.min(999, q + delta)));
 
@@ -191,6 +200,7 @@ const ProductDetail = () => {
               <img
                 src={imageUrl}
                 alt={productName}
+                loading="lazy"
                 className="w-full h-full object-cover"
                 onError={e => {
                   e.currentTarget.src =
@@ -335,6 +345,41 @@ const ProductDetail = () => {
           </div>
         )}
       </div>
+
+      {/* Related products */}
+      {related.length > 0 && (
+        <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+          <h2 className="text-xl font-bold text-gray-800 mb-6">You might also like</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            {related.map((p: any) => {
+              const name = p.name || p.plant_name;
+              const price = typeof p.price === 'number' ? `KSH ${p.price}` : p.price;
+              const img = p.image_url || p.imageUrl ||
+                'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=400&fit=crop';
+              return (
+                <button
+                  key={p.id}
+                  onClick={() => { navigate(`/products/${p.id}`); window.scrollTo(0, 0); }}
+                  className="group text-left bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 hover:-translate-y-0.5"
+                >
+                  <div className="aspect-square overflow-hidden bg-green-50">
+                    <img
+                      src={img}
+                      alt={name}
+                      loading="lazy"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+                  <div className="p-3">
+                    <p className="text-sm font-medium text-gray-800 line-clamp-1">{name}</p>
+                    <p className="text-sm font-bold text-green-600 mt-0.5">{price}</p>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </section>
+      )}
 
       <Footer />
     </div>

@@ -14,6 +14,7 @@ import AdminLogin from "./pages/AdminLogin";
 import NotFound from "./pages/NotFound";
 import Contact from "./pages/Contact";
 import ProductDetail from "./pages/ProductDetail";
+import FloatingWhatsApp from "./components/FloatingWhatsApp";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -35,6 +36,7 @@ const App = () => (
       <BrowserRouter>
         <AuthProvider>
           <CartProvider>
+            <FloatingWhatsApp />
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/about" element={<About />} />

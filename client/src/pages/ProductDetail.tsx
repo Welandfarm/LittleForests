@@ -19,6 +19,7 @@ const ProductDetail = () => {
   const [added, setAdded] = useState(false);
   const [showShareMenu, setShowShareMenu] = useState(false);
   const [copied, setCopied] = useState(false);
+  const shareMenuRef = useEffect(() => {}, []) as any; // placeholder, real ref below
 
   const { data: product, isLoading, error } = useQuery({
     queryKey: ['product', id],
@@ -31,9 +32,10 @@ const ProductDetail = () => {
     queryFn: () => apiClient.getProducts() as Promise<any[]>,
   });
 
-  const related = (allProducts as any[])
-    .filter(p => p.id !== id && p.category === product?.category)
-    .slice(0, 4);
+  const sameCat = (allProducts as any[]).filter(p => p.id !== id && p.category === product?.category);
+  const related = sameCat.length > 0
+    ? sameCat.slice(0, 4)
+    : (allProducts as any[]).filter(p => p.id !== id).slice(0, 4);
 
   const adjustQty = (delta: number) =>
     setQuantity(q => Math.max(1, Math.min(999, q + delta)));

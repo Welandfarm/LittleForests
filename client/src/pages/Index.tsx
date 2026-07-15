@@ -12,7 +12,7 @@ import AdminAccessButton from '@/components/AdminAccessButton';
 import { useCart } from '@/contexts/CartContext';
 import { useQuery } from '@tanstack/react-query';
 import { apiClient } from '@/lib/api';
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
@@ -36,19 +36,18 @@ const Index = () => {
   // Restore scroll position when returning from a product page
   useEffect(() => {
     const saved = sessionStorage.getItem('shopScrollY');
-    if (saved) {
-      sessionStorage.removeItem('shopScrollY');
-      const y = parseInt(saved, 10);
-      // Wait for products to render before scrolling
-      const tryScroll = () => {
-        if (document.getElementById('products')) {
-          window.scrollTo({ top: y, behavior: 'instant' });
-        } else {
-          requestAnimationFrame(tryScroll);
-        }
-      };
-      requestAnimationFrame(tryScroll);
-    }
+    if (!saved) return;
+    sessionStorage.removeItem('shopScrollY');
+    const y = parseInt(saved, 10);
+    let attempts = 0;
+    const tryScroll = () => {
+      if (document.getElementById('products')) {
+        window.scrollTo({ top: y, behavior: 'instant' });
+      } else if (attempts++ < 60) {
+        requestAnimationFrame(tryScroll);
+      }
+    };
+    requestAnimationFrame(tryScroll);
   }, []);
 
   // Fetch testimonials

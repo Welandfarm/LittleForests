@@ -179,7 +179,7 @@ const Donate = () => {
               <p className="text-gray-600 mt-2 max-w-2xl mx-auto">Choose whether you want to support an existing LittleForest or help establish a new one.</p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-6">
               {(['adopt', 'start'] as Choice[]).map((key) => {
                 const active = choice === key;
                 return (
@@ -187,14 +187,16 @@ const Donate = () => {
                     key={key}
                     type="button"
                     onClick={() => selectChoice(key)}
-                    className={`relative rounded-2xl border-2 p-7 text-left transition-all ${active ? (key === 'adopt' ? 'border-green-600 bg-green-50 shadow-md' : 'border-orange-500 bg-orange-50 shadow-md') : 'border-gray-200 bg-white hover:border-green-300'}`}
+                    aria-pressed={active}
+                    aria-label={`Select ${options[key].shortTitle}`}
+                    className={`relative flex h-full flex-col rounded-2xl border-2 p-4 text-left transition-all hover:-translate-y-0.5 sm:p-7 ${active ? (key === 'adopt' ? 'border-green-600 bg-green-50 shadow-md' : 'border-orange-500 bg-orange-50 shadow-md') : 'border-gray-200 bg-white hover:border-green-300'}`}
                   >
-                    {active && <CheckCircle2 className={`absolute right-5 top-5 h-6 w-6 ${key === 'adopt' ? 'text-green-700' : 'text-orange-600'}`} />}
-                    <div className={`w-12 h-12 rounded-full flex items-center justify-center mb-5 ${key === 'adopt' ? 'bg-green-100' : 'bg-orange-100'}`}>
-                      {key === 'adopt' ? <TreePine className="w-6 h-6 text-green-700" /> : <Sprout className="w-6 h-6 text-orange-600" />}
+                    {active && <CheckCircle2 className={`absolute right-3 top-3 h-5 w-5 sm:right-5 sm:top-5 sm:h-6 sm:w-6 ${key === 'adopt' ? 'text-green-700' : 'text-orange-600'}`} />}
+                    <div className={`mb-3 flex h-10 w-10 items-center justify-center rounded-full sm:mb-5 sm:h-12 sm:w-12 ${key === 'adopt' ? 'bg-green-100' : 'bg-orange-100'}`}>
+                      {key === 'adopt' ? <TreePine className="h-5 w-5 text-green-700 sm:h-6 sm:w-6" /> : <Sprout className="h-5 w-5 text-orange-600 sm:h-6 sm:w-6" />}
                     </div>
-                    <h4 className="text-xl font-bold text-gray-900">{options[key].shortTitle}</h4>
-                    <p className="text-gray-600 leading-7 mt-3">{options[key].description}</p>
+                    <h4 className="pr-5 text-base font-bold leading-tight text-gray-900 sm:text-xl">{options[key].shortTitle}</h4>
+                    <p className="mt-2 text-sm leading-6 text-gray-600 sm:mt-3 sm:leading-7">{options[key].description}</p>
                   </button>
                 );
               })}

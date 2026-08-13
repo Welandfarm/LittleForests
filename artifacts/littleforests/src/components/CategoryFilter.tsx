@@ -43,7 +43,14 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({ selectedCategory, onCat
     queryKey: ['categories'],
     queryFn: async () => {
       const response = await fetch('/api/categories');
-      return response.json();
+      if (!response.ok) {
+        return [];
+      }
+
+      const data: unknown = await response.json();
+      return Array.isArray(data)
+        ? data.filter((category): category is string => typeof category === 'string')
+        : [];
     },
   });
 

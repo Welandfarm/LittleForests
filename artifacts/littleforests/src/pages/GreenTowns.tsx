@@ -15,6 +15,7 @@ import img3 from '@assets/WhatsApp Image 2025-09-19 at 15.27.03_c4519e73_1759838
 import img4 from '@assets/WhatsApp Image 2025-09-19 at 15.27.50_6eec7683_1759838217352.jpg';
 import img5 from '@assets/WhatsApp Image 2025-09-22 at 22.31.52_2616492e_1759838217353.jpg';
 import SEO from '@/components/SEO';
+import BrandMark from '@/components/BrandMark';
 
 const GreenTowns = () => {
   const [activeTab, setActiveTab] = useState<'water' | 'schools'>('water');
@@ -143,13 +144,7 @@ const GreenTowns = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center space-x-3">
-              <div>
-                <h1 className="text-2xl font-bold">
-                  <span className="text-orange-500">Little</span>
-                  <span className="text-green-600">Forest</span>
-                </h1>
-                <p className="text-sm text-gray-600">Nurturing Nature</p>
-              </div>
+              <BrandMark />
             </div>
             <div className="flex items-center space-x-3">
               <AuthButton />

@@ -7,6 +7,7 @@ import { Phone, MessageCircle, MapPin, ExternalLink } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { apiClient } from '@/lib/api';
 import SEO from '@/components/SEO';
+import BrandMark from '@/components/BrandMark';
 
 const DEFAULTS = {
   whatsapp_number: '2540143538080',
@@ -52,13 +53,7 @@ const Contact = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <Link to="/" className="flex items-center space-x-3">
-              <div>
-                <h1 className="text-2xl font-bold">
-                  <span className="text-orange-500">Little</span>
-                  <span className="text-green-600">Forest</span>
-                </h1>
-                <p className="text-sm text-gray-600">Nurturing Nature</p>
-              </div>
+              <BrandMark />
             </Link>
             <div className="flex items-center space-x-3">
               <AuthButton />

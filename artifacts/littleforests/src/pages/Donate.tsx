@@ -21,6 +21,7 @@ import Footer from '@/components/Footer';
 import SEO from '@/components/SEO';
 import CartSidebar from '@/components/CartSidebar';
 import { useCart } from '@/contexts/CartContext';
+import BrandMark from '@/components/BrandMark';
 import nurseryImage from '@assets/For Front page_1751302445978.jpg';
 
 type Choice = 'adopt' | 'start';
@@ -109,13 +110,7 @@ const Donate = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <Link to="/" className="flex items-center space-x-3">
-              <div>
-                <h1 className="text-2xl font-bold">
-                  <span className="text-orange-500">Little</span>
-                  <span className="text-green-600">Forest</span>
-                </h1>
-                <p className="text-sm text-gray-600">Nurturing Nature</p>
-              </div>
+              <BrandMark />
             </Link>
             <div className="flex items-center space-x-3">
               <AuthButton />

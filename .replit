@@ -1,20 +1,45 @@
-modules = ["nodejs-24"]
+modules = ["nodejs-20", "web", "postgresql-16"]
+run = "npm run dev"
+hidden = [".config", ".git", "generated-icon.png", "node_modules", "dist", ".env"]
+
+[nix]
+channel = "stable-25_05"
+
+[env]
+# Environment variables will be loaded from .env file
+# Create a .env file with your Supabase credentials
 
 [deployment]
-router = "application"
 deploymentTarget = "autoscale"
-
-[deployment.postBuild]
-args = ["pnpm", "store", "prune"]
-env = { "CI" = "true" }
+run = ["npm", "run", "start"]
+build = ["npm", "run", "build"]
 
 [workflows]
 runButton = "Project"
 
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Start application"
+
+[[workflows.workflow]]
+name = "Start application"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npm run dev"
+waitForPort = 5000
+
 [agent]
-stack = "PNPM_WORKSPACE"
 expertMode = true
 
-[postMerge]
-path = "scripts/post-merge.sh"
-timeoutMs = 20000
+[userenv]
+
+[userenv.shared]
+SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1qc3V3bHBpeGNyZWdpaWtpdXNkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk0Njc0NzcsImV4cCI6MjA2NTA0MzQ3N30.Anz7mqQLkGIMGcvPtfT1ELORA2DqEIHLsIge5DfQYxc"
+SUPABASE_URL = "https://mjsuwlpixcregiikiusd.supabase.co"

@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Little Forests"
+description = "A full website for Little Forests, a Kenyan tree nursery and environmental initiative with product browsing, community information, donations, contact, and admin tools."
+version = "1.0.0"
+id = "artifacts/littleforests"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 23858
+
+[services.development]
+run = "pnpm --filter @workspace/littleforests run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/littleforests", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/littleforests/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "23858"
+BASE_PATH = "/"

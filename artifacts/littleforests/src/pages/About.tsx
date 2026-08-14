@@ -8,6 +8,7 @@ import DonateButton from '@/components/DonateButton';
 import SEO from '@/components/SEO';
 import BrandMark from '@/components/BrandMark';
 import BrandName from '@/components/BrandName';
+import SocialLinks from '@/components/SocialLinks';
 
 const About = () => {
   return (
@@ -107,6 +108,10 @@ const About = () => {
               </div>
             </TabsContent>
           </Tabs>
+           <div className="mt-8 flex flex-col items-center gap-3 border-t border-green-100 pt-6 sm:flex-row sm:justify-center">
+             <span className="text-sm font-semibold text-green-800">Follow our work</span>
+             <SocialLinks compact />
+           </div>
         </div>
       </section>
 

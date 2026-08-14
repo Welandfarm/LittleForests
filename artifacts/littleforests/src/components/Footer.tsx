@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { apiClient } from '@/lib/api';
 import BrandName from '@/components/BrandName';
+import SocialLinks from '@/components/SocialLinks';
 
 const DEFAULTS = {
   whatsapp_number: '2540143538080',
@@ -81,6 +82,7 @@ const Footer = () => {
               >
                 📍 {location}
               </a>
+              <SocialLinks compact className="pt-1" />
             </div>
           </div>
         </div>

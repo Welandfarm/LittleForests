@@ -10,6 +10,7 @@ import AuthButton from '@/components/AuthButton';
 import SEO from '@/components/SEO';
 import BrandName from '@/components/BrandName';
 import BrandMark from '@/components/BrandMark';
+import SocialLinks from '@/components/SocialLinks';
 
 const Blog = () => {
   const navigate = useNavigate();
@@ -58,6 +59,7 @@ const Blog = () => {
           <p className="text-stone-600 max-w-2xl mx-auto">
             Stay updated with the latest tips, insights, and stories from our nursery experts
           </p>
+          <SocialLinks compact className="mt-5 justify-center" />
         </div>
 
         {isLoading ? (

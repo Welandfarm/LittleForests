@@ -3,11 +3,12 @@ import NavigationDropdown from '@/components/NavigationDropdown';
 import Footer from '@/components/Footer';
 import AuthButton from '@/components/AuthButton';
 import { Link } from 'react-router-dom';
-import { Phone, MessageCircle, MapPin, ExternalLink, Instagram, Facebook } from 'lucide-react';
+import { Phone, MessageCircle, MapPin, ExternalLink } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { apiClient } from '@/lib/api';
 import SEO from '@/components/SEO';
 import BrandMark from '@/components/BrandMark';
+import SocialLinks from '@/components/SocialLinks';
 
 const DEFAULTS = {
   whatsapp_number: '2540143538080',
@@ -15,9 +16,6 @@ const DEFAULTS = {
   location: 'Bomet County, Kenya',
   maps_url: 'https://maps.app.goo.gl/NQzgNAjcRYWzFNjy7',
 };
-
-const INSTAGRAM_URL = 'https://www.instagram.com/little_forestnursery?igsh=NzloYjNveHVybTZo&utm_source=qr';
-const FACEBOOK_URL = '';
 
 const Contact = () => {
   const { data: settingsContent = [] } = useQuery({
@@ -148,43 +146,7 @@ const Contact = () => {
               {/* Social links */}
               <div className="mt-8 rounded-2xl border border-green-200 bg-white p-4 shadow-sm sm:p-5">
                 <h4 className="font-semibold text-green-800">Follow us</h4>
-                <div className="mt-4 flex items-center gap-4">
-                  <a
-                    href={INSTAGRAM_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="LittleForest Nursery on Instagram"
-                    title="Instagram"
-                    style={{
-                      background: 'linear-gradient(135deg, #F58529 0%, #DD2A7B 52%, #515BD4 100%)',
-                    }}
-                    className="inline-flex h-14 w-14 items-center justify-center rounded-full border-2 border-white text-white shadow-md transition-transform hover:-translate-y-0.5 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2"
-                  >
-                    <Instagram className="h-7 w-7" strokeWidth={2.2} />
-                  </a>
-                  {FACEBOOK_URL ? (
-                    <a
-                      href={FACEBOOK_URL}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="LittleForest Nursery on Facebook"
-                      title="Facebook"
-                      className="inline-flex h-14 w-14 items-center justify-center rounded-full border-2 border-white bg-[#1877F2] text-white shadow-md transition-transform hover:-translate-y-0.5 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2"
-                    >
-                      <Facebook className="h-7 w-7" fill="currentColor" />
-                    </a>
-                  ) : (
-                    <span
-                      role="img"
-                      aria-disabled="true"
-                      aria-label="Facebook"
-                      title="Facebook"
-                      className="inline-flex h-14 w-14 items-center justify-center rounded-full border-2 border-white bg-[#1877F2] text-white shadow-md"
-                    >
-                      <Facebook className="h-7 w-7" fill="currentColor" />
-                    </span>
-                  )}
-                </div>
+                <SocialLinks className="mt-4" />
               </div>
 
               {/* Ordering tip */}

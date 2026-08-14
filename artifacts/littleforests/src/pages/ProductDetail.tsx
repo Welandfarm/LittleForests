@@ -12,10 +12,7 @@ import AuthButton from '@/components/AuthButton';
 import { ArrowLeft, Plus, Minus, ShoppingCart, MessageCircle, Leaf, Share2, Copy, Check, Facebook } from 'lucide-react';
 import DonateButton from '@/components/DonateButton';
 import SEO from '@/components/SEO';
-<<<<<<< HEAD
 import BrandName from '@/components/BrandName';
-=======
->>>>>>> 95c8ffdb2e9c18f0fccbce5e86f5122a9459e81f
 
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -153,14 +150,7 @@ const ProductDetail = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <Link to="/" className="flex items-center space-x-2">
-<<<<<<< HEAD
               <BrandName className="text-2xl" />
-=======
-              <h1 className="text-2xl font-bold">
-                <span className="text-orange-500">Little</span>
-                <span className="text-green-600">Forest</span>
-              </h1>
->>>>>>> 95c8ffdb2e9c18f0fccbce5e86f5122a9459e81f
             </Link>
             <div className="flex items-center gap-3">
               <AuthButton />

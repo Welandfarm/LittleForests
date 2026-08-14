@@ -3,7 +3,7 @@ import NavigationDropdown from '@/components/NavigationDropdown';
 import Footer from '@/components/Footer';
 import AuthButton from '@/components/AuthButton';
 import { Link } from 'react-router-dom';
-import { Phone, MessageCircle, MapPin, ExternalLink } from 'lucide-react';
+import { Phone, MessageCircle, MapPin, ExternalLink, Instagram, Facebook } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { apiClient } from '@/lib/api';
 import SEO from '@/components/SEO';
@@ -15,6 +15,9 @@ const DEFAULTS = {
   location: 'Bomet County, Kenya',
   maps_url: 'https://maps.app.goo.gl/NQzgNAjcRYWzFNjy7',
 };
+
+const INSTAGRAM_URL = 'https://www.instagram.com/little_forestnursery?igsh=NzloYjNveHVybTZo&utm_source=qr';
+const FACEBOOK_URL = '';
 
 const Contact = () => {
   const { data: settingsContent = [] } = useQuery({
@@ -154,6 +157,43 @@ const Contact = () => {
                 >
                   Browse the shop →
                 </Link>
+              </div>
+
+              <div className="mt-8">
+                <h4 className="font-semibold text-green-800 mb-3">Follow us</h4>
+                <div className="flex items-center gap-3">
+                  <a
+                    href={INSTAGRAM_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="LittleForest Nursery on Instagram"
+                    title="Instagram"
+                    className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-purple-600 via-pink-500 to-orange-400 text-white shadow-sm transition-transform hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2"
+                  >
+                    <Instagram className="h-5 w-5" />
+                  </a>
+                  {FACEBOOK_URL ? (
+                    <a
+                      href={FACEBOOK_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="LittleForest Nursery on Facebook"
+                      title="Facebook"
+                      className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[#1877F2] text-white shadow-sm transition-transform hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2"
+                    >
+                      <Facebook className="h-5 w-5" />
+                    </a>
+                  ) : (
+                    <span
+                      aria-label="Facebook link coming soon"
+                      title="Facebook link coming soon"
+                      className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-gray-200 text-gray-500 opacity-70"
+                    >
+                      <Facebook className="h-5 w-5" />
+                    </span>
+                  )}
+                </div>
+                <p className="mt-2 text-xs text-gray-500">Instagram is live now. Facebook link coming soon.</p>
               </div>
             </div>
 

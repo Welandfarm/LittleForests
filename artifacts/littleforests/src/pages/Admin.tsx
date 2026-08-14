@@ -16,6 +16,7 @@ import TestimonialsManagement from '@/components/admin/TestimonialsManagement';
 import GalleryManagement from '@/components/admin/GalleryManagement';
 import ContentSocial from '@/pages/ContentSocial';
 import { useNavigate } from 'react-router-dom';
+import BrandName from '@/components/BrandName';
 
 const Admin = () => {
   const { adminUser, loading, adminSignOut } = useAuth();
@@ -69,8 +70,7 @@ const Admin = () => {
                 <TreePine className="h-8 w-8 text-green-600" />
                 <div>
                   <h1 className="text-2xl font-bold text-gray-900">
-                    <span className="text-orange-500">Little</span>
-                    <span className="text-green-600">Forest</span> Admin
+                    <BrandName /> Admin
                   </h1>
                   <p className="text-gray-600">Manage your nursery website</p>
                 </div>

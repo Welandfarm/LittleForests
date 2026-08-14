@@ -21,6 +21,7 @@ import Footer from '@/components/Footer';
 import SEO from '@/components/SEO';
 import DonateButton from '@/components/DonateButton';
 import BrandMark from '@/components/BrandMark';
+import BrandName from '@/components/BrandName';
 
 import nurseryImage from '@assets/For Front page_1751302445978.jpg';
 
@@ -247,7 +248,7 @@ Please confirm availability and let me know`;
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center animate-slide-up">
           <div className="mb-8">
             <h1 className="text-3xl md:text-4xl text-white mb-8 font-bold">
-              Grow a Little Forest. Restore Land.
+              Grow a <BrandName surface="dark" className="text-3xl md:text-4xl" />. Restore Land.
             </h1>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

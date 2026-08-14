@@ -7,6 +7,7 @@ import Footer from '@/components/Footer';
 import DonateButton from '@/components/DonateButton';
 import SEO from '@/components/SEO';
 import BrandMark from '@/components/BrandMark';
+import BrandName from '@/components/BrandName';
 
 const About = () => {
   return (
@@ -47,10 +48,10 @@ const About = () => {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-bold text-green-800 mb-6">
-              About <span className="text-orange-500">Little</span><span className="text-green-600">Forest</span> Nursery
+              About <BrandName /> Nursery
             </h2>
             <p className="text-xl text-gray-700 leading-relaxed max-w-4xl mx-auto">
-              Little Forest Nursery is a nature-inspired social-enterprise rooted in Bomet County, Kenya. We are passionate about restoring landscapes, conserving water sources, and greening spaces, one seedling at a time.
+              <BrandName /> Nursery is a nature-inspired social-enterprise rooted in Bomet County, Kenya. We are passionate about restoring landscapes, conserving water sources, and greening spaces, one seedling at a time.
             </p>
           </div>
 
@@ -72,7 +73,7 @@ const About = () => {
                 
                 <div className="bg-green-50 p-8 rounded-2xl">
                   <p className="text-2xl font-semibold text-green-700 mb-4">
-                    <span className="text-orange-500">Little</span><span className="text-green-600">Forest</span> Nursery — Restoring Water Resources, One Tree at a Time.
+                    <BrandName /> Nursery — Restoring Water Resources, One Tree at a Time.
                   </p>
                   <p className="text-lg text-gray-600">
                     Whether you're a farmer, a conservationist, a hotel, or a homeowner, we're here to help you grow with purpose.

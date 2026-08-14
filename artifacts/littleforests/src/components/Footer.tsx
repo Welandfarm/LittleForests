@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { apiClient } from '@/lib/api';
+import BrandName from '@/components/BrandName';
 
 const DEFAULTS = {
   whatsapp_number: '2540143538080',
@@ -39,10 +40,7 @@ const Footer = () => {
         <div className="grid md:grid-cols-3 gap-8">
           <div>
             <div className="flex items-center space-x-2 mb-4">
-              <span className="text-xl font-bold">
-                <span className="text-orange-500">Little</span>
-                <span className="text-green-400">Forest</span>
-              </span>
+              <BrandName surface="dark" className="text-xl" />
             </div>
             <p className="text-green-200 text-sm">
               Restoring Water Resources, One Tree at a Time.
@@ -89,7 +87,7 @@ const Footer = () => {
 
         <div className="border-t border-green-700 mt-8 pt-8 text-center">
           <p className="text-green-200 text-sm">
-            © {currentYear} Little Forest. All rights reserved. | Restoring Water Resources, One Tree at a Time.
+            © {currentYear} <BrandName surface="dark" className="text-sm" />. All rights reserved. | Restoring Water Resources, One Tree at a Time.
           </p>
         </div>
       </div>

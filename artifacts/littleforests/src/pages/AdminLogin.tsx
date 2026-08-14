@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Leaf, Lock } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
+import BrandName from '@/components/BrandName';
 
 const AdminLogin = () => {
   const [email, setEmail] = useState('');
@@ -43,8 +44,7 @@ const AdminLogin = () => {
           </div>
           <div>
             <CardTitle className="text-2xl">
-              <span className="text-orange-500">Little</span>
-              <span className="text-green-600">Forest</span> Admin
+              <BrandName /> Admin
             </CardTitle>
             <CardDescription>
               Authorized Personnel Only

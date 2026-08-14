@@ -145,8 +145,60 @@ const Contact = () => {
                 </div>
               </div>
 
+              {/* Social links */}
+              <div className="mt-8 rounded-2xl border border-green-200 bg-white p-4 shadow-sm sm:p-5">
+                <h4 className="font-semibold text-green-800">Follow us</h4>
+                <div className="mt-4 grid grid-cols-2 gap-3">
+                  <a
+                    href={INSTAGRAM_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="LittleForest Nursery on Instagram"
+                    title="Instagram"
+                    className="flex min-h-16 items-center gap-2 rounded-xl bg-gradient-to-br from-[#F58529] via-[#DD2A7B] to-[#515BD4] px-3 py-2.5 text-left text-white shadow-sm transition-transform hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2"
+                  >
+                    <Instagram className="h-5 w-5 shrink-0" />
+                    <span className="min-w-0">
+                      <span className="block text-sm font-semibold">Instagram</span>
+                      <span className="block text-[11px] text-white/85">Visit profile</span>
+                    </span>
+                  </a>
+                  {FACEBOOK_URL ? (
+                    <a
+                      href={FACEBOOK_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="LittleForest Nursery on Facebook"
+                      title="Facebook"
+                      className="flex min-h-16 items-center gap-2 rounded-xl bg-[#1877F2] px-3 py-2.5 text-left text-white shadow-sm transition-transform hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2"
+                    >
+                      <Facebook className="h-5 w-5 shrink-0" />
+                      <span className="min-w-0">
+                        <span className="block text-sm font-semibold">Facebook</span>
+                        <span className="block text-[11px] text-white/85">Visit page</span>
+                      </span>
+                    </a>
+                  ) : (
+                    <span
+                      role="img"
+                      aria-disabled="true"
+                      aria-label="Facebook link coming soon"
+                      title="Facebook link coming soon"
+                      className="flex min-h-16 items-center gap-2 rounded-xl bg-[#1877F2] px-3 py-2.5 text-left text-white shadow-sm"
+                    >
+                      <Facebook className="h-5 w-5 shrink-0" />
+                      <span className="min-w-0">
+                        <span className="block text-sm font-semibold">Facebook</span>
+                        <span className="block text-[11px] text-white/85">Link coming soon</span>
+                      </span>
+                    </span>
+                  )}
+                </div>
+                <p className="mt-3 text-xs text-gray-500">Instagram is live now. Facebook link will be added when the page URL is available.</p>
+              </div>
+
               {/* Ordering tip */}
-              <div className="mt-10 bg-green-50 border border-green-200 rounded-lg p-5">
+              <div className="mt-8 bg-green-50 border border-green-200 rounded-lg p-5">
                 <h4 className="font-semibold text-green-800 mb-2">Ordering by WhatsApp</h4>
                 <p className="text-sm text-gray-600">
                   The fastest way to order is through our shop — add items to your cart and click "Order Now" to send us your full order via WhatsApp directly.
@@ -157,43 +209,6 @@ const Contact = () => {
                 >
                   Browse the shop →
                 </Link>
-              </div>
-
-              <div className="mt-8">
-                <h4 className="font-semibold text-green-800 mb-3">Follow us</h4>
-                <div className="flex items-center gap-3">
-                  <a
-                    href={INSTAGRAM_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="LittleForest Nursery on Instagram"
-                    title="Instagram"
-                    className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-purple-600 via-pink-500 to-orange-400 text-white shadow-sm transition-transform hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2"
-                  >
-                    <Instagram className="h-5 w-5" />
-                  </a>
-                  {FACEBOOK_URL ? (
-                    <a
-                      href={FACEBOOK_URL}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="LittleForest Nursery on Facebook"
-                      title="Facebook"
-                      className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[#1877F2] text-white shadow-sm transition-transform hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2"
-                    >
-                      <Facebook className="h-5 w-5" />
-                    </a>
-                  ) : (
-                    <span
-                      aria-label="Facebook link coming soon"
-                      title="Facebook link coming soon"
-                      className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-gray-200 text-gray-500 opacity-70"
-                    >
-                      <Facebook className="h-5 w-5" />
-                    </span>
-                  )}
-                </div>
-                <p className="mt-2 text-xs text-gray-500">Instagram is live now. Facebook link coming soon.</p>
               </div>
             </div>
 

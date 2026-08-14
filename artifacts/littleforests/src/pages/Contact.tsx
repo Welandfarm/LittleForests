@@ -148,20 +148,19 @@ const Contact = () => {
               {/* Social links */}
               <div className="mt-8 rounded-2xl border border-green-200 bg-white p-4 shadow-sm sm:p-5">
                 <h4 className="font-semibold text-green-800">Follow us</h4>
-                <div className="mt-4 grid grid-cols-2 gap-3">
+                <div className="mt-4 flex items-center gap-4">
                   <a
                     href={INSTAGRAM_URL}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="LittleForest Nursery on Instagram"
                     title="Instagram"
-                    className="flex min-h-16 items-center gap-2 rounded-xl bg-gradient-to-br from-[#F58529] via-[#DD2A7B] to-[#515BD4] px-3 py-2.5 text-left text-white shadow-sm transition-transform hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2"
+                    style={{
+                      background: 'linear-gradient(135deg, #F58529 0%, #DD2A7B 52%, #515BD4 100%)',
+                    }}
+                    className="inline-flex h-14 w-14 items-center justify-center rounded-full border-2 border-white text-white shadow-md transition-transform hover:-translate-y-0.5 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2"
                   >
-                    <Instagram className="h-5 w-5 shrink-0" />
-                    <span className="min-w-0">
-                      <span className="block text-sm font-semibold">Instagram</span>
-                      <span className="block text-[11px] text-white/85">Visit profile</span>
-                    </span>
+                    <Instagram className="h-7 w-7" strokeWidth={2.2} />
                   </a>
                   {FACEBOOK_URL ? (
                     <a
@@ -170,31 +169,22 @@ const Contact = () => {
                       rel="noopener noreferrer"
                       aria-label="LittleForest Nursery on Facebook"
                       title="Facebook"
-                      className="flex min-h-16 items-center gap-2 rounded-xl bg-[#1877F2] px-3 py-2.5 text-left text-white shadow-sm transition-transform hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2"
+                      className="inline-flex h-14 w-14 items-center justify-center rounded-full border-2 border-white bg-[#1877F2] text-white shadow-md transition-transform hover:-translate-y-0.5 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2"
                     >
-                      <Facebook className="h-5 w-5 shrink-0" />
-                      <span className="min-w-0">
-                        <span className="block text-sm font-semibold">Facebook</span>
-                        <span className="block text-[11px] text-white/85">Visit page</span>
-                      </span>
+                      <Facebook className="h-7 w-7" fill="currentColor" />
                     </a>
                   ) : (
                     <span
                       role="img"
                       aria-disabled="true"
-                      aria-label="Facebook link coming soon"
-                      title="Facebook link coming soon"
-                      className="flex min-h-16 items-center gap-2 rounded-xl bg-[#1877F2] px-3 py-2.5 text-left text-white shadow-sm"
+                      aria-label="Facebook"
+                      title="Facebook"
+                      className="inline-flex h-14 w-14 items-center justify-center rounded-full border-2 border-white bg-[#1877F2] text-white shadow-md"
                     >
-                      <Facebook className="h-5 w-5 shrink-0" />
-                      <span className="min-w-0">
-                        <span className="block text-sm font-semibold">Facebook</span>
-                        <span className="block text-[11px] text-white/85">Link coming soon</span>
-                      </span>
+                      <Facebook className="h-7 w-7" fill="currentColor" />
                     </span>
                   )}
                 </div>
-                <p className="mt-3 text-xs text-gray-500">Instagram is live now. Facebook link will be added when the page URL is available.</p>
               </div>
 
               {/* Ordering tip */}

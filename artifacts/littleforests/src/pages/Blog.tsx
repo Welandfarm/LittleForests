@@ -8,9 +8,13 @@ import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import AuthButton from '@/components/AuthButton';
 import SEO from '@/components/SEO';
+<<<<<<< HEAD
 import BrandName from '@/components/BrandName';
 import BrandMark from '@/components/BrandMark';
 import SocialLinks from '@/components/SocialLinks';
+=======
+import BrandMark from '@/components/BrandMark';
+>>>>>>> 95c8ffdb2e9c18f0fccbce5e86f5122a9459e81f
 
 const Blog = () => {
   const navigate = useNavigate();
@@ -55,11 +59,18 @@ const Blog = () => {
       {/* Blog Content */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="text-center mb-12">
+<<<<<<< HEAD
           <h1 className="text-4xl font-bold text-stone-800 mb-4"><BrandName /> Blog</h1>
           <p className="text-stone-600 max-w-2xl mx-auto">
             Stay updated with the latest tips, insights, and stories from our nursery experts
           </p>
           <SocialLinks compact className="mt-5 justify-center" />
+=======
+          <h1 className="text-4xl font-bold text-stone-800 mb-4">LittleForest Blog</h1>
+          <p className="text-stone-600 max-w-2xl mx-auto">
+            Stay updated with the latest tips, insights, and stories from our nursery experts
+          </p>
+>>>>>>> 95c8ffdb2e9c18f0fccbce5e86f5122a9459e81f
         </div>
 
         {isLoading ? (

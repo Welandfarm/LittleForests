@@ -1,8 +1,11 @@
 import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { apiClient } from '@/lib/api';
+<<<<<<< HEAD
 import BrandName from '@/components/BrandName';
 import SocialLinks from '@/components/SocialLinks';
+=======
+>>>>>>> 95c8ffdb2e9c18f0fccbce5e86f5122a9459e81f
 
 const DEFAULTS = {
   whatsapp_number: '2540143538080',
@@ -41,7 +44,14 @@ const Footer = () => {
         <div className="grid md:grid-cols-3 gap-8">
           <div>
             <div className="flex items-center space-x-2 mb-4">
+<<<<<<< HEAD
               <BrandName surface="dark" className="text-xl" />
+=======
+              <span className="text-xl font-bold">
+                <span className="text-orange-500">Little</span>
+                <span className="text-green-400">Forest</span>
+              </span>
+>>>>>>> 95c8ffdb2e9c18f0fccbce5e86f5122a9459e81f
             </div>
             <p className="text-green-200 text-sm">
               Restoring Water Resources, One Tree at a Time.
@@ -82,14 +92,21 @@ const Footer = () => {
               >
                 📍 {location}
               </a>
+<<<<<<< HEAD
               <SocialLinks compact className="pt-1" />
+=======
+>>>>>>> 95c8ffdb2e9c18f0fccbce5e86f5122a9459e81f
             </div>
           </div>
         </div>
 
         <div className="border-t border-green-700 mt-8 pt-8 text-center">
           <p className="text-green-200 text-sm">
+<<<<<<< HEAD
             © {currentYear} <BrandName surface="dark" className="text-sm" />. All rights reserved. | Restoring Water Resources, One Tree at a Time.
+=======
+            © {currentYear} Little Forest. All rights reserved. | Restoring Water Resources, One Tree at a Time.
+>>>>>>> 95c8ffdb2e9c18f0fccbce5e86f5122a9459e81f
           </p>
         </div>
       </div>

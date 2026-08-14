@@ -1,45 +1,183 @@
-# [Project name]
+# LittleForest - Seedling E-commerce Platform
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+## Running on Replit
 
-## Run & Operate
+- **Start**: the "Start application" workflow runs `npm run dev` (port 5000)
+- **Database**: Replit's built-in PostgreSQL — tables are already created and match the Drizzle schema in `shared/schema.ts`
+- **Environment variables set**: `SUPABASE_URL`, `SUPABASE_ANON_KEY` (from the project's existing Supabase project). `DATABASE_URL` is managed by Replit automatically.
+- **Supabase service role key**: if you need admin-level Supabase storage/auth operations, add `SUPABASE_SERVICE_ROLE_KEY` as a secret.
+- **First-time setup**: products and content are empty — use the admin dashboard to add products.
 
-- `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
-- `pnpm run typecheck` — full typecheck across all packages
-- `pnpm run build` — typecheck + build all packages
-- `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
-- `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
-- Required env: `DATABASE_URL` — Postgres connection string
+## Overview
 
-## Stack
+LittleForest is a full-stack web application for an online seedling nursery business. The application provides a modern e-commerce experience for browsing and ordering tree seedlings, with admin functionality for content and product management. Built with React frontend, Express backend, and PostgreSQL database.
 
-- pnpm workspaces, Node.js 24, TypeScript 5.9
-- API: Express 5
-- DB: PostgreSQL + Drizzle ORM
-- Validation: Zod (`zod/v4`), `drizzle-zod`
-- API codegen: Orval (from OpenAPI spec)
-- Build: esbuild (CJS bundle)
+## System Architecture
 
-## Where things live
+### Frontend Architecture
+- **Framework**: React 18 with TypeScript
+- **Styling**: Tailwind CSS with shadcn/ui component library
+- **State Management**: React Context API for authentication and cart state
+- **Data Fetching**: TanStack React Query for server state management
+- **Routing**: React Router for client-side navigation
+- **Form Handling**: React Hook Form with Zod validation
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+### Backend Architecture
+- **Runtime**: Node.js with Express.js framework
+- **Language**: TypeScript with ES modules
+- **Development**: TSX for development server with hot reload
+- **Production**: ESBuild for server bundling
 
-## Architecture decisions
+### Database Architecture
+- **Database**: PostgreSQL (configured for Neon serverless)
+- **ORM**: Drizzle ORM with Drizzle Kit for migrations
+- **Schema**: Located in `shared/schema.ts` for type sharing
+- **Connection**: WebSocket-enabled connection pool using @neondatabase/serverless
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+## Key Components
 
-## Product
+### Authentication System
+- Supabase-based authentication with email/password
+- Role-based access control (admin/user roles)
+- Session management with persistent login state
+- Protected routes for admin functionality
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+### E-commerce Features
+- Product catalog with category filtering (Indigenous Trees, Ornamental Trees, Fruit Trees)
+- Shopping cart functionality with local state management
+- WhatsApp integration for order placement
+- Product image management with Supabase storage
 
-## User preferences
+### Admin Dashboard
+- Product management (CRUD operations)
+- Content management system for dynamic page content
+- Contact message handling
+- User management with role assignment
+- Image upload functionality
 
-_Populate as you build — explicit user instructions worth remembering across sessions._
+### UI Components
+- Comprehensive shadcn/ui component library
+- Responsive design with mobile-first approach
+- Carousel components for product display
+- Modal dialogs and sidebars for enhanced UX
 
-## Gotchas
+## Data Flow
 
-_Populate as you build — sharp edges, "always run X before Y" rules._
+1. **Client Requests**: React frontend makes API calls through TanStack Query
+2. **Server Processing**: Express server handles requests with proper middleware
+3. **Database Operations**: Drizzle ORM executes type-safe database queries
+4. **Response Handling**: Server returns JSON responses with error handling
+5. **State Updates**: React Query manages cache invalidation and UI updates
 
-## Pointers
+## External Dependencies
 
-- See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and package details
+### Core Dependencies
+- **Database**: Neon PostgreSQL serverless with connection pooling
+- **Authentication**: Supabase for user management and auth
+- **UI Framework**: Radix UI primitives with shadcn/ui styling
+- **Image Storage**: Supabase Storage for file uploads
+- **Communication**: WhatsApp Business API integration for orders
+
+### Development Tools
+- **Build Tool**: Vite for frontend bundling with HMR
+- **TypeScript**: Full type safety across frontend and backend
+- **ESLint/Prettier**: Code quality and formatting
+- **Drizzle Kit**: Database schema management and migrations
+
+## Deployment Strategy
+
+### Development Environment
+- Replit-based development with hot reload
+- Environment variable configuration for database and API keys
+- PostgreSQL module provisioning through Replit
+
+### Production Build
+- Frontend: Vite builds static assets to `dist/public`
+- Backend: ESBuild bundles server code to `dist/index.js`
+- Single-server deployment serving both API and static files
+
+### Environment Configuration
+- Database URL for PostgreSQL connection
+- Supabase configuration for authentication and storage
+- WhatsApp API credentials for order processing
+
+### Hosting Strategy
+- Replit autoscale deployment target
+- Port 5000 for development, port 80 for production
+- Static file serving with Express for production builds
+
+## Changelog
+- June 24, 2025. Initial setup
+- June 24, 2025. Added honey product category with admin management
+- June 24, 2025. Updated homepage messaging and styling with orange accents
+- June 24, 2025. Fixed image upload functionality with proper payload limits
+- June 26, 2025. Successfully migrated from Supabase to PostgreSQL database
+- June 26, 2025. Fixed image upload mapping between database schema and frontend forms
+- June 26, 2025. Updated homepage background with authentic nursery photo
+- June 26, 2025. Implemented secure admin authentication system with bcrypt password hashing
+- June 26, 2025. Created hidden admin login at /admin-login accessible only to wesleykoech2022@gmail.com and chepkoechjoan55@gmail.com
+- June 26, 2025. Added clean public interface that hides all admin access when not logged in
+- June 26, 2025. Migrated from PostgreSQL back to Supabase for better scalability and deployment flexibility
+- June 30, 2025. Successfully migrated from Replit Agent to Replit environment with full functionality
+- June 30, 2025. Updated homepage background with new nursery photo showing seedling cultivation
+- June 30, 2025. Improved "Available" button styling from black to white background with black text
+- June 30, 2025. Added clickable WhatsApp contact links throughout the application for better user engagement
+- June 30, 2025. Updated WhatsApp message templates for order and contact buttons to use simplified, professional language
+- July 17, 2025. Successfully migrated from PostgreSQL to Supabase database for better integration flexibility
+- July 17, 2025. Configured API integration endpoints for Vercel dashboard to manage public website inventory
+- July 17, 2025. Set up cross-platform integration between Replit admin app and Vercel dashboard analytics
+- July 17, 2025. Successfully migrated from Replit Agent to Replit environment with proper inventory integration
+- July 17, 2025. Successfully migrated from Replit Agent to Replit environment with full functionality
+- July 17, 2025. Configured Supabase integration with provided credentials for authentication and data storage
+- July 17, 2025. Seeded database with sample products (6 tree seedlings), content, and testimonials
+- July 17, 2025. Fixed critical integration issue - website now displays real inventory from Vercel dashboard API
+- July 17, 2025. Implemented data transformation layer to convert Vercel API format to frontend-compatible format
+- July 17, 2025. Achieved real-time inventory synchronization between Vercel dashboard and public website
+- July 24, 2025. Successfully completed migration from Replit Agent to Replit environment with enhanced security
+- July 24, 2025. Fixed inventory filtering to properly hide products marked as "not ready for sale" in Vercel dashboard
+- July 24, 2025. Improved database schema synchronization and resolved TypeScript errors for clean execution
+- July 24, 2025. Successfully completed migration from Replit Agent to Replit environment with enhanced security
+- July 24, 2025. Fixed inventory filtering to properly hide products marked as "not ready for sale" in Vercel dashboard
+- July 24, 2025. Improved database schema synchronization and resolved TypeScript errors for clean execution
+- July 24, 2025. Optimized product image display with square aspect ratio, object-cover styling, and 4-product grid layout for professional e-commerce appearance
+- July 24, 2025. Added comprehensive scroll-triggered animations using Intersection Observer API for engaging user experience throughout the website
+- August 2, 2025. Successfully migrated from Replit Agent to Replit environment with corrected API integration
+- August 2, 2025. Fixed critical API integration issue - corrected dashboard URL from non-existent Vercel URL to working Replit dashboard
+- August 2, 2025. Confirmed real-time product data flow with proper image URLs and inventory synchronization
+- August 2, 2025. Implemented advanced product hover effects with image overlay animations instead of video replacement
+- August 2, 2025. Enhanced scroll animations with new animation types (scale, rotate) and floating leaf background particles
+- August 2, 2025. Added growth timeline component showing plant development stages with progressive animation
+- August 2, 2025. Created comprehensive CSS animation library for improved user engagement throughout the website
+- August 7, 2025. Successfully migrated from Replit Agent to Replit environment with full functionality
+- August 7, 2025. Removed all dashboard integration components and external API dependencies for simplified, standalone operation
+- August 7, 2025. Configured direct Supabase database access for secure, clean data management without external service dependencies
+- August 7, 2025. Completed migration from Replit Agent to Replit environment with all dependencies properly configured
+- August 7, 2025. Fixed product image display by populating database with appropriate seedling/tree images replacing null image URLs
+- August 7, 2025. Verified all API endpoints working correctly with real data from Supabase database
+- August 7, 2025. Successfully completed migration with direct Supabase database access as requested
+- August 7, 2025. Fixed website to read from correct inventory table managed by dashboard instead of old products table
+- August 7, 2025. Website now displays real inventory with authentic plant images from Supabase storage
+- August 7, 2025. Implemented ready_for_sale filtering - only products marked ready in dashboard appear on website
+- August 7, 2025. Migration completed successfully - user confirmed website displaying real inventory with authentic images
+- August 7, 2025. Fixed honey product inclusion - website now displays both plants and honey products from inventory
+- August 7, 2025. Implemented fully dynamic category system - website automatically detects and displays any new categories added to dashboard
+- August 7, 2025. Created intelligent category filtering with smart icon mapping for different product types
+- August 7, 2025. Added /api/categories endpoint for real-time category discovery from inventory database
+- August 7, 2025. Website now future-ready - any new product categories will automatically appear with proper filtering and display
+- October 7, 2025. Created new "Green Towns Initiative" page to showcase impact work in communities
+- October 7, 2025. Moved water source restoration content from About page to Green Towns page, renamed to "Water Source Protection and Restoration"
+- October 7, 2025. Added "Green Champions" school greening initiative section featuring 14 schools with unique stories
+- October 7, 2025. Restructured navigation to include Green Towns Initiative as third menu item after Shop with Us and About Us
+- October 7, 2025. Updated About page to focus on company information and offerings, removed impact content
+- October 7, 2025. Created media gallery system for Green Towns Initiative with database tables (water_source_gallery, green_champions_gallery)
+- October 7, 2025. Implemented API routes for gallery data (/api/gallery/water-source, /api/gallery/green-champions)
+- October 7, 2025. Added MediaGallery component to display photos and videos with captions for Water Source Protection and Green Champions sections
+- October 7, 2025. Gallery content (photos/videos/stories) managed by external inventory app with automatic display on website
+- October 7, 2025. Redesigned product category navigation - replaced dropdown/button filters with horizontal tab layout for improved UX
+- October 7, 2025. Replaced horizontal product carousel with vertical grid layout (1-4 columns responsive) for better browsing and vertical scrolling
+- October 7, 2025. Created ProductGrid component for responsive vertical product display replacing ProductCarousel
+- October 7, 2025. Updated CategoryFilter component to display categories as clean horizontal tabs with active state indicators
+
+## User Preferences
+
+Preferred communication style: Simple, everyday language.

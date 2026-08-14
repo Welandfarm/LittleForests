@@ -8,7 +8,10 @@ import { useQuery } from '@tanstack/react-query';
 import { apiClient } from '@/lib/api';
 import SEO from '@/components/SEO';
 import BrandMark from '@/components/BrandMark';
+<<<<<<< HEAD
 import SocialLinks from '@/components/SocialLinks';
+=======
+>>>>>>> 95c8ffdb2e9c18f0fccbce5e86f5122a9459e81f
 
 const DEFAULTS = {
   whatsapp_number: '2540143538080',
@@ -143,6 +146,7 @@ const Contact = () => {
                 </div>
               </div>
 
+<<<<<<< HEAD
               {/* Social links */}
               <div className="mt-8 rounded-2xl border border-green-200 bg-white p-4 shadow-sm sm:p-5">
                 <h4 className="font-semibold text-green-800">Follow us</h4>
@@ -151,6 +155,10 @@ const Contact = () => {
 
               {/* Ordering tip */}
               <div className="mt-8 bg-green-50 border border-green-200 rounded-lg p-5">
+=======
+              {/* Ordering tip */}
+              <div className="mt-10 bg-green-50 border border-green-200 rounded-lg p-5">
+>>>>>>> 95c8ffdb2e9c18f0fccbce5e86f5122a9459e81f
                 <h4 className="font-semibold text-green-800 mb-2">Ordering by WhatsApp</h4>
                 <p className="text-sm text-gray-600">
                   The fastest way to order is through our shop — add items to your cart and click "Order Now" to send us your full order via WhatsApp directly.

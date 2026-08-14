@@ -1,7 +1,12 @@
 kind = "web"
 previewPath = "/"
+<<<<<<< HEAD
 title = "LittleForests"
 description = "The imported LittleForests website and storefront, brought into an editable React app for ongoing content and design updates."
+=======
+title = "Little Forests"
+description = "A full website for Little Forests, a Kenyan tree nursery and environmental initiative with product browsing, community information, donations, contact, and admin tools."
+>>>>>>> 95c8ffdb2e9c18f0fccbce5e86f5122a9459e81f
 version = "1.0.0"
 id = "artifacts/littleforests"
 router = "path"

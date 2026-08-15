@@ -1,0 +1,1 @@
+- [GitHub pull and preview setup](github-preview-setup.md) — pulling this project can replace Replit workflow and environment configuration.

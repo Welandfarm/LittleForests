@@ -1,18 +1,24 @@
 {
   "version": 2,
+  "buildCommand": "npm run build:vercel",
+  "outputDirectory": "dist/public",
   "functions": {
-    "server/index.ts": {
+    "api/index.ts": {
       "maxDuration": 30
     }
   },
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "/server/index.ts"
+      "destination": "/api/index.ts"
+    },
+    {
+      "source": "/sitemap.xml",
+      "destination": "/api/index.ts"
     },
     {
       "source": "/(.*)",
-      "destination": "/server/index.ts"
+      "destination": "/index.html"
     }
   ]
 }

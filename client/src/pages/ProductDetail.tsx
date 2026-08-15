@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { apiClient } from '@/lib/api';
@@ -19,7 +19,20 @@ const ProductDetail = () => {
   const [added, setAdded] = useState(false);
   const [showShareMenu, setShowShareMenu] = useState(false);
   const [copied, setCopied] = useState(false);
-  const shareMenuRef = useEffect(() => {}, []) as any; // placeholder, real ref below
+  const shareMenuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!showShareMenu) return;
+
+    const closeOnOutsideClick = (event: MouseEvent) => {
+      if (shareMenuRef.current && !shareMenuRef.current.contains(event.target as Node)) {
+        setShowShareMenu(false);
+      }
+    };
+
+    document.addEventListener('mousedown', closeOnOutsideClick);
+    return () => document.removeEventListener('mousedown', closeOnOutsideClick);
+  }, [showShareMenu]);
 
   const { data: product, isLoading, error } = useQuery({
     queryKey: ['product', id],
@@ -221,7 +234,7 @@ const ProductDetail = () => {
                 </Badge>
 
                 {/* Share button */}
-                <div className="relative">
+                <div ref={shareMenuRef} className="relative">
                   <Button
                     variant="ghost"
                     size="sm"

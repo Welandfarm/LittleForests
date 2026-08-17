@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "buildCommand": "npm run build:vercel",
+  "outputDirectory": "dist/public",
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "https://litteforestj-1.onrender.com/api/$1" },
+    { "source": "/sitemap.xml", "destination": "https://litteforestj-1.onrender.com/sitemap.xml" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}

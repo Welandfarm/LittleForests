@@ -13,6 +13,7 @@ import { useCart } from '@/contexts/CartContext';
 import { useQuery } from '@tanstack/react-query';
 import { apiClient } from '@/lib/api';
 import { useState, useMemo, useEffect } from 'react';
+import { supabase } from '@/lib/supabase';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
@@ -100,7 +101,7 @@ Please confirm availability and let me know`;
   const { data: products = [], isLoading: productsLoading, error } = useQuery({
     queryKey: ['products'],
     queryFn: async () => {
-      const data = await apiClient.getProducts();
+      const { data, error: sbError } = await supabase.from('products').select('*'); if (sbError) throw sbError;
       // Include all products (available and out of stock) for better customer experience
       return data;
     },
